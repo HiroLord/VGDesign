@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class Movement : MonoBehaviour {
 
 	private Animator anim;
@@ -9,10 +9,13 @@ public class Movement : MonoBehaviour {
 	private Rigidbody playerRigidbody;
 	private float speed;
 	int floorMask;
+	int oceanCheck;
 	float camRayLength = 100f;
 	float gravity = 0f;
 	private bool isGrounded;
-
+	private bool isDead;
+	private Vector3 spawn;
+	public Image deadImage;
 	private Vector3 direction;
 	//private Vector3 angle = new Vector3(0f,0f,0f);
 	private bool shooting;
@@ -23,11 +26,12 @@ public class Movement : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
 		floorMask = LayerMask.GetMask ("Floor");
-
+		oceanCheck = LayerMask.GetMask ("OceanCheck");
 		direction = Vector3.zero;
 		speed = 2.5f;
 		shooting = false;
 		isGrounded = true;
+		spawn = transform.position;
 	}
 
 	void Move(float h, float v) {
@@ -67,9 +71,34 @@ public class Movement : MonoBehaviour {
 			transform.rotation = Quaternion.LookRotation(playerToMouse);
 		}
 	}
-	
+	//respawns, won't be needed in final version
+	void Respawn() {
+		transform.position = spawn;
+	}
+
+	void OverWater() {
+		Ray ray = new Ray (transform.position, new Vector3 (0, -1, 0));
+		RaycastHit oceanHit;
+
+		if (Physics.Raycast (ray, out oceanHit, 0.1f, oceanCheck)) {
+			if (oceanHit.collider.CompareTag ("Kill")) {
+				Debug.Log (oceanHit.collider.CompareTag ("Kill"));
+				isDead = true;
+				Respawn ();
+				deadImage.color = Color.red;
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
+		OverWater ();
+		if (isDead) {
+			deadImage.color = Color.red;
+		} else {
+			deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
+		}
+		isDead = false;
 
 		float h = Input.GetAxisRaw ("Horizontal");
 		float v = Input.GetAxisRaw ("Vertical");
