@@ -14,7 +14,7 @@ public class Shooting : MonoBehaviour
 	int shootableMask;
 	// ParticleSystem gunParticles;
 	// LineRenderer gunLine;
-	// AudioSource gunAudio;
+	AudioSource gunAudio;
 	// Light gunLight;
 	// float effectsDisplayTime = 0.2f;
 
@@ -23,17 +23,18 @@ public class Shooting : MonoBehaviour
 		shootableMask = LayerMask.GetMask ("Shootable");
 		// gunParticles = GetComponent<ParticleSystem> ();
 		// gunLine = GetComponent<LineRenderer> ();
-		// gunAudio = GetComponent<AudioSource> ();
+		gunAudio = GetComponent<AudioSource> ();
 		// gunLight = GetComponent<Light> ();
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
+		timer += Time.deltaTime;
 //		if(Input.GetButton("Jump"))
 //		{
 //			print ("Aiming");
-			if(Input.GetButton ("Fire1"))// && timer >= timeBetweenBullets && Time.timeScale != 0)
+			if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets && Time.timeScale != 0)
 			{
 				//print ("Shooting");
 				Shoot();
@@ -42,7 +43,6 @@ public class Shooting : MonoBehaviour
 //			{
 //				DisableEffects ();
 //			}
-
 //		}
 	}
 
@@ -56,7 +56,7 @@ public class Shooting : MonoBehaviour
 	void Shoot()
 	{
 		timer = 0f;
-//		gunAudio.Play();
+		gunAudio.Play();
 //
 //		gunLight.enabled = true;
 //
@@ -70,11 +70,16 @@ public class Shooting : MonoBehaviour
 		shootRay.direction = transform.forward;
 		if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
 		{
+			EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+			if(enemyHealth != null)
+			{
+				enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+			}
 			print ("It's away!");
 		}
-		else
-		{
-			print ("Miss!");
-		}
+//		else
+//		{
+//			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+//		}
 	}
 }
