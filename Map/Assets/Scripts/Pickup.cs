@@ -15,6 +15,11 @@ public class Pickup : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		//PlayerScript pscript = other.GetComponent<PlayerScript>();
+		if(other.tag == "Player")
+		{
+			Shooting comp = other.GetComponentInChildren<Shooting> ();
+			comp.currentAmmo = comp.startingAmmo;
+		}
 		Destroy (this.gameObject);
 	}
 }
