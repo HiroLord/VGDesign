@@ -96,7 +96,7 @@ public class Movement : MonoBehaviour {
 		if (isDead) {
 			deadImage.color = Color.red;
 		} else {
-			deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
+	//		deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
 		}
 		isDead = false;
 
