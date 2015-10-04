@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour {
 	private bool shooting;
 	private bool f, b, l, r;
 
-	private bool inThirdPerson = true;
+	public bool inThirdPerson = true;
 
 	// Use this for initialization
 	void Start () {
