@@ -1,44 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Shooting : MonoBehaviour 
 {
 	public int damagePerShot = 20;
 	public float timeBetweenBullets = 0.15f;
 	public float range = 100f;
-
-
+	public int startingAmmo = 30;
+	public int currentAmmo;
+	public Text disp;
 	float timer;
 	Ray shootRay;
 	RaycastHit shootHit;
 	int shootableMask;
+	AudioSource[] soundEff;
+	AudioSource gunAudio;
+	AudioSource emptyClip;
+
 	// ParticleSystem gunParticles;
 	// LineRenderer gunLine;
-	AudioSource gunAudio;
 	// Light gunLight;
 	// float effectsDisplayTime = 0.2f;
 
 	void Awake()
 	{
 		shootableMask = LayerMask.GetMask ("Shootable");
+		soundEff = GetComponents<AudioSource> ();
+		gunAudio = soundEff [0];
+		emptyClip = soundEff [1];
+		currentAmmo = startingAmmo;
+
+		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
+		// gunLight = GetComponent<Light> ();
 		// gunParticles = GetComponent<ParticleSystem> ();
 		// gunLine = GetComponent<LineRenderer> ();
-		gunAudio = GetComponent<AudioSource> ();
-		// gunLight = GetComponent<Light> ();
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
 		timer += Time.deltaTime;
-//		if(Input.GetButton("Jump"))
-//		{
-//			print ("Aiming");
-			if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets && Time.timeScale != 0)
-			{
-				//print ("Shooting");
-				Shoot();
-			}
+		if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets 
+	   		&& Time.timeScale != 0 && currentAmmo > 0)
+		{
+			currentAmmo--;
+			Shoot();
+		}
+		else if(currentAmmo <= 0)
+		{
+			// For some reason this clip is not playing
+			emptyClip.Play();
+			print ("Empty!");
+		}
+		disp.text = "Ammo: " + currentAmmo + "/" + startingAmmo;
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{
 //				DisableEffects ();
@@ -75,11 +90,11 @@ public class Shooting : MonoBehaviour
 			{
 				enemyHealth.TakeDamage(damagePerShot, shootHit.point);
 			}
-			print ("It's away!");
 		}
 //		else
 //		{
 //			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
 //		}
 	}
+
 }
