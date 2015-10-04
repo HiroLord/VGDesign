@@ -41,17 +41,19 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets 
-	   		&& Time.timeScale != 0 && currentAmmo > 0)
-		{
-			currentAmmo--;
-			Shoot();
-		}
-		else if(currentAmmo <= 0)
-		{
-			// For some reason this clip is not playing
-			emptyClip.Play();
-			print ("Empty!");
+		if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets) {
+	   		if (Time.timeScale != 0 && currentAmmo > 0)
+			{
+				currentAmmo--;
+				Shoot();
+			}
+			else
+			{
+				// For some reason this clip is not playing
+				timer = 0f;
+				emptyClip.Play();
+				print ("Empty!");
+			}
 		}
 		disp.text = "Ammo: " + currentAmmo + "/" + startingAmmo;
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
