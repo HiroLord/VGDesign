@@ -41,7 +41,7 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if(Input.GetButton ("Fire1") && Input.GetButton("Jump") && timer >= timeBetweenBullets) {
+		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= timeBetweenBullets) {
 	   		if (Time.timeScale != 0 && currentAmmo > 0)
 			{
 				currentAmmo--;

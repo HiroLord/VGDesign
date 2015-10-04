@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour {
 	private bool shooting;
 	private bool f, b, l, r;
 
+	private bool inThirdPerson = true;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -37,6 +39,9 @@ public class Movement : MonoBehaviour {
 	void Move(float h, float v) {
 		movement.Set (h, gravity, v);
 		movement = movement.normalized * speed * Time.deltaTime;
+		if (inThirdPerson) {
+			movement = transform.rotation * movement;
+		}
 
 		gravity -= Time.deltaTime / 3.5f;
 		RaycastHit hitInfo = new RaycastHit();
@@ -57,18 +62,27 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Turning() {
-		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+		if (!inThirdPerson) {
+			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		
-		RaycastHit floorHit;
+			RaycastHit floorHit;
 		
-		if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) {
-			Vector3 playerToMouse = floorHit.point - transform.position;
-			playerToMouse.y = 0f;
+			if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) {
+				Vector3 playerToMouse = floorHit.point - transform.position;
+				playerToMouse.y = 0f;
 			
-			//Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
-			//playerRigidbody.MoveRotation (newRotation);
+				//Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
+				//playerRigidbody.MoveRotation (newRotation);
 
-			transform.rotation = Quaternion.LookRotation(playerToMouse);
+				transform.rotation = Quaternion.LookRotation (playerToMouse);
+			}
+		} else {
+			float turnSpeed = Time.deltaTime * 100;
+			if (Input.GetKey ("j")) {
+				transform.Rotate (0, -turnSpeed, 0);
+			} else if (Input.GetKey ("l")) {
+				transform.Rotate (0, turnSpeed, 0);
+			}
 		}
 	}
 	//respawns, won't be needed in final version
@@ -123,8 +137,10 @@ public class Movement : MonoBehaviour {
 
 		if ( h != 0 || v != 0) {
 			float angle = rot;
-			float movAngle = Vector3.Angle (new Vector3 (h, 0, v), new Vector3 (0, 0, 1));
-			if (h < 0) {
+			float movAngle = Vector3.Angle (movement, new Vector3 (0, 0, 1));
+			//float movAngle = Vector3.Angle (new Vector3(h, 0, v), new Vector3 (0, 0, 1));
+
+			if (movement.x < 0) {
 				movAngle = 360f - movAngle;
 			}
 
