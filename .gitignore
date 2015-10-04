@@ -5,7 +5,7 @@
 [Oo]bj/
 [Bb]uild
 [Ll]ibrary/
-Library/
+*.pidb.meta
 sysinfo.txt
 *.stackdump
  
