@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour {
 	private Animator anim;
 
 	private Vector3 movement;
+	private Vector3 acceleration;
+	private float accAmnt = 0.01f;
 	private Rigidbody playerRigidbody;
 	private float speed;
 	int floorMask;
@@ -37,11 +39,17 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Move(float h, float v) {
-		movement.Set (h, gravity, v);
-		movement = movement.normalized * speed * Time.deltaTime;
+		acceleration.Set (h, 0, v);
+		acceleration = acceleration.normalized;
+		/*
+		if (movement.magnitude > 1) {
+			movement = movement.normalized;
+		}
+		*/
 		if (inThirdPerson) {
 			movement = transform.rotation * movement;
 		}
+		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * 10f);
 
 		gravity -= Time.deltaTime / 3.5f;
 		RaycastHit hitInfo = new RaycastHit();
@@ -52,7 +60,7 @@ public class Movement : MonoBehaviour {
 		}
 		movement.y = gravity;
 		
-		playerRigidbody.MovePosition (transform.position + movement);
+		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime));
 		Vector3 vl = playerRigidbody.velocity;
 		float newSpeed = 1f - (vl.magnitude);
 		if (newSpeed < 0.1f) {
