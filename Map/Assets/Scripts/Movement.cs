@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Move(float h, float v) {
-		acceleration.Set (h, 0, v);
+		acceleration.Set (h, movement.y, v);
 		acceleration = acceleration.normalized;
 		/*
 		if (movement.magnitude > 1) {
@@ -58,7 +58,7 @@ public class Movement : MonoBehaviour {
 		if (Physics.Raycast(new Ray(pos, Vector3.down), out hitInfo, 1.1f)) {
 			gravity = 0;
 		}
-		movement.y = gravity;
+		movement.y = gravity / Time.deltaTime;
 		
 		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime));
 		Vector3 vl = playerRigidbody.velocity;
@@ -145,10 +145,11 @@ public class Movement : MonoBehaviour {
 
 		if ( h != 0 || v != 0) {
 			float angle = rot;
-			float movAngle = Vector3.Angle (movement, new Vector3 (0, 0, 1));
+			float movAngle = Vector3.Angle (movement, new Vector3 (0, movement.y, 1));
+			Debug.Log (movAngle);
 			//float movAngle = Vector3.Angle (new Vector3(h, 0, v), new Vector3 (0, 0, 1));
 
-			if (movement.x < 0) {
+			if (movement.x < -0.01f) {
 				movAngle = 360f - movAngle;
 			}
 
