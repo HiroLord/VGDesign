@@ -25,6 +25,8 @@ public class Movement : MonoBehaviour {
 
 	public bool inThirdPerson = true;
 
+	private AudioSource footstepSound;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -38,6 +40,12 @@ public class Movement : MonoBehaviour {
 		spawn = transform.position;
 	}
 
+	void FootStep() {
+		if (footstepSound && movement.magnitude >= 0.6f) {
+			footstepSound.Play ();
+		}
+	}
+
 	void Move(float h, float v) {
 		acceleration.Set (h, movement.y, v);
 		acceleration = acceleration.normalized;
@@ -49,15 +57,20 @@ public class Movement : MonoBehaviour {
 		if (inThirdPerson) {
 			movement = transform.rotation * movement;
 		}
-		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * 10f);
-
+		float slide = 10f;
 		gravity -= Time.deltaTime / 3.5f;
 		RaycastHit hitInfo = new RaycastHit();
 		Vector3 pos = playerRigidbody.position;
 		pos.y += 1f;
 		if (Physics.Raycast(new Ray(pos, Vector3.down), out hitInfo, 1.1f)) {
+			if (hitInfo.collider.CompareTag("Ice")) {
+				slide = 1f;
+			}
+			footstepSound = hitInfo.transform.gameObject.GetComponents<AudioSource> ()[0];
 			gravity = 0;
 		}
+
+		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
 		movement.y = gravity / Time.deltaTime;
 		
 		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime));
@@ -146,10 +159,9 @@ public class Movement : MonoBehaviour {
 		if ( h != 0 || v != 0) {
 			float angle = rot;
 			float movAngle = Vector3.Angle (movement, new Vector3 (0, movement.y, 1));
-			Debug.Log (movAngle);
 			//float movAngle = Vector3.Angle (new Vector3(h, 0, v), new Vector3 (0, 0, 1));
 
-			if (movement.x < -0.01f) {
+			if (movement.x < -0.1f) {
 				movAngle = 360f - movAngle;
 			}
 
