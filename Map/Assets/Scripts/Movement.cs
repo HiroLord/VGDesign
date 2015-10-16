@@ -48,7 +48,11 @@ public class Movement : MonoBehaviour {
 
 	void RagDoll(bool rag) {
 		if (rag) {
+<<<<<<< HEAD
 			anim.enabled = false;
+=======
+			anim.Stop ();
+>>>>>>> parent of df8c8ba... scene commit
 			isDead = true;
 //		} else {
 //			anim.enabled = true;
