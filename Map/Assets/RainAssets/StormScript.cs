@@ -17,9 +17,9 @@ public class StormScript : MonoBehaviour {
 	}
 	void Awake(){
 		sounds = GetComponents<AudioSource> ();
-//		rainSound = sounds [0];
-//		doorSound = sounds [1];
-//		splashSound = sounds [2];
+		rainSound = sounds [0];
+		doorSound = sounds [1];
+		splashSound = sounds [2];
 	}
 	// Update is called once per frame
 	void Update () {
@@ -28,6 +28,7 @@ public class StormScript : MonoBehaviour {
 			timer = 0;
 		} else if (timer > 500) {
 			dirLight.intensity = 90f;
+			print ("lightning");
 		} else {
 			dirLight.intensity = 0.3f;
 		}

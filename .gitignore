@@ -36,3 +36,4 @@ ehthumbs.db
 [Tt]humbs.db
 *.swp
 __pycache__/
+*.meta
