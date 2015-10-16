@@ -2,7 +2,7 @@
 # backtrace
 0   blender                             0x00143342 blender_crash_handler_backtrace + 98
 1   blender                             0x00142e87 blender_crash_handler + 791
-2   libsystem_platform.dylib            0x99e1a79b _sigtramp + 43
+2   libsystem_platform.dylib            0x92b3679b _sigtramp + 43
 3   ???                                 0xffffffff 0x0 + 4294967295
 4   blender                             0x0049b2a3 fsmenu_read_system + 851
 5   blender                             0x0049cda8 ED_file_init + 72
