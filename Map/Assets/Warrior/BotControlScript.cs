@@ -23,7 +23,7 @@ public class BotControlScript : MonoBehaviour
 	void Start ()
 	{
 		anim = GetComponent<Animator>();
-		terrAudio = Terrain.activeTerrain.GetComponent<AudioSource> ();
+		//terrAudio = Terrain.activeTerrain.GetComponent<AudioSource> ();
 	}
 	
 	// This will update based on the physics engine
@@ -55,8 +55,8 @@ public class BotControlScript : MonoBehaviour
 		}
 		else if(currentBaseState.nameHash == runState)
 		{
-			if(!terrAudio.isPlaying)
-				terrAudio.Play();
+			//if(!terrAudio.isPlaying)
+			//	terrAudio.Play();
 		}
 		// If we are in attack state then set our attack variable to false
 		else if(currentBaseState.nameHash == attackState)

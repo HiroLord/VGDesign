@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour {
 
 	void RagDoll(bool rag) {
 		if (rag) {
-			anim.Stop ();
+			//anim.Stop ();
 			isDead = true;
 		} else {
 			anim.StartPlayback();
