@@ -1419,7 +1419,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -1607,7 +1606,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &345013548
 Prefab:
   m_ObjectHideFlags: 0
@@ -2657,6 +2656,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1640053316}
   - 108: {fileID: 1640053315}
+  - 114: {fileID: 1640053317}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2708,6 +2708,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1640053317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1640053314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adfe6548c9fc56d4bbeb158495be930c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1644588747 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 42c6802f5720aa945948122911a29ce7, type: 3}
