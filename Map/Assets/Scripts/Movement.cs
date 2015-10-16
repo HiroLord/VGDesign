@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class Movement : MonoBehaviour {
 
 	private Animator anim;
-
 	private Vector3 movement;
 	private Vector3 acceleration;
 	private float accAmnt = 0.01f;
@@ -41,12 +40,16 @@ public class Movement : MonoBehaviour {
 		RagDoll (false);
 	}
 
+	public void SetRagdoll(bool rag) {
+		RagDoll (rag);
+	}
+
 	void RagDoll(bool rag) {
 		if (rag) {
-			anim.Stop ();
+			anim.enabled = false; //anim.StopPlayback ();
 			isDead = true;
 		} else {
-			anim.StartPlayback();
+			anim.enabled = true; //anim.StartPlayback();
 		}
 		Rigidbody[] bodies = GetComponentsInChildren<Rigidbody> ();
 		foreach (Rigidbody body in bodies) {
