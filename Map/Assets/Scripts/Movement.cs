@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour {
 		}
 		*/
 		if (inThirdPerson) {
-			movement = transform.rotation * movement;
+			acceleration = transform.rotation * acceleration;
 		}
 		float slide = 10f;
 		gravity -= Time.deltaTime / 3.5f;
@@ -95,6 +95,11 @@ public class Movement : MonoBehaviour {
 				footstepSound = sources [0];
 			}
 			gravity = 0;
+		}
+
+		if (movement.magnitude > 0.1) {
+			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
+			part.Play ();
 		}
 
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
