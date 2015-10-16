@@ -66,6 +66,7 @@ public class Movement : MonoBehaviour {
 			if (hitInfo.collider.CompareTag("Ice")) {
 				slide = 1f;
 			}
+			print ("Hit!");
 			AudioSource[] audioComps = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
 			if(audioComps.Length != 0)
 			{
