@@ -3,6 +3,11 @@ using System.Collections;
 
 public class ParticleDamage : MonoBehaviour {
 	//public Image deadImage;
+	public AudioSource audio;
+	public AudioClip explode;
+	public AudioClip bang;
+	public AudioClip thud;
+	public Movement move;
 	Rigidbody r;
 	void Start() {
 		r = GetComponent<Rigidbody> ();
@@ -14,11 +19,19 @@ public class ParticleDamage : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		foreach (ContactPoint contact in collision.contacts) {
-			Debug.DrawRay(contact.point, contact.normal, Color.white);
-		}
 		if (collision.collider.CompareTag ("Kill")) {
 			r.AddForce (new Vector3(0,1000,0), ForceMode.Impulse);
+			Debug.Log ("hit wall");
+			audio.PlayOneShot (explode);
+			move.SetRagdoll (true);
+		}
+
+		if (collision.collider.CompareTag ("MetalicSnake")) {
+			audio.PlayOneShot (bang);
+		}
+
+		if (collision.collider.CompareTag ("Shield")) {
+			audio.PlayOneShot (thud);
 		}
 	}
 }
