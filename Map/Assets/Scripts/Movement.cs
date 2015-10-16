@@ -38,9 +38,33 @@ public class Movement : MonoBehaviour {
 		shooting = false;
 		isGrounded = true;
 		spawn = transform.position;
+		RagDoll (false);
+	}
+
+	void RagDoll(bool rag) {
+		if (rag) {
+			anim.Stop ();
+			isDead = true;
+		} else {
+			anim.StartPlayback();
+		}
+		Rigidbody[] bodies = GetComponentsInChildren<Rigidbody> ();
+		foreach (Rigidbody body in bodies) {
+			if (body.name == "ArmyPilot (1)") { 
+				//continue;
+			}
+			body.isKinematic = !rag;
+		}
+		GetComponent<Rigidbody> ().isKinematic = rag;
+		foreach (Collider c in GetComponentsInChildren<Collider> ()) {
+			c.enabled = rag;
+		}
+		GetComponent<CapsuleCollider>().enabled = !rag;
+		GetComponent<Rigidbody> ().isKinematic = rag;
 	}
 
 	void FootStep() {
+		Debug.Log ("Footstep!");
 		if (footstepSound && movement.magnitude >= 0.6f) {
 			footstepSound.Play ();
 		}
@@ -55,24 +79,27 @@ public class Movement : MonoBehaviour {
 		}
 		*/
 		if (inThirdPerson) {
-			movement = transform.rotation * movement;
+			acceleration = transform.rotation * acceleration;
 		}
 		float slide = 10f;
 		gravity -= Time.deltaTime / 3.5f;
 		RaycastHit hitInfo = new RaycastHit();
 		Vector3 pos = playerRigidbody.position;
 		pos.y += 1f;
-		if (Physics.Raycast(new Ray(pos, Vector3.down), out hitInfo, 1.1f)) {
-			if (hitInfo.collider.CompareTag("Ice")) {
+		if (Physics.Raycast (new Ray (pos, Vector3.down), out hitInfo, 1.1f, 1 << 11)) {
+			if (hitInfo.collider.CompareTag ("Ice")) {
 				slide = 1f;
 			}
-			print ("Hit!");
-			AudioSource[] audioComps = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
-			if(audioComps.Length != 0)
-			{
-				footstepSound = audioComps[0];
+			AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
+			if (sources.Length > 0) {
+				footstepSound = sources [0];
 			}
 			gravity = 0;
+		}
+
+		if (movement.magnitude > 0.1) {
+			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
+			part.Play ();
 		}
 
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
@@ -134,7 +161,8 @@ public class Movement : MonoBehaviour {
 	void Update () {
 		OverWater ();
 		if (isDead) {
-			deadImage.color = Color.red;
+			//deadImage.color = Color.red;
+			return;
 		} else {
 			deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
 		}
@@ -147,6 +175,10 @@ public class Movement : MonoBehaviour {
 			shooting = true;
 		} else {
 			shooting = false;
+		}
+
+		if (Input.GetKey ("k")) {
+			RagDoll (true);
 		}
 
 		if (shooting) {
