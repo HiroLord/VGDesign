@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour {
 	//private Vector3 angle = new Vector3(0f,0f,0f);
 	private bool shooting;
 	private bool f, b, l, r;
-	private float ccRadius;
+	private float ccHeight;
 
 
 	public bool inThirdPerson = true;
@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour {
 		isGrounded = true;
 		spawn = transform.position;
 		RagDoll (false);
-		ccRadius = .5f;
+		ccHeight = GetComponent<CapsuleCollider>().height;
 	}
 
 	public void SetRagdoll(bool rag) {
@@ -105,16 +105,6 @@ public class Movement : MonoBehaviour {
 				footstepSound = sources [0];
 			}
 			gravity = 0;
-		}
-
-		CapsuleCollider cc = GetComponent<CapsuleCollider> ();
-		float ccRadius = cc.radius;
-		if (shooting) {
-			h = 0;
-			v = 0;
-			cc.radius = ccRadius/2;
-		} else {
-			cc.radius = ccRadius;
 		}
 
 		if (overSnow && movement.magnitude > 0.1) {
@@ -209,9 +199,9 @@ public class Movement : MonoBehaviour {
 		if (shooting) {
 			h = 0;
 			v = 0;
-			cc.radius = ccRadius/2;
+			cc.height = ccHeight * 0.8f;
 		} else {
-			cc.radius = ccRadius;
+			cc.height = ccHeight;
 		}
 
 		Move (h, v);
