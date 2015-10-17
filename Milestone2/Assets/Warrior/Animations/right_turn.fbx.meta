@@ -1,0 +1,1237 @@
+fileFormatVersion: 2
+guid: 4e4b8033bf5c69948b6cbf31fb3b8b61
+timeCreated: 1443467749
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: BoneNecklace_Geo
+    100002: Harness_Geo
+    100004: LowerBody_Geo
+    100006: //RootNode
+    100008: ShoulderArmor_Geo
+    100010: transform1
+    100012: warrior:Head
+    100014: warrior:HeadTop_End
+    100016: warrior:Hips
+    100018: warrior:LeftArm
+    100020: warrior:LeftFoot
+    100022: warrior:LeftFootToeBase_End
+    100024: warrior:LeftForeArm
+    100026: warrior:LeftHand
+    100028: warrior:LeftHandIndex1
+    100030: warrior:LeftHandIndex2
+    100032: warrior:LeftHandIndex3
+    100034: warrior:LeftHandIndex4
+    100036: warrior:LeftHandMiddle1
+    100038: warrior:LeftHandMiddle2
+    100040: warrior:LeftHandMiddle3
+    100042: warrior:LeftHandMiddle4
+    100044: warrior:LeftHandPinky1
+    100046: warrior:LeftHandPinky2
+    100048: warrior:LeftHandPinky3
+    100050: warrior:LeftHandPinky4
+    100052: warrior:LeftHandRing1
+    100054: warrior:LeftHandRing2
+    100056: warrior:LeftHandRing3
+    100058: warrior:LeftHandRing4
+    100060: warrior:LeftHandThumb1
+    100062: warrior:LeftHandThumb2
+    100064: warrior:LeftHandThumb3
+    100066: warrior:LeftHandThumb4
+    100068: warrior:LeftLeg
+    100070: warrior:LeftShoulder
+    100072: warrior:LeftToeBase
+    100074: warrior:LeftUpLeg
+    100076: warrior:Neck
+    100078: warrior:Neck1
+    100080: warrior:RightArm
+    100082: warrior:RightFoot
+    100084: warrior:RightFootToeBase_End
+    100086: warrior:RightForeArm
+    100088: warrior:RightHand
+    100090: warrior:RightHandIndex1
+    100092: warrior:RightHandIndex2
+    100094: warrior:RightHandIndex3
+    100096: warrior:RightHandIndex4
+    100098: warrior:RightHandMiddle1
+    100100: warrior:RightHandMiddle2
+    100102: warrior:RightHandMiddle3
+    100104: warrior:RightHandMiddle4
+    100106: warrior:RightHandPinky1
+    100108: warrior:RightHandPinky2
+    100110: warrior:RightHandPinky3
+    100112: warrior:RightHandPinky4
+    100114: warrior:RightHandRing1
+    100116: warrior:RightHandRing2
+    100118: warrior:RightHandRing3
+    100120: warrior:RightHandRing4
+    100122: warrior:RightHandThumb1
+    100124: warrior:RightHandThumb2
+    100126: warrior:RightHandThumb3
+    100128: warrior:RightHandThumb4
+    100130: warrior:RightLeg
+    100132: warrior:RightShoulder
+    100134: warrior:RightToeBase
+    100136: warrior:RightUpLeg
+    100138: warrior:Spine
+    100140: warrior:Spine1
+    100142: warrior:Spine2
+    100144: WarriorBelt_Geo
+    100146: WarriorEyes_Geo
+    100148: WarriorMeshes
+    100150: WarriorSkull_Geo
+    100152: WarriorUpperBody_Geo
+    100154: WarriorUpperBody_Geo1
+    100156: WarriorUpperBody_Geo2
+    400000: BoneNecklace_Geo
+    400002: Harness_Geo
+    400004: LowerBody_Geo
+    400006: //RootNode
+    400008: ShoulderArmor_Geo
+    400010: transform1
+    400012: warrior:Head
+    400014: warrior:HeadTop_End
+    400016: warrior:Hips
+    400018: warrior:LeftArm
+    400020: warrior:LeftFoot
+    400022: warrior:LeftFootToeBase_End
+    400024: warrior:LeftForeArm
+    400026: warrior:LeftHand
+    400028: warrior:LeftHandIndex1
+    400030: warrior:LeftHandIndex2
+    400032: warrior:LeftHandIndex3
+    400034: warrior:LeftHandIndex4
+    400036: warrior:LeftHandMiddle1
+    400038: warrior:LeftHandMiddle2
+    400040: warrior:LeftHandMiddle3
+    400042: warrior:LeftHandMiddle4
+    400044: warrior:LeftHandPinky1
+    400046: warrior:LeftHandPinky2
+    400048: warrior:LeftHandPinky3
+    400050: warrior:LeftHandPinky4
+    400052: warrior:LeftHandRing1
+    400054: warrior:LeftHandRing2
+    400056: warrior:LeftHandRing3
+    400058: warrior:LeftHandRing4
+    400060: warrior:LeftHandThumb1
+    400062: warrior:LeftHandThumb2
+    400064: warrior:LeftHandThumb3
+    400066: warrior:LeftHandThumb4
+    400068: warrior:LeftLeg
+    400070: warrior:LeftShoulder
+    400072: warrior:LeftToeBase
+    400074: warrior:LeftUpLeg
+    400076: warrior:Neck
+    400078: warrior:Neck1
+    400080: warrior:RightArm
+    400082: warrior:RightFoot
+    400084: warrior:RightFootToeBase_End
+    400086: warrior:RightForeArm
+    400088: warrior:RightHand
+    400090: warrior:RightHandIndex1
+    400092: warrior:RightHandIndex2
+    400094: warrior:RightHandIndex3
+    400096: warrior:RightHandIndex4
+    400098: warrior:RightHandMiddle1
+    400100: warrior:RightHandMiddle2
+    400102: warrior:RightHandMiddle3
+    400104: warrior:RightHandMiddle4
+    400106: warrior:RightHandPinky1
+    400108: warrior:RightHandPinky2
+    400110: warrior:RightHandPinky3
+    400112: warrior:RightHandPinky4
+    400114: warrior:RightHandRing1
+    400116: warrior:RightHandRing2
+    400118: warrior:RightHandRing3
+    400120: warrior:RightHandRing4
+    400122: warrior:RightHandThumb1
+    400124: warrior:RightHandThumb2
+    400126: warrior:RightHandThumb3
+    400128: warrior:RightHandThumb4
+    400130: warrior:RightLeg
+    400132: warrior:RightShoulder
+    400134: warrior:RightToeBase
+    400136: warrior:RightUpLeg
+    400138: warrior:Spine
+    400140: warrior:Spine1
+    400142: warrior:Spine2
+    400144: WarriorBelt_Geo
+    400146: WarriorEyes_Geo
+    400148: WarriorMeshes
+    400150: WarriorSkull_Geo
+    400152: WarriorUpperBody_Geo
+    400154: WarriorUpperBody_Geo1
+    400156: WarriorUpperBody_Geo2
+    4300000: BoneNecklace_Geo
+    4300002: LowerBody_Geo
+    4300004: Harness_Geo
+    4300006: ShoulderArmor_Geo
+    4300008: WarriorEyes_Geo
+    4300010: WarriorSkull_Geo
+    4300012: WarriorBelt_Geo
+    4300014: WarriorUpperBody_Geo
+    7400000: mixamo.com
+    9500000: //RootNode
+    13700000: BoneNecklace_Geo
+    13700002: Harness_Geo
+    13700004: LowerBody_Geo
+    13700006: ShoulderArmor_Geo
+    13700008: WarriorBelt_Geo
+    13700010: WarriorEyes_Geo
+    13700012: WarriorSkull_Geo
+    13700014: WarriorUpperBody_Geo
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 'MuscleClip ''right_turn'' conversion warning: ''warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2''
+      is between humanoid transforms and has rotation animation. This might lower
+      retargeting quality.
+
+
+'
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: mixamo.com
+      takeName: mixamo.com
+      firstFrame: 0
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: warrior:Hips
+        weight: 1
+      - path: warrior:Hips/warrior:LeftUpLeg
+        weight: 1
+      - path: warrior:Hips/warrior:LeftUpLeg/warrior:LeftLeg
+        weight: 1
+      - path: warrior:Hips/warrior:LeftUpLeg/warrior:LeftLeg/warrior:LeftFoot
+        weight: 1
+      - path: warrior:Hips/warrior:LeftUpLeg/warrior:LeftLeg/warrior:LeftFoot/warrior:LeftToeBase
+        weight: 1
+      - path: warrior:Hips/warrior:LeftUpLeg/warrior:LeftLeg/warrior:LeftFoot/warrior:LeftToeBase/warrior:LeftFootToeBase_End
+        weight: 0
+      - path: warrior:Hips/warrior:RightUpLeg
+        weight: 1
+      - path: warrior:Hips/warrior:RightUpLeg/warrior:RightLeg
+        weight: 1
+      - path: warrior:Hips/warrior:RightUpLeg/warrior:RightLeg/warrior:RightFoot
+        weight: 1
+      - path: warrior:Hips/warrior:RightUpLeg/warrior:RightLeg/warrior:RightFoot/warrior:RightToeBase
+        weight: 1
+      - path: warrior:Hips/warrior:RightUpLeg/warrior:RightLeg/warrior:RightFoot/warrior:RightToeBase/warrior:RightFootToeBase_End
+        weight: 0
+      - path: warrior:Hips/warrior:Spine
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandIndex1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandIndex1/warrior:LeftHandIndex2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandIndex1/warrior:LeftHandIndex2/warrior:LeftHandIndex3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandIndex1/warrior:LeftHandIndex2/warrior:LeftHandIndex3/warrior:LeftHandIndex4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandMiddle1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandMiddle1/warrior:LeftHandMiddle2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandMiddle1/warrior:LeftHandMiddle2/warrior:LeftHandMiddle3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandMiddle1/warrior:LeftHandMiddle2/warrior:LeftHandMiddle3/warrior:LeftHandMiddle4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandPinky1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandPinky1/warrior:LeftHandPinky2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandPinky1/warrior:LeftHandPinky2/warrior:LeftHandPinky3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandPinky1/warrior:LeftHandPinky2/warrior:LeftHandPinky3/warrior:LeftHandPinky4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandRing1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandRing1/warrior:LeftHandRing2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandRing1/warrior:LeftHandRing2/warrior:LeftHandRing3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandRing1/warrior:LeftHandRing2/warrior:LeftHandRing3/warrior:LeftHandRing4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandThumb1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandThumb1/warrior:LeftHandThumb2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandThumb1/warrior:LeftHandThumb2/warrior:LeftHandThumb3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:LeftShoulder/warrior:LeftArm/warrior:LeftForeArm/warrior:LeftHand/warrior:LeftHandThumb1/warrior:LeftHandThumb2/warrior:LeftHandThumb3/warrior:LeftHandThumb4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:Neck
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:Neck/warrior:Neck1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:Neck/warrior:Neck1/warrior:Head
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:Neck/warrior:Neck1/warrior:Head/warrior:HeadTop_End
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandIndex1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandIndex1/warrior:RightHandIndex2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandIndex1/warrior:RightHandIndex2/warrior:RightHandIndex3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandIndex1/warrior:RightHandIndex2/warrior:RightHandIndex3/warrior:RightHandIndex4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandMiddle1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandMiddle1/warrior:RightHandMiddle2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandMiddle1/warrior:RightHandMiddle2/warrior:RightHandMiddle3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandMiddle1/warrior:RightHandMiddle2/warrior:RightHandMiddle3/warrior:RightHandMiddle4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandPinky1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandPinky1/warrior:RightHandPinky2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandPinky1/warrior:RightHandPinky2/warrior:RightHandPinky3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandPinky1/warrior:RightHandPinky2/warrior:RightHandPinky3/warrior:RightHandPinky4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandRing1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandRing1/warrior:RightHandRing2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandRing1/warrior:RightHandRing2/warrior:RightHandRing3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandRing1/warrior:RightHandRing2/warrior:RightHandRing3/warrior:RightHandRing4
+        weight: 0
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandThumb1
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandThumb1/warrior:RightHandThumb2
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandThumb1/warrior:RightHandThumb2/warrior:RightHandThumb3
+        weight: 1
+      - path: warrior:Hips/warrior:Spine/warrior:Spine1/warrior:Spine2/warrior:RightShoulder/warrior:RightArm/warrior:RightForeArm/warrior:RightHand/warrior:RightHandThumb1/warrior:RightHandThumb2/warrior:RightHandThumb3/warrior:RightHandThumb4
+        weight: 0
+      - path: WarriorMeshes
+        weight: 0
+      - path: WarriorMeshes/BoneNecklace_Geo
+        weight: 0
+      - path: WarriorMeshes/Harness_Geo
+        weight: 0
+      - path: WarriorMeshes/LowerBody_Geo
+        weight: 0
+      - path: WarriorMeshes/ShoulderArmor_Geo
+        weight: 0
+      - path: WarriorMeshes/WarriorBelt_Geo
+        weight: 0
+      - path: WarriorMeshes/WarriorEyes_Geo
+        weight: 0
+      - path: WarriorMeshes/WarriorSkull_Geo
+        weight: 0
+      - path: WarriorMeshes/WarriorUpperBody_Geo
+        weight: 0
+      - path: WarriorMeshes/WarriorUpperBody_Geo1
+        weight: 0
+      - path: WarriorMeshes/WarriorUpperBody_Geo2
+        weight: 0
+      - path: WarriorMeshes/WarriorUpperBody_Geo2/transform1
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: warrior:Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandThumb3
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandMiddle1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandMiddle2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandMiddle3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandRing1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandRing2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandRing3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandPinky1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandPinky2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:LeftHandPinky3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandThumb1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandThumb2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandThumb3
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandIndex1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandIndex2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandIndex3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandMiddle1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandMiddle2
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandMiddle3
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandRing1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandRing2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandRing3
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandPinky1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandPinky2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: warrior:RightHandPinky3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: right_turn(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorMeshes
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: BoneNecklace_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Harness_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LowerBody_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: ShoulderArmor_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorBelt_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorEyes_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorSkull_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorUpperBody_Geo
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorUpperBody_Geo1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: WarriorUpperBody_Geo2
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: transform1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Hips
+      position: {x: 1.70350383e-08, y: .991791666, z: 0}
+      rotation: {x: 0, y: 0, z: -3.0872122e-23, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightUpLeg
+      position: {x: .0963379964, y: -.0327329971, z: 0}
+      rotation: {x: -2.07174595e-24, y: 1.77635684e-13, z: -7.67719222e-12, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightLeg
+      position: {x: -0, y: -.417299986, z: -.0173000004}
+      rotation: {x: -1.45519152e-09, y: -1.77635697e-13, z: 3.81361609e-12, w: 1}
+      scale: {x: 1, y: 1, z: .99999994}
+      transformModified: 1
+    - name: warrior:RightFoot
+      position: {x: -.000125999999, y: -.391893983, z: -.00847699959}
+      rotation: {x: 1.45519219e-09, y: -5.6222404e-21, z: 3.86357613e-12, w: 1}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: warrior:RightToeBase
+      position: {x: .00183299999, y: -.121930994, z: .0828230008}
+      rotation: {x: -5.20417043e-16, y: 1.8395508e-35, z: 2.12085781e-20, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightFootToeBase_End
+      position: {x: -3.19999999e-05, y: 0, z: .119999997}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftUpLeg
+      position: {x: -.0963379964, y: -.0327329971, z: 0}
+      rotation: {x: -1.77493704e-25, y: 1.77635684e-13, z: -7.91589017e-12, w: 1}
+      scale: {x: 1, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: warrior:LeftLeg
+      position: {x: -0, y: -.417299986, z: -.0173000004}
+      rotation: {x: 3.65242599e-24, y: -5.32907052e-13, z: 1.06248343e-11, w: 1}
+      scale: {x: 1, y: 1.00000012, z: 1.00000012}
+      transformModified: 1
+    - name: warrior:LeftFoot
+      position: {x: -.000125999999, y: -.391893983, z: -.00847699959}
+      rotation: {x: -1.14384812e-24, y: 3.55271368e-13, z: -2.70894418e-12, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftToeBase
+      position: {x: .00183299999, y: -.121930994, z: .0828230008}
+      rotation: {x: 0, y: 0, z: -2.04471189e-19, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftFootToeBase_End
+      position: {x: -0, y: 0, z: .119999997}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Spine
+      position: {x: -0, y: .0922629982, z: .0157709997}
+      rotation: {x: 0, y: 0, z: 3.0872122e-23, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Spine1
+      position: {x: -0, y: .162539989, z: -.00165600004}
+      rotation: {x: 1.97215226e-29, y: 0, z: -5.41659646e-35, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Spine2
+      position: {x: -0, y: .136395991, z: -.0129229994}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightShoulder
+      position: {x: .0614020005, y: .10187, z: -.0379320011}
+      rotation: {x: -1.97215226e-29, y: 0, z: -1.98525366e-23, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightArm
+      position: {x: .123231001, y: -.0111300005, z: -.0179349985}
+      rotation: {x: 0, y: 0, z: 1.98525366e-23, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightForeArm
+      position: {x: .276869982, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: -4.13590306e-23, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHand
+      position: {x: .278737992, y: 0, z: 0}
+      rotation: {x: 5.8207652e-09, y: 1.45519152e-09, z: -8.47028646e-18, w: 1}
+      scale: {x: .99999994, y: 1, z: .99999994}
+      transformModified: 1
+    - name: warrior:RightHandPinky1
+      position: {x: .0997150019, y: -.00119099999, z: -.0395400003}
+      rotation: {x: -8.73114914e-09, y: -1.45518875e-09, z: -1.21007127e-15, w: 1}
+      scale: {x: 1.00000012, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandPinky2
+      position: {x: .0365279987, y: 0, z: 0}
+      rotation: {x: -2.91038349e-09, y: -1.38777878e-15, z: 1.12757026e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandPinky3
+      position: {x: .0278200004, y: 0, z: 0}
+      rotation: {x: 5.82076698e-09, y: -1.38777878e-15, z: -2.60208521e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandPinky4
+      position: {x: .0227669999, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandRing1
+      position: {x: .104701996, y: .00387899997, z: -.0193629991}
+      rotation: {x: -8.73114914e-09, y: -1.45518875e-09, z: 1.47875012e-15, w: 1}
+      scale: {x: 1.00000012, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandRing2
+      position: {x: .0540129989, y: 0, z: 0}
+      rotation: {x: 1.85370757e-29, y: 1.94375359e-23, z: -6.67868538e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandRing3
+      position: {x: .0339159966, y: 0, z: 0}
+      rotation: {x: -2.91038349e-09, y: 2.77555756e-15, z: 4.16333634e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandRing4
+      position: {x: .0296649989, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandMiddle1
+      position: {x: .107595995, y: .00489600003, z: .00427799998}
+      rotation: {x: -8.73114825e-09, y: -1.45519174e-09, z: -4.72813791e-16, w: 1}
+      scale: {x: 1.00000012, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandMiddle2
+      position: {x: .0561679974, y: 0, z: 0}
+      rotation: {x: -7.37270057e-31, y: 1.56125113e-15, z: 4.33680902e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandMiddle3
+      position: {x: .0373639986, y: 0, z: 0}
+      rotation: {x: -2.91038305e-09, y: -2.77555756e-15, z: -8.6736187e-17, w: 1}
+      scale: {x: 1, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandMiddle4
+      position: {x: .0288030002, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandIndex1
+      position: {x: .104665004, y: .00489600003, z: .0271199979}
+      rotation: {x: -8.73114825e-09, y: -1.45518597e-09, z: 4.23514737e-18, w: 1}
+      scale: {x: 1.00000012, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandIndex2
+      position: {x: .0537679978, y: 0, z: 0}
+      rotation: {x: 2.91038305e-09, y: -5.55111512e-15, z: -3.46944722e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandIndex3
+      position: {x: .0338549986, y: 0, z: 0}
+      rotation: {x: -2.91038305e-09, y: 5.55111512e-15, z: 2.77555756e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandIndex4
+      position: {x: .0277309977, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandThumb1
+      position: {x: .0251780003, y: -.00936699938, z: .0251369998}
+      rotation: {x: -.04386729, y: -.0190235674, z: .0412872918, w: .998002589}
+      scale: {x: 1.00000024, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandThumb2
+      position: {x: .0326379985, y: -.0108699994, z: .0296689998}
+      rotation: {x: -.0281536952, y: -.0989912674, z: -.00529669132, w: .994675875}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandThumb3
+      position: {x: .0441650003, y: -.0137029998, z: .0213500001}
+      rotation: {x: .0301497988, y: -.0454310775, z: -.0915275738, w: .99430871}
+      scale: {x: .99999994, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:RightHandThumb4
+      position: {x: .0347619988, y: -.000520000001, z: .011709}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftShoulder
+      position: {x: -.0614419989, y: .10187, z: -.0379320011}
+      rotation: {x: -1.97215226e-29, y: 0, z: -1.78671606e-22, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftArm
+      position: {x: -.123190999, y: -.0111300005, z: -.0179349985}
+      rotation: {x: 0, y: 0, z: 1.78671606e-22, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftForeArm
+      position: {x: -.276869982, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHand
+      position: {x: -.278737992, y: 0, z: 0}
+      rotation: {x: -5.8207652e-09, y: 1.45519152e-09, z: -7.27595761e-10, w: 1}
+      scale: {x: 1.00000012, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: warrior:LeftHandMiddle1
+      position: {x: -.104638994, y: .00614799978, z: .00429800013}
+      rotation: {x: 1.16415313e-08, y: -1.45519286e-09, z: 7.27597316e-10, w: 1}
+      scale: {x: .999999881, y: 1, z: 1.00000012}
+      transformModified: 1
+    - name: warrior:LeftHandMiddle2
+      position: {x: -.0579209998, y: 0, z: 0}
+      rotation: {x: -2.40741243e-30, y: 1.38777878e-15, z: -3.2959746e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandMiddle3
+      position: {x: -.0371319987, y: 0, z: 0}
+      rotation: {x: -1.20370622e-30, y: 6.9388939e-16, z: 2.51534904e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandMiddle4
+      position: {x: -.0275790002, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandPinky1
+      position: {x: -.100129992, y: -.000782999967, z: -.0396709964}
+      rotation: {x: 5.8207652e-09, y: -1.45519152e-09, z: 7.27595262e-10, w: 1}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandPinky2
+      position: {x: -.0367630012, y: 0, z: 0}
+      rotation: {x: -5.82076609e-09, y: -6.9388939e-16, z: 5.20417043e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandPinky3
+      position: {x: -.0281130001, y: 0, z: 0}
+      rotation: {x: 1.16415322e-08, y: -6.9388939e-16, z: 2.60208521e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1.00000012}
+      transformModified: 1
+    - name: warrior:LeftHandPinky4
+      position: {x: -.0192549992, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandRing1
+      position: {x: -.103252001, y: .003211, z: -.0187550001}
+      rotation: {x: 5.8207652e-09, y: -1.45519019e-09, z: 7.27596705e-10, w: 1}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandRing2
+      position: {x: -.0544519983, y: 0, z: 0}
+      rotation: {x: 5.82076609e-09, y: 4.16333634e-15, z: -1.994932e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1.00000012}
+      transformModified: 1
+    - name: warrior:LeftHandRing3
+      position: {x: -.0371319987, y: 0, z: 0}
+      rotation: {x: -5.82076609e-09, y: -5.55111512e-15, z: 1.21430643e-15, w: 1}
+      scale: {x: 1, y: 1, z: .99999994}
+      transformModified: 1
+    - name: warrior:LeftHandRing4
+      position: {x: -.0275790002, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandIndex1
+      position: {x: -.103944995, y: .00614799978, z: .027054999}
+      rotation: {x: 5.8207652e-09, y: -1.45519152e-09, z: 7.27596816e-10, w: 1}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandIndex2
+      position: {x: -.0554930009, y: 0, z: 0}
+      rotation: {x: 5.82076609e-09, y: -6.05845175e-24, z: -1.04083409e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1.00000012}
+      transformModified: 1
+    - name: warrior:LeftHandIndex3
+      position: {x: -.0339109972, y: 0, z: 0}
+      rotation: {x: 0, y: 2.4233807e-23, z: 2.08166817e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandIndex4
+      position: {x: -.0275790002, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandThumb1
+      position: {x: -.0237849988, y: -.0100290002, z: .0262089986}
+      rotation: {x: -.0434408188, y: .0281334613, z: -.0414994583, w: .997797191}
+      scale: {x: .999999881, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandThumb2
+      position: {x: -.0336240008, y: -.0100290002, z: .0283979978}
+      rotation: {x: -.0245298874, y: .0819905773, z: -8.82105669e-05, w: .996331215}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:LeftHandThumb3
+      position: {x: -.0450179987, y: -.0134449992, z: .021782998}
+      rotation: {x: .0396271907, y: .00582928536, z: .0854937732, w: .995533288}
+      scale: {x: .99999994, y: 1.00000012, z: 1.00000024}
+      transformModified: 1
+    - name: warrior:LeftHandThumb4
+      position: {x: -.0321439989, y: 0, z: .0148989996}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Neck
+      position: {x: -0, y: .138774008, z: -.0435419977}
+      rotation: {x: -1.97215226e-29, y: 0, z: 5.78339547e-35, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Neck1
+      position: {x: -0, y: .0434000008, z: .00926900003}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:Head
+      position: {x: -0, y: .0402659997, z: .00858499948}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: warrior:HeadTop_End
+      position: {x: -0, y: .178865999, z: .00123099994}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
