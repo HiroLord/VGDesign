@@ -90,9 +90,12 @@ public class Movement : MonoBehaviour {
 		RaycastHit hitInfo = new RaycastHit();
 		Vector3 pos = playerRigidbody.position;
 		pos.y += 1f;
+		bool overSnow = false;
 		if (Physics.Raycast (new Ray (pos, Vector3.down), out hitInfo, 1.1f, 1 << 11)) {
 			if (hitInfo.collider.CompareTag ("Ice")) {
 				slide = 1f;
+			} else if (hitInfo.collider.CompareTag("Snow")) {
+				overSnow = true;
 			}
 			AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
 			if (sources.Length > 0) {
@@ -110,7 +113,7 @@ public class Movement : MonoBehaviour {
 			cc.radius = ccRadius;
 		}
 
-		if (movement.magnitude > 0.1) {
+		if (overSnow && movement.magnitude > 0.1) {
 			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
 			part.Play ();
 		}
