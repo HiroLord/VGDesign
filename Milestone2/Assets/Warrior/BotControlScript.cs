@@ -8,7 +8,7 @@ using System.Collections;
 public class BotControlScript : MonoBehaviour
 {
 	public float animSpeed = 1.5f;
-	public AudioSource terrAudio;
+	//public AudioSource terrAudio;
 
 
 	private Animator anim;							// The animator to the character
