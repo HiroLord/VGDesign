@@ -22,6 +22,8 @@ public class Movement : MonoBehaviour {
 	//private Vector3 angle = new Vector3(0f,0f,0f);
 	private bool shooting;
 	private bool f, b, l, r;
+	private float ccRadius;
+
 
 	public bool inThirdPerson = true;
 
@@ -39,6 +41,7 @@ public class Movement : MonoBehaviour {
 		isGrounded = true;
 		spawn = transform.position;
 		RagDoll (false);
+		ccRadius = .5f;
 	}
 
 	public void SetRagdoll(bool rag) {
@@ -189,6 +192,15 @@ public class Movement : MonoBehaviour {
 			h = 0;
 			v = 0;
 		}
+		CapsuleCollider cc = GetComponent<CapsuleCollider> ();
+		if (shooting) {
+			h = 0;
+			v = 0;
+			cc.radius = ccRadius/2;
+		} else {
+			cc.radius = ccRadius;
+		}
+
 		Move (h, v);
 		Turning ();
 
