@@ -22,8 +22,6 @@ public class Movement : MonoBehaviour {
 	//private Vector3 angle = new Vector3(0f,0f,0f);
 	private bool shooting;
 	private bool f, b, l, r;
-	private float ccRadius;
-
 
 	public bool inThirdPerson = true;
 
@@ -41,14 +39,16 @@ public class Movement : MonoBehaviour {
 		isGrounded = true;
 		spawn = transform.position;
 		RagDoll (false);
-		ccRadius = .5f;
+	}
+
+	public void SetRagdoll(bool rag) {
+		RagDoll (rag);
 	}
 
 	void RagDoll(bool rag) {
 		if (rag) {
-			//anim.Stop ();
-			isDead = true;
 			anim.enabled = false;
+			isDead = true;
 		} else {
 			anim.enabled = true;
 		}
@@ -101,19 +101,10 @@ public class Movement : MonoBehaviour {
 			gravity = 0;
 		}
 
-		CapsuleCollider cc = GetComponent<CapsuleCollider> ();
-		if (shooting) {
-			h = 0;
-			v = 0;
-			cc.radius = ccRadius/2;
-		} else {
-			cc.radius = ccRadius;
-		}
-
-		if (movement.magnitude > 0.1) {
-			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
-			part.Play ();
-		}
+//		if (movement.magnitude > 0.1) {
+//			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
+//			part.Play ();
+//		}
 
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
 		movement.y = gravity / Time.deltaTime;
@@ -177,7 +168,7 @@ public class Movement : MonoBehaviour {
 			//deadImage.color = Color.red;
 			return;
 		} else {
-			deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
+			//deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
 		}
 		isDead = false;
 
