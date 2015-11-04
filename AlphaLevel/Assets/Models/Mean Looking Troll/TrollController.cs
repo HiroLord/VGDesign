@@ -20,7 +20,7 @@ public class TrollController : MonoBehaviour {
 	void FixedUpdate() {
 		bool b = Input.GetKey (KeyCode.Space);
 		bool attack = Input.GetKeyDown (KeyCode.A);
-		Debug.Log (b);
+//		Debug.Log (b);
 		bool moving = Input.GetMouseButton (0);
 
 		if ((b) && (!block)) {
