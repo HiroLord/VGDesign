@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviour {
 				recvBufferSize += 1;
 				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
-			if (recvBufferSize > 0) {
+			if (CanHandleMsg()) {
 				Debug.Log ("Handling data.");
 				int msgID = ReadByte ();
 				switch(msgID) {
@@ -86,6 +86,33 @@ public class NetworkManager : MonoBehaviour {
 				WriteFloat (player.transform.position.y);
 			}
 		}
+	}
+
+	private bool CanHandleMsg() {
+		if (recvBufferSize < 1) {
+			return false;
+		}
+		int msgID = PeekByte ();
+		int sizeM = 0;
+		switch (msgID) {
+		case 254:
+			sizeM = 0;
+			break;
+		case 2:
+			sizeM = 9;
+			break;
+		case 3:
+			sizeM = 9;
+			break;
+		}
+		if (sizeM < recvBufferSize) {
+			return true;
+		}
+		return false;
+	}
+
+	private int PeekByte() {
+		return recvBuffer [0];
 	}
 
 	private int ReadByte() {
