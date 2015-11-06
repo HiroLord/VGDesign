@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Shooting : MonoBehaviour 
 {
-	public int damagePerShot = 20;
+	public int damagePerShot = 10;
 	public float timeBetweenBullets = 0.15f;
 	public float range = 100f;
 	public int startingAmmo = 30;
@@ -87,7 +87,7 @@ public class Shooting : MonoBehaviour
 		shootRay.direction = transform.forward;
 		if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
 		{
-			EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+			Enemy enemyHealth = shootHit.collider.GetComponent<Enemy>();
 			if(enemyHealth != null)
 			{
 				enemyHealth.TakeDamage(damagePerShot, shootHit.point);
