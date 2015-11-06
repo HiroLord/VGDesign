@@ -51,12 +51,14 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
 			if (CanHandleMsg()) {
-				Debug.Log ("Handling data.");
 				int msgID = ReadByte ();
 				switch(msgID) {
 				case 254:
 					// Send our information
 					WriteByte (1);
+					break;
+				case 1:
+					int pID = ReadByte();
 					break;
 				case 2:
 					int newPID = ReadByte ();
@@ -98,6 +100,9 @@ public class NetworkManager : MonoBehaviour {
 		case 254:
 			sizeM = 0;
 			break;
+		case 1:
+			sizeM = 1;
+			break;
 		case 2:
 			sizeM = 9;
 			break;
@@ -106,8 +111,10 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		}
 		if (sizeM < recvBufferSize) {
+			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
+		Debug.Log ("Cannot handle message " + msgID.ToString ());
 		return false;
 	}
 
