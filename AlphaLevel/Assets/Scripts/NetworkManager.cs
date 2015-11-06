@@ -25,7 +25,7 @@ public class NetworkManager : MonoBehaviour {
 
 	void Connect(bool host) {
 		try {
-			client = new TcpClient("127.0.0.1", 25001);
+			client = new TcpClient("128.61.30.151", 25001);
 			client.ReceiveTimeout = 0;
 			WriteByte (host ? 1 : 0);
 			Debug.Log ("Connected!");
