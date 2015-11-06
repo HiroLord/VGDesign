@@ -12,7 +12,7 @@ public class Shooting : MonoBehaviour
 	AudioSource[] soundEff;
 	AudioSource gunAudio;
 	AudioSource emptyClip;
-
+	public Text disp;
 	// ParticleSystem gunParticles;
 	// LineRenderer gunLine;
 	// Light gunLight;
@@ -24,10 +24,11 @@ public class Shooting : MonoBehaviour
 		soundEff = GetComponents<AudioSource> ();
 		gunAudio = soundEff [0];
 		emptyClip = soundEff [1];
-		weapon = new Weapon ("Default", 10, .015f, 100f, 30, 30);
+		weapon = new Weapon ("Default", 10, .15f, 100f, 30, 30);
 		weapon.currentAmmo = weapon.maxAmmo;
 
 		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
+		//print (disp.ToString());
 		// gunLight = GetComponent<Light> ();
 		// gunParticles = GetComponent<ParticleSystem> ();
 		// gunLine = GetComponent<LineRenderer> ();
@@ -36,6 +37,7 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		print (weapon.currentAmmo);
 		timer += Time.deltaTime;
 		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= weapon.fireRate) {
 	   		if (Time.timeScale != 0 && weapon.currentAmmo > 0)
@@ -50,6 +52,11 @@ public class Shooting : MonoBehaviour
 				emptyClip.Play();
 				print ("Empty!");
 			}
+		}
+
+		if(disp != null)
+		{
+			disp.text = "Ammo: " + weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{
