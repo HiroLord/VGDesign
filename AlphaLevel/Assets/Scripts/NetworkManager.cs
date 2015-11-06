@@ -101,7 +101,7 @@ public class NetworkManager : MonoBehaviour {
 				timeBetween = 60;
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
-				WriteFloat (player.transform.position.y);
+				WriteFloat (player.transform.position.z);
 			}
 		}
 	}
