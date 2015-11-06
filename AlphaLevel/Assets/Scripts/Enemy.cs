@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 	public int pointsLen;
 	public Transform player;
 	public int currentHealth;
+	public int currentEnergy;
 
 	private Animator anim;
 	private NavMeshAgent agent;
@@ -17,6 +18,8 @@ public class Enemy : MonoBehaviour
 
 
 	public int startingHealth = 100;
+	public int startingEnergy = 1000;
+	public float stoppingDistance = 1.0f;
 	bool isDead;
 
 	// Use this for initialization
@@ -30,6 +33,7 @@ public class Enemy : MonoBehaviour
 		pointsLen = points.Length;
 		stateMachine = new StateMachine<Enemy> (new MoveAlongPath (), this);
 		currentHealth = startingHealth;
+		currentEnergy = startingEnergy;
 	}
 	
 	// Update is called once per frame
@@ -57,18 +61,34 @@ public class Enemy : MonoBehaviour
 		if(currentHealth <= 0)
 		{
 			//Death();
+			currentHealth = 0;
 		}
+	}
+
+	public void TakeEnergy(int amount)
+	{
+		currentEnergy -= amount;
+		if (currentEnergy < 0)
+			currentEnergy = 0;
+	}
+
+	public void GiveHealth(int amount)
+	{
+		currentHealth += amount;
+		if (currentHealth > startingHealth)
+			currentHealth = startingHealth;
+	}
+
+	public void GiveEnergy(int amount)
+	{
+		currentEnergy += amount;
+		if (currentEnergy > startingEnergy)
+			currentEnergy = startingEnergy;
 	}
 
 	void Death ()
 	{
 		isDead = true;
 		Destroy (gameObject);
-		//		capsuleCollider.isTrigger = true;
-		//		
-		//		anim.SetTrigger ("Dead");
-		//		
-		//		enemyAudio.clip = deathClip;
-		//		enemyAudio.Play ();
 	}
 }

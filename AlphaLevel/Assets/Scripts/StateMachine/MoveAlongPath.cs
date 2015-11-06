@@ -12,8 +12,11 @@ public class MoveAlongPath : State<Enemy>
 		// If the agent is close to the player then transition into an attack state
 		if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 10f)
 		{
-			anim.SetFloat ("Speed", 0.0f);
-			ownerStateMachine.CurrentState = new AttackPlayer();
+			if(ownerObject.currentEnergy > 500)
+			{
+				anim.SetFloat ("Speed", 0.0f);
+				ownerStateMachine.CurrentState = new AttackPlayer();
+			}
 		}
 	}
 
@@ -22,11 +25,13 @@ public class MoveAlongPath : State<Enemy>
 		// If the agent is close to his waypoint then move on to the next one
 		if(agent.remainingDistance < 2)
 		{
+			ownerObject.GiveHealth(10);
 			ownerObject.currPoint += 1;
 			if(ownerObject.currPoint >= ownerObject.pointsLen)
 				ownerObject.currPoint = 0;
 			ownerObject.currTarget = ownerObject.points[ownerObject.currPoint];
 		}
+		ownerObject.GiveEnergy (1);
 		agent.SetDestination (ownerObject.currTarget.position);
 		anim.SetFloat ("Speed", 1.0f);
 	}

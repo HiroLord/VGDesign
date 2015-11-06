@@ -20,6 +20,14 @@ public class AttackPlayer : State<Enemy>
 		{
 			anim.SetFloat ("Speed", 0.0f);
 			ownerStateMachine.CurrentState = new FleeFromPlayer();
+			agent.Resume ();
+		}
+
+		if(ownerObject.currentEnergy <= 200)
+		{
+			anim.SetFloat ("Speed", 0.0f);
+			ownerStateMachine.CurrentState = new MoveAlongPath();
+			agent.Resume ();
 		}
 	}
 	
@@ -33,11 +41,12 @@ public class AttackPlayer : State<Enemy>
 		if (attacking)
 		{
 			time += Time.deltaTime;
-			if(time > 1.0f)
+			if(time > 1.5f)
 			{
 				attacking = false;
 				time = 0.0f;
 				agent.Resume ();
+				speed = 0.5f;
 			}
 		}
 
@@ -54,13 +63,18 @@ public class AttackPlayer : State<Enemy>
 			speed = 1.0f;
 			agent.SetDestination (ownerObject.currTarget.position);
 		}
-		else if(agent.remainingDistance <= 1f && (time == 0.0f || time > 1.0f))
+		else if(agent.remainingDistance <= 1f && (time == 0.0f || time > 1.0f) && !attacking)
 		{
 			//time = 0.0f;
+			speed = 0.0f;
 			anim.SetTrigger ("Attack");
 			time += Time.deltaTime;
 			attacking = true;
 			agent.Stop ();
+			ownerObject.TakeEnergy(100);
+		}
+		else if(attacking)
+		{
 		}
 		else
 		{
