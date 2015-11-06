@@ -126,7 +126,7 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Turning() {
-		if (!inThirdPerson) {
+		if (!inThirdPerson && isPlayer) {
 			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		
 			RaycastHit floorHit;
@@ -170,11 +170,32 @@ public class Movement : MonoBehaviour {
 
 	private float h;
 	private float v;
+	private float oldH = 0;
+	private float oldV = 0;
+	private bool needsUpdate = false;
+
+	public float getH() {
+		return h;
+	}
+
+	public float getV() {
+		return v;
+	}
+
+	public bool NeedsUpdate() {
+		if (needsUpdate) {
+			needsUpdate = false;
+			return true;
+		}
+		return false;
+	}
 
 	public void setInputs(float hh, float vv) {
 		h = hh;
 		v = vv;
 	}
+
+
 
 	// Update is called once per frame
 	void Update () {
@@ -190,6 +211,9 @@ public class Movement : MonoBehaviour {
 		if (isPlayer) {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
+			if (h != oldH || v != oldV) {
+				needsUpdate = true;
+			}
 		}
 
 		if (Input.GetKey ("space")) {

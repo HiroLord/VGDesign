@@ -38,8 +38,20 @@ class Client:
                     if client.pID != self.pID:
                         print("Sending new position.")
                         client.socket.writeByte(2)
+                        client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.x)
                         client.socket.writeFloat(self.y)
+            elif (msgID == 3):
+                self.h = self.socket.readFloat();
+                self.v = self.socket.readFloat();
+                for client in clients:
+                    if client.pID != self.pID:
+                        print("Sending new movement.")
+                        client.socket.writeByte(3)
+                        client.socket.writeByte(self.pID)
+                        client.socket.writeFloat(self.h)
+                        client.socket.writeFloat(self.v)
+
 
     def canHandle(self):
         if (self.socket.hasData() == False):
@@ -49,6 +61,8 @@ class Client:
         if (msgID == 1):
             size = 0
         elif(msgID == 2):
+            size = 9
+        elif(msgID == 3):
             size = 9
         if size <= len(self.socket.data):
             return True

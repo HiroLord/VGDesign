@@ -35,6 +35,45 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log(ex.Message);
 		}
 	}
+
+	void FixedUpdate() {
+		if (CanHandleMsg()) {
+			int msgID = ReadByte ();
+			switch(msgID) {
+			case 254:
+				// Send our information
+				WriteByte (1);
+				break;
+			case 1:
+				int pID = ReadByte();
+				break;
+			case 2:
+				int newPID = ReadByte ();
+				if (players[newPID] == null) { break; }
+				float newX = ReadFloat ();
+				float oldY = players[newPID].transform.position.y;
+				float newZ = ReadFloat ();
+				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
+				players[newPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(newX, oldY, newZ));
+				break;
+			case 3:
+				int movPID = ReadByte ();
+				if (players[movPID] == null) { break; }
+				float newH = ReadFloat ();
+				float newV = ReadFloat ();
+				players[movPID].GetComponent<Movement>().setInputs(newH, newV);
+				break;
+			case 10:
+				Debug.Log("New Player!");
+				int crPID = ReadByte ();
+				float crX = ReadFloat ();
+				float crZ = ReadFloat ();
+				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
+				players[crPID] = newPlayer;
+				break;
+			}
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,34 +89,11 @@ public class NetworkManager : MonoBehaviour {
 				recvBufferSize += 1;
 				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
-			if (CanHandleMsg()) {
-				int msgID = ReadByte ();
-				switch(msgID) {
-				case 254:
-					// Send our information
-					WriteByte (1);
-					break;
-				case 1:
-					int pID = ReadByte();
-					break;
-				case 2:
-					int newPID = ReadByte ();
-					if (players[newPID] == null) { break; }
-					float newX = ReadFloat ();
-					float oldY = players[newPID].transform.position.y;
-					float newZ = ReadFloat ();
-					Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
-					players[newPID].transform.position.Set(newX, oldY, newZ);
-					break;
-				case 10:
-					Debug.Log("New Player!");
-					int crPID = ReadByte ();
-					float crX = ReadFloat ();
-					float crZ = ReadFloat ();
-					GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
-					players[crPID] = newPlayer;
-					break;
-				}
+
+			if (player.NeedsUpdate()) {
+				WriteByte (3);
+				WriteFloat (player.getH());
+				WriteFloat (player.getV());
 			}
 
 			timeBetween -= 1;
@@ -91,11 +107,11 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	private bool CanHandleMsg() {
-		if (recvBufferSize < 1) {
+		if (!connected || recvBufferSize < 1) {
 			return false;
 		}
 		int msgID = PeekByte ();
-		int sizeM = 0;
+		int sizeM = 257;
 		switch (msgID) {
 		case 254:
 			sizeM = 0;
@@ -109,8 +125,11 @@ public class NetworkManager : MonoBehaviour {
 		case 3:
 			sizeM = 9;
 			break;
+		case 10:
+			sizeM = 9;
+			break;
 		}
-		if (sizeM < recvBufferSize) {
+		if (sizeM <= recvBufferSize) {
 			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
