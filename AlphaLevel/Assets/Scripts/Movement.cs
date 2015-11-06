@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour {
 	}
 
 	void FootStep() {
-		Debug.Log ("Footstep!");
+		//Debug.Log ("Footstep!");
 		if (footstepSound && movement.magnitude >= 0.6f) {
 			footstepSound.Play ();
 		}

@@ -102,8 +102,8 @@ public class Movement : MonoBehaviour {
 		}
 
 		if (movement.magnitude > 0.1) {
-			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
-			part.Play ();
+//			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
+//			part.Play ();
 		}
 
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
