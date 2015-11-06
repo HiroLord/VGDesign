@@ -12,7 +12,7 @@ public class MoveAlongPath : State<Enemy>
 		// If the agent is close to the player then transition into an attack state
 		if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 10f)
 		{
-			if(ownerObject.currentEnergy > 500)
+			if(ownerObject.currentEnergy > 500 && ownerObject.currentHealth > 50)
 			{
 				anim.SetFloat ("Speed", 0.0f);
 				ownerStateMachine.CurrentState = new AttackPlayer();

@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
 	public Transform player;
 	public int currentHealth;
 	public int currentEnergy;
+	public string enemyType;
 
 	private Animator anim;
 	private NavMeshAgent agent;
@@ -46,17 +47,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (isDead)
 			return;
-		
-		// enemyAudio.Play();
-		
-		// For funsies
-		//		hitPoint.Scale (new Vector3 (100f, 100f, 100f));
-		//		GetComponent <Rigidbody> ().AddForce (hitPoint);
-		
 		currentHealth -= amount;
-		
-		// hitParticles.transform.position = hitPoint;
-		// hitParticles.Play();
 		
 		if(currentHealth <= 0)
 		{
