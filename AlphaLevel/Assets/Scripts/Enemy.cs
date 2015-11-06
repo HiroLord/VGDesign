@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
 	public int startingHealth = 100;
 	public int startingEnergy = 1000;
-	public float stoppingDistance = 1.0f;
+	public float attackDist = 1.0f;
 	bool isDead;
 
 	// Use this for initialization
