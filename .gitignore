@@ -38,3 +38,5 @@ ehthumbs.db
 __pycache__/
 
 Map/
+
+*.pyc
