@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+
+/**
+ * Movement class. Should only be responsible for moving. Make an input wrapper class. 
+**/
 public class Movement : MonoBehaviour {
 
+	//networking
 	public bool isPlayer = false;
-	private Animator anim;
+
+	//animator
+	public Animator anim;
 
 	private Vector3 movement;
 	private Vector3 acceleration;
@@ -12,22 +19,24 @@ public class Movement : MonoBehaviour {
 	private Rigidbody playerRigidbody;
 	private float speed;
 	int floorMask;
-	int oceanCheck;
 	float camRayLength = 100f;
 	float gravity = 0f;
 	private bool isGrounded;
 	private bool isDead;
 	private Vector3 spawn;
-	public Image deadImage;
 	private Vector3 direction;
-	//private Vector3 angle = new Vector3(0f,0f,0f);
 	private bool shooting;
 	private bool f, b, l, r;
 	private float ccHeight;
 
 	public int tester = 42;
 
+	//swaps back and forth between third person and perspective
 	public bool inThirdPerson = true;
+
+	public Vector3 getMove() {
+		return movement;
+	}
 
 	private AudioSource footstepSound;
 
@@ -36,9 +45,8 @@ public class Movement : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
 		floorMask = LayerMask.GetMask ("Floor");
-		oceanCheck = LayerMask.GetMask ("OceanCheck");
 		direction = Vector3.zero;
-		speed = 2.5f;
+		speed = 5f;
 		shooting = false;
 		isGrounded = true;
 		spawn = transform.position;
@@ -46,7 +54,7 @@ public class Movement : MonoBehaviour {
 		ccHeight = GetComponent<CapsuleCollider>().height;
 	}
 
-	public void SetRagdoll(bool rag) {
+	public void SetRagDoll(bool rag) {
 		RagDoll (rag);
 	}
 
@@ -78,14 +86,10 @@ public class Movement : MonoBehaviour {
 		}
 	}
 
-	void Move(float h, float v) {
+	public void Move(float h, float v) {
 		acceleration.Set (h, movement.y, v);
 		acceleration = acceleration.normalized;
-		/*
-		if (movement.magnitude > 1) {
-			movement = movement.normalized;
-		}
-		*/
+
 		if (inThirdPerson) {
 			acceleration = transform.rotation * acceleration;
 		}
@@ -95,6 +99,9 @@ public class Movement : MonoBehaviour {
 		Vector3 pos = playerRigidbody.position;
 		pos.y += 1f;
 		bool overSnow = false;
+
+		//THIS SHOULD ALL BE A SEPERATE CLASS
+	
 		if (Physics.Raycast (new Ray (pos, Vector3.down), out hitInfo, 1.1f, 1 << 11)) {
 			if (hitInfo.collider.CompareTag ("Ice")) {
 				slide = 1f;
@@ -108,10 +115,10 @@ public class Movement : MonoBehaviour {
 			gravity = 0;
 		}
 
-		if (overSnow && movement.magnitude > 0.1) {
+		/*if (overSnow && movement.magnitude > 0.1) {
 			ParticleSystem part = GetComponentInChildren<ParticleSystem> ();
 			part.Play ();
-		}
+		}*/
 
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
 		movement.y = gravity / Time.deltaTime;
@@ -125,7 +132,7 @@ public class Movement : MonoBehaviour {
 		anim.speed = newSpeed;
 	}
 
-	void Turning() {
+	public void Turning() {
 		if (!inThirdPerson && isPlayer) {
 			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		
@@ -134,9 +141,6 @@ public class Movement : MonoBehaviour {
 			if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) {
 				Vector3 playerToMouse = floorHit.point - transform.position;
 				playerToMouse.y = 0f;
-			
-				//Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
-				//playerRigidbody.MoveRotation (newRotation);
 
 				transform.rotation = Quaternion.LookRotation (playerToMouse);
 			}
@@ -152,20 +156,6 @@ public class Movement : MonoBehaviour {
 	//respawns, won't be needed in final version
 	void Respawn() {
 		transform.position = spawn;
-	}
-
-	void OverWater() {
-		Ray ray = new Ray (transform.position, new Vector3 (0, -1, 0));
-		RaycastHit oceanHit;
-
-		if (Physics.Raycast (ray, out oceanHit, 0.1f, oceanCheck)) {
-			if (oceanHit.collider.CompareTag ("Kill")) {
-				Debug.Log (oceanHit.collider.CompareTag ("Kill"));
-				isDead = true;
-				Respawn ();
-				deadImage.color = Color.red;
-			}
-		}
 	}
 
 	private float h;
@@ -198,7 +188,8 @@ public class Movement : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
+	//Moving this into PlayerInputManager
+	/*void Update () {
 		OverWater ();
 		if (isDead) {
 			//deadImage.color = Color.red;
@@ -291,5 +282,5 @@ public class Movement : MonoBehaviour {
 		anim.SetFloat ("Direction", dir, .25f, Time.deltaTime);
 
 		anim.SetBool ("Shooting", shooting);
-	}
+	}*/
 }
