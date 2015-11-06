@@ -85,6 +85,7 @@ public class NetworkManager : MonoBehaviour {
 			}
 		} else {
 			while (client.GetStream().DataAvailable) {
+				Debug.Log("Buffer size: " + recvBufferSize.ToString());
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
 				recvBufferSize += 1;
 				Debug.Log ("Read data " + recvBufferSize.ToString());
@@ -129,7 +130,7 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 9;
 			break;
 		}
-		if (sizeM <= recvBufferSize) {
+		if (sizeM < recvBufferSize) {
 			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
