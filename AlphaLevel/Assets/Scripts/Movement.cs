@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class Movement : MonoBehaviour {
 
+	public bool isPlayer = false;
 	private Animator anim;
 
 	private Vector3 movement;
@@ -24,6 +25,7 @@ public class Movement : MonoBehaviour {
 	private bool f, b, l, r;
 	private float ccHeight;
 
+	public int tester = 42;
 
 	public bool inThirdPerson = true;
 
@@ -71,7 +73,6 @@ public class Movement : MonoBehaviour {
 	}
 
 	void FootStep() {
-		//Debug.Log ("Footstep!");
 		if (footstepSound && movement.magnitude >= 0.6f) {
 			footstepSound.Play ();
 		}
@@ -125,7 +126,7 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Turning() {
-		if (!inThirdPerson) {
+		if (!inThirdPerson && isPlayer) {
 			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		
 			RaycastHit floorHit;
@@ -167,6 +168,35 @@ public class Movement : MonoBehaviour {
 		}
 	}
 
+	private float h;
+	private float v;
+	private float oldH = 0;
+	private float oldV = 0;
+	private bool needsUpdate = false;
+
+	public float getH() {
+		return h;
+	}
+
+	public float getV() {
+		return v;
+	}
+
+	public bool NeedsUpdate() {
+		if (needsUpdate) {
+			needsUpdate = false;
+			return true;
+		}
+		return false;
+	}
+
+	public void setInputs(float hh, float vv) {
+		h = hh;
+		v = vv;
+	}
+
+
+
 	// Update is called once per frame
 	void Update () {
 		OverWater ();
@@ -178,8 +208,15 @@ public class Movement : MonoBehaviour {
 		}
 		isDead = false;
 
-		float h = Input.GetAxisRaw ("Horizontal");
-		float v = Input.GetAxisRaw ("Vertical");
+		if (isPlayer) {
+			h = Input.GetAxisRaw ("Horizontal");
+			v = Input.GetAxisRaw ("Vertical");
+			if (h != oldH || v != oldV) {
+				oldH = h;
+				oldV = v;
+				needsUpdate = true;
+			}
+		}
 
 		if (Input.GetKey ("space")) {
 			shooting = true;

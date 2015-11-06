@@ -9,7 +9,6 @@ public class Shooting : MonoBehaviour
 	public float range = 100f;
 	public int startingAmmo = 30;
 	public int currentAmmo;
-	public Text disp;
 	float timer;
 	Ray shootRay;
 	RaycastHit shootHit;
@@ -55,7 +54,6 @@ public class Shooting : MonoBehaviour
 				print ("Empty!");
 			}
 		}
-		disp.text = "Ammo: " + currentAmmo + "/" + startingAmmo;
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{
 //				DisableEffects ();

@@ -18,23 +18,76 @@ class Client:
     def __init__(self, socket, pID):
         self.socket = socket
         self.pID = pID
+
+        self.x = 0;
+        self.y = 0;
     
     def handle(self):
-        global pID
-        if (self.socket.canHandleMsg() == False):
-            return
-        packet = self.socket.readPacket()
-        msgID = packet.msgID
-        if msgID == 1:
-            name = packet.read()
-            self.confirm() 
-    
+        #if (self.socket.canHandleMsg() == False):
+        #    return
+        if self.canHandle():
+            msgID = self.socket.readByte()
+            if (msgID == 1):
+                self.confirm()
+            elif (msgID == 2):
+                print("Updated position.")
+                # Player position
+                self.x = self.socket.readFloat();
+                self.y = self.socket.readFloat();
+                for client in clients:
+                    if client.pID != self.pID:
+                        print("Sending new position.")
+                        client.socket.writeByte(2)
+                        client.socket.writeByte(self.pID)
+                        client.socket.writeFloat(self.x)
+                        client.socket.writeFloat(self.y)
+            elif (msgID == 3):
+                self.h = self.socket.readFloat();
+                self.v = self.socket.readFloat();
+                for client in clients:
+                    if client.pID != self.pID:
+                        print("Sending new movement.")
+                        client.socket.writeByte(3)
+                        client.socket.writeByte(self.pID)
+                        client.socket.writeFloat(self.h)
+                        client.socket.writeFloat(self.v)
+
+
+    def canHandle(self):
+        if (self.socket.hasData() == False):
+            return False
+        msgID = self.socket.peekByte()
+        print(msgID)
+        if (msgID == 1):
+            size = 0
+        elif(msgID == 2):
+            size = 9
+        elif(msgID == 3):
+            size = 9
+        if size <= len(self.socket.data):
+            return True
+        return False
+
     # This is called to confirm to the client that they have been accepted,
     # after they send us their details.
     def confirm(self):
-        self.socket.newPacket(1)
-        self.socket.write(self.pID)
-        self.socket.send()
+        self.socket.writeByte(1)
+        self.socket.writeByte(self.pID)
+        #self.socket.sendMessage()
+
+        for client in clients:
+            if (client.pID == self.pID):
+                continue
+            self.socket.writeByte(10)
+            self.socket.writeByte(client.pID)
+            self.socket.writeFloat(client.x)
+            self.socket.writeFloat(client.y)
+            #self.socket.sendMessage()
+            client.socket.writeByte(10)
+            client.socket.writeByte(self.pID)
+            client.socket.writeFloat(self.x)
+            client.socket.writeFloat(self.y)
+            #client.socket.sendMessage()
 
     def disconnect(self):
         print("Lost client.")
