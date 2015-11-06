@@ -4,6 +4,7 @@ import base64
 import hashlib
 import select
 import random
+import struct
 from time import sleep
 from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -143,7 +144,7 @@ class Socket:
         self.socket = socket
         self.webSocket = webSocket
         self.cID = cID
-        self.data = ""
+        self.data = []
         self.hostCode = ""
 
         self.packet = None
@@ -156,13 +157,6 @@ class Socket:
 
     def read(self):
         self.packet.read(data)
-
-    def readRaw(self):
-        out = self.data[:]
-        ##if len(out) > 0:
-        ##    print(out)
-        self.data = ""
-        return out
 
     def readPacket(self):
         msgID = int(self.data[0:3])
@@ -181,6 +175,34 @@ class Socket:
         for byte in data.encode("utf-8"):
             ret.append(byte)
         self.socket.send(ret)
+
+    def writeByte(self, byte):
+        self.socket.send(bytearray([byte]))
+
+    def writeString(self, string):
+        ret = bytearray([len(string)])
+        for byte in string.encode("utf-8"):
+            ret.append(byte)
+        self.socket.send(ret)
+
+    def readByte(self):
+        byte = self.data[0]
+        self.data = self.data[1:]
+        return byte
+
+    def readString(self):
+        l = self.readByte()
+        string = self.data[0:l]
+        self.data = self.data[l:]
+        return string.decode('utf-8')
+
+    def readFloat(self):
+        flo = self.data[0:4]
+        self.data = self.data[4:]
+        return struct.unpack('f', bytearray(flo))[0]
+
+    def hasData(self):
+        return len(self.data) > 0
 
     def canHandleMsg(self):
         if len(self.data) < 3:
@@ -227,21 +249,8 @@ class Socket:
     def parseData(self, data):
         if (len(data) < 1):
             return
-        strData = ''
-        if self.webSocket:
-            datalen = (0x7f & data[1])
-            if (datalen > 0):
-                mask_key = data[2:6]
-                masked_data = data[6:(6+datalen)]
-                unmasked_data = [masked_data[i] ^ mask_key[i%4] for i in range(len(masked_data))]
-                strData = bytearray(unmasked_data).decode('utf-8')
-        else:
-            strData = data.decode('utf-8')
-        self.data = self.data + strData
-        #self.allData = self.allData + strData
-        #print(self.name, self.allData)
-        if (self.webSocket):
-            self.parseData(data[6+datalen:])
+        print("New data:", data)
+        self.data.extend(data);
 
     def disconnect(self):
         print("Lost client.")
@@ -258,37 +267,9 @@ def acceptClient(s):
     print("Accepting client...")
     rec = s.recv(4096)
     print("Handshake:", rec)
-    rec = rec.decode("utf-8").split('\n')
-    headers = {}
-    for header in rec:
-        if (": " in header):
-            app = header.split(": ")
-            headers[app[0]] = app[1]
- 
-    if len(headers) > 0:
-        webSocket = True
-        guid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
-
-        accept = ""
-        if "Sec-WebSocket-Key" in headers:
-            key = headers['Sec-WebSocket-Key'].rstrip()
-            key = bytes(key + guid, 'UTF-8')
-            key = hashlib.sha1(key).digest()
-            accept = base64.b64encode(key)
-            accept = accept.decode('UTF-8')
-
-        s.send(bytes(("" +
-        "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" +
-        "Upgrade: WebSocket\r\n" +
-        "Connection: Upgrade\r\n" +
-        "WebSocket-Origin: http://localhost:8888\r\n" +
-        "WebSocket-Location: ws://localhost:9876/\r\n" +
-        "WebSocket-Protocol: sample\r\n" +
-        "Sec-WebSocket-Accept: " + str(accept) +
-        "").strip() + '\r\n\r\n', 'UTF-8'))
-    else:
-        s.send(bytes("1", 'utf-8'))
-        webSocket = False
+    
+    s.send(bytearray([0]))
+    webSocket = False
 
     _sockets.append(s)
     client = Socket(s, webSocket, cID)
@@ -318,5 +299,5 @@ def startServer(port=8886):
     _server.bind(('', port))
     _server.listen(5)
     print("Websocket server has been started.")
-    print("Listening on port " + port + "...")
+    print("Listening on port " + str(port) + "...")
     return _server
