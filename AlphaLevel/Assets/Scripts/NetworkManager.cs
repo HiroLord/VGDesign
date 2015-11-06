@@ -128,8 +128,12 @@ public class NetworkManager : MonoBehaviour {
 		case 10:
 			sizeM = 9;
 			break;
+		default:
+			Debug.Log ("MSG ID " + msgID.ToString() + " does not exist.");
+			recvBufferSize = 0;
+			break;
 		}
-		if (sizeM <= recvBufferSize) {
+		if (sizeM < recvBufferSize) {
 			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
