@@ -54,7 +54,7 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log ("Handling data.");
 				int msgID = ReadByte ();
 				switch(msgID) {
-				case 0:
+				case 254:
 					// Send our information
 					WriteByte (1);
 					break;

@@ -275,7 +275,7 @@ def acceptClient(s):
     rec = s.recv(4096)
     print("Handshake:", rec)
     
-    s.send(bytearray([0]))
+    s.send(bytearray([254]))
     webSocket = False
 
     _sockets.append(s)
