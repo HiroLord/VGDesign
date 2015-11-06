@@ -185,6 +185,12 @@ class Socket:
             ret.append(byte)
         self.socket.send(ret)
 
+    def writeFloat(self, flo):
+        self.socket.send(struct.pack('f',flo))
+
+    def peekByte(self):
+        return self.data[0]
+
     def readByte(self):
         byte = self.data[0]
         self.data = self.data[1:]
@@ -251,6 +257,7 @@ class Socket:
             return
         print("New data:", data)
         self.data.extend(data);
+        print("Add data:", self.data)
 
     def disconnect(self):
         print("Lost client.")

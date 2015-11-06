@@ -23,22 +23,36 @@ class Client:
         self.y = 0;
     
     def handle(self):
-        global pID
         #if (self.socket.canHandleMsg() == False):
         #    return
-        if (self.socket.hasData()):
+        if self.canHandle():
             msgID = self.socket.readByte()
             if (msgID == 1):
                 self.confirm()
             elif (msgID == 2):
+                print("Updated position.")
                 # Player position
-                self.x = self.readFloat();
-                self.y = self.readFloat();
+                self.x = self.socket.readFloat();
+                self.y = self.socket.readFloat();
                 for client in clients:
                     if client.pID != self.pID:
+                        print("Sending new position.")
                         client.socket.writeByte(2)
                         client.socket.writeFloat(self.x)
                         client.socket.writeFloat(self.y)
+
+    def canHandle(self):
+        if (self.socket.hasData() == False):
+            return False
+        msgID = self.socket.peekByte()
+        print(msgID)
+        if (msgID == 1):
+            size = 0
+        elif(msgID == 2):
+            size = 9
+        if size <= len(self.socket.data):
+            return True
+        return False
 
     # This is called to confirm to the client that they have been accepted,
     # after they send us their details.

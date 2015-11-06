@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour {
 			while (client.GetStream().DataAvailable) {
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
 				recvBufferSize += 1;
-				Debug.Log ("Read data, " + client.GetStream().DataAvailable.ToString());
+				Debug.Log ("Read data");
 			}
 			if (recvBufferSize > 0) {
 				int msgID = ReadByte ();
@@ -60,9 +60,11 @@ public class NetworkManager : MonoBehaviour {
 					break;
 				case 2:
 					int newPID = ReadByte ();
+					if (players[newPID] == null) { break; }
 					float newX = ReadFloat ();
 					float oldY = players[newPID].transform.position.y;
 					float newZ = ReadFloat ();
+					Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
 					players[newPID].transform.position.Set(newX, oldY, newZ);
 					break;
 				case 10:
@@ -113,7 +115,6 @@ public class NetworkManager : MonoBehaviour {
 
 	private void WriteFloat(float f) {
 		NetworkStream stream = client.GetStream ();
-		Debug.Log ("Writing the float " + f.ToString ());
 		byte[] buffer = BitConverter.GetBytes(f);
 		stream.Write (buffer, 0, buffer.Length);
 		stream.Flush ();
