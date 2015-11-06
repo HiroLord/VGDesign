@@ -7,27 +7,24 @@ public class AttackPlayer : State<Enemy>
 	Animator anim;
 	float speed = 1.0f;
 	bool attacking = false;
-	bool keepCheck = false;
-	static int attackState = Animator.StringToHash ("Base Layer.Attack");
-	float time = 0.0f;
 	float damping = 2.0f;
 	Vector3 prevLoc;
 	
-	
+	// the Ogre will not flee until he runs out of energy, the troll will not flee if his health is low
 	public override void CheckForNewState()
 	{
 		// If the agent has low health, then flee from the player
-		if(ownerObject.currentHealth <= 20)
+		if(ownerObject.currentHealth <= 20 && ownerObject.enemyType != "Troll")
 		{
 			anim.SetFloat ("Speed", 0.0f);
 			ownerStateMachine.CurrentState = new FleeFromPlayer();
 			agent.Resume ();
 		}
 
-		if(ownerObject.currentEnergy <= 200)
+		if(ownerObject.currentEnergy <= 200 && (ownerObject.enemyType != "Ogre" || ownerObject.currentEnergy == 0))
 		{
 			anim.SetFloat ("Speed", 0.0f);
-			ownerStateMachine.CurrentState = new MoveAlongPath();
+			ownerStateMachine.CurrentState = new Patrol();
 			agent.Resume ();
 		}
 	}

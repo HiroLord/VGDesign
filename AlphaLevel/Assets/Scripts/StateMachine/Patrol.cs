@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveAlongPath : State<Enemy>
+public class Patrol : State<Enemy>
 {
 	NavMeshAgent agent;
 	Animator anim;

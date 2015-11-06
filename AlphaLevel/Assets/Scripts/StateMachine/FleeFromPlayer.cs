@@ -12,7 +12,7 @@ public class FleeFromPlayer : State<Enemy>
 		if(agent.remainingDistance < 5f)
 		{
 			anim.SetFloat ("Speed", 0.0f);
-			ownerStateMachine.CurrentState = new MoveAlongPath();
+			ownerStateMachine.CurrentState = new Patrol();
 		}
 	}
 	

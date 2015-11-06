@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
 		currPoint = 0;
 		currTarget = points [currPoint];
 		pointsLen = points.Length;
-		stateMachine = new StateMachine<Enemy> (new MoveAlongPath (), this);
+		stateMachine = new StateMachine<Enemy> (new Patrol (), this);
 		currentHealth = startingHealth;
 		currentEnergy = startingEnergy;
 	}
