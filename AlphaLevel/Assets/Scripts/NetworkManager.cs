@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour {
 			while (client.GetStream().DataAvailable) {
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
 				recvBufferSize += 1;
-				Debug.Log ("Read data");
+				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
 			if (recvBufferSize > 0) {
 				int msgID = ReadByte ();
@@ -68,6 +68,7 @@ public class NetworkManager : MonoBehaviour {
 					players[newPID].transform.position.Set(newX, oldY, newZ);
 					break;
 				case 10:
+					Debug.Log("New Player!");
 					int crPID = ReadByte ();
 					float crX = ReadFloat ();
 					float crZ = ReadFloat ();
