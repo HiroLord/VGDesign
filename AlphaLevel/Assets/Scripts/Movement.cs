@@ -212,6 +212,8 @@ public class Movement : MonoBehaviour {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
 			if (h != oldH || v != oldV) {
+				oldH = h;
+				oldV = v;
 				needsUpdate = true;
 			}
 		}
