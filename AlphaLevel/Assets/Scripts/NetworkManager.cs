@@ -45,13 +45,13 @@ public class NetworkManager : MonoBehaviour {
 				Connect (false);
 			}
 		} else {
-			StreamReader reader = new StreamReader (client.GetStream ());
 			while (client.GetStream().DataAvailable) {
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
 				recvBufferSize += 1;
 				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
 			if (recvBufferSize > 0) {
+				Debug.Log ("Handling data.");
 				int msgID = ReadByte ();
 				switch(msgID) {
 				case 0:
