@@ -4,11 +4,7 @@ using UnityEngine.UI;
 
 public class Shooting : MonoBehaviour 
 {
-	public int damagePerShot = 10;
-	public float timeBetweenBullets = 0.15f;
-	public float range = 100f;
-	public int startingAmmo = 30;
-	public int currentAmmo;
+	public Weapon weapon;
 	float timer;
 	Ray shootRay;
 	RaycastHit shootHit;
@@ -28,7 +24,8 @@ public class Shooting : MonoBehaviour
 		soundEff = GetComponents<AudioSource> ();
 		gunAudio = soundEff [0];
 		emptyClip = soundEff [1];
-		currentAmmo = startingAmmo;
+		weapon = new Weapon ("Default", 10, .015f, 100f, 30, 30);
+		weapon.currentAmmo = weapon.maxAmmo;
 
 		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
 		// gunLight = GetComponent<Light> ();
@@ -40,10 +37,10 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= timeBetweenBullets) {
-	   		if (Time.timeScale != 0 && currentAmmo > 0)
+		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= weapon.fireRate) {
+	   		if (Time.timeScale != 0 && weapon.currentAmmo > 0)
 			{
-				currentAmmo--;
+				weapon.currentAmmo--;
 				Shoot();
 			}
 			else
@@ -83,18 +80,22 @@ public class Shooting : MonoBehaviour
 
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
-		if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+		if(Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
 		{
 			Enemy enemyHealth = shootHit.collider.GetComponent<Enemy>();
 			if(enemyHealth != null)
 			{
-				enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
 			}
 		}
 //		else
 //		{
 //			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
 //		}
+	}
+
+	public void changeWeapon(Weapon weapon){
+		this.weapon = weapon;
 	}
 
 }
