@@ -7,20 +7,26 @@ using UnityEngine;
 using System.Collections;
 
 //[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class Enemy : Entity 
+public class Enemy : MonoBehaviour 
 {
 	public Transform currTarget;
 	public int currPoint;
 	public Transform[] points;
 	public int pointsLen;
 	public Transform player;
+	public int currentHealth;
+	public int currentEnergy;
 	public string enemyType;
 
 	private Animator anim;
 	private NavMeshAgent agent;
 	private StateMachine<Enemy> stateMachine;
 
+
+	public int startingHealth = 100;
+	public int startingEnergy = 1000;
 	public float attackDist = 1.0f;
+	bool isDead;
 
 	// Use this for initialization
 	void Start () 
@@ -41,9 +47,44 @@ public class Enemy : Entity
 	{
 		stateMachine.Update ();
 	}
+
+	public void TakeDamage(int amount, Vector3 hitPoint)
+	{
+		if (isDead)
+			return;
+		currentHealth -= amount;
+		
+		if(currentHealth <= 0)
+		{
+			//Death();
+			currentHealth = 0;
+		}
+	}
+
+	public void TakeEnergy(int amount)
+	{
+		currentEnergy -= amount;
+		if (currentEnergy < 0)
+			currentEnergy = 0;
+	}
+
+	public void GiveHealth(int amount)
+	{
+		currentHealth += amount;
+		if (currentHealth > startingHealth)
+			currentHealth = startingHealth;
+	}
+
+	public void GiveEnergy(int amount)
+	{
+		currentEnergy += amount;
+		if (currentEnergy > startingEnergy)
+			currentEnergy = startingEnergy;
+	}
+
 	void Death ()
 	{
-		//isDead = true;
+		isDead = true;
 		Destroy (gameObject);
 	}
 }

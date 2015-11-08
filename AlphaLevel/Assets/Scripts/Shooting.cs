@@ -23,8 +23,6 @@ public class Shooting : MonoBehaviour
 	// Light gunLight;
 	// float effectsDisplayTime = 0.2f;
 
-	private float cooldown = 0f;
-
 	void Awake()
 	{
 		shootableMask = LayerMask.GetMask ("Shootable");
@@ -45,26 +43,19 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if (Input.GetButton ("Jump")) {
-			if (timer >= weapon.fireRate) {
-				if (Time.timeScale != 0 && weapon.currentAmmo > 0) {
-					weapon.currentAmmo--;
-					Shoot ();
-				} else {
-					timer = 0f;
-					emptyClip.Play ();
-					print ("Empty!");
-				}
+		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= weapon.fireRate) {
+	   		if (Time.timeScale != 0 && weapon.currentAmmo > 0)
+			{
+				weapon.currentAmmo--;
+				Shoot();
 			}
-		} else {
-			timer = -4 * Time.deltaTime;
-		}
-
-		if (cooldown < Time.deltaTime) {
-//			GetComponent<LineRenderer> ().enabled = false;
-//			GetComponentInChildren<Light> ().enabled = false;
-		} else {
-			cooldown -= Time.deltaTime;
+			else
+			{
+				// For some reason this clip is not playing
+				timer = 0f;
+				emptyClip.Play();
+				print ("Empty!");
+			}
 		}
 
 		if(disp != null)
@@ -93,9 +84,6 @@ public class Shooting : MonoBehaviour
 	void Shoot()
 	{
 		timer = 0f;
-//		GetComponent<LineRenderer> ().enabled = true;
-//		GetComponentInChildren<Light> ().enabled = true;
-		cooldown = Time.deltaTime * 2;
 		gunAudio.Play();
 //
 //		gunLight.enabled = true;
@@ -110,7 +98,7 @@ public class Shooting : MonoBehaviour
 		shootRay.direction = transform.forward;
 		if(Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
 		{
-			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
+			Enemy enemyHealth = shootHit.collider.GetComponent<Enemy>();
 			if(enemyHealth != null)
 			{
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);

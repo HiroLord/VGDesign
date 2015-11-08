@@ -16,7 +16,7 @@ public class Player : Entity {
 		if(isDead)
 		{
 			Movement p = GetComponent<Movement>();
-			p.Kill();
+			//p.Kill();
 		}
 	}
 }
