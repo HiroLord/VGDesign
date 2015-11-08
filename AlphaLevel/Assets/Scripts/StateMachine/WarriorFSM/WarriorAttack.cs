@@ -1,13 +1,9 @@
-﻿/**
- * Team: Fireflies
- * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class OgreAttack : State<OgreBehavior> 
+public class WarriorAttack : State<WarriorBehavior> 
 {
+
 	NavMeshAgent agent;
 	Animator anim;
 	float speed = 1.0f;
@@ -19,25 +15,10 @@ public class OgreAttack : State<OgreBehavior>
 	// the Ogre will not flee until he runs out of energy, the troll will not flee if his health is low
 	public override void CheckForNewState()
 	{
-		// If the agent has low health, then flee from the player
-//		if(ownerObject.currentHealth <= 20 && ownerObject.enemyType != "Troll")
-//		{
-//			anim.SetFloat ("Speed", 0.0f);
-//			ownerStateMachine.CurrentState = new FleeFromPlayer();
-//			agent.Resume ();
-//		}
-//		
-//		if(ownerObject.currentEnergy <= 200 && (ownerObject.enemyType != "Ogre" || ownerObject.currentEnergy == 0))
-//		{
-//			anim.SetFloat ("Speed", 0.0f);
-//			ownerStateMachine.CurrentState = new Patrol();
-//			agent.Resume ();
-//		}
-
 		if(ownerObject.isDead)
 		{
 			anim.SetFloat ("Speed", 0.0f);
-			ownerStateMachine.CurrentState = new OgreDeath();
+			ownerStateMachine.CurrentState = new WarriorDeath();
 		}
 	}
 	
@@ -89,10 +70,9 @@ public class OgreAttack : State<OgreBehavior>
 			anim.SetFloat ("Speed", speed);
 			agent.SetDestination (finalDest);
 			hitPlayer = false;
-
+			
 		}
-
-
+		
 		if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.7f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f &&
 		   !anim.IsInTransition(0))
 		{
@@ -100,14 +80,14 @@ public class OgreAttack : State<OgreBehavior>
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
 				Entity ent = ownerObject.currTarget.GetComponent<Entity>();
-				ent.TakeDamage (50, ownerObject.transform.position);
+				ent.TakeDamage (20, ownerObject.transform.position);
 				hitPlayer = true;
 			}
 		}
 		anim.SetFloat ("Speed", speed);
 	}
 	
-	public override void OnEnable(OgreBehavior owner, StateMachine<OgreBehavior> newStateMachine)
+	public override void OnEnable(WarriorBehavior owner, StateMachine<WarriorBehavior> newStateMachine)
 	{
 		// Get components and set target to player
 		base.OnEnable (owner, newStateMachine);
