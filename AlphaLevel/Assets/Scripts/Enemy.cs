@@ -43,7 +43,7 @@ public class Enemy : Entity
 	}
 	void Death ()
 	{
-		isDead = true;
+		//isDead = true;
 		Destroy (gameObject);
 	}
 }

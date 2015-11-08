@@ -18,11 +18,16 @@ public class Guard : State<OgreBehavior>
 		{
 			ownerStateMachine.CurrentState = new OgreAttack();
 		}
+
+		if(ownerObject.isDead)
+		{
+			anim.SetFloat ("Speed", 0.0f);
+			ownerStateMachine.CurrentState = new OgreDeath();
+		}
 	}
 	
 	public override void Update()
 	{
-		Debug.Log ("InGuard");
 		// If the agent is close to his waypoint then move on to the next one
 //		if(agent.remainingDistance < 2)
 //		{

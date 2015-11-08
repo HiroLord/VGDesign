@@ -45,7 +45,7 @@ public class OgreBehavior : Entity
 		}
 	}
 	
-	void Death ()
+	public void Death ()
 	{
 		Destroy (gameObject);
 	}

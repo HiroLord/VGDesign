@@ -14,6 +14,7 @@ public class OgreAttack : State<OgreBehavior>
 	bool attacking = false;
 	float damping = 2.0f;
 	Vector3 prevLoc;
+	bool hitPlayer = false;
 	
 	// the Ogre will not flee until he runs out of energy, the troll will not flee if his health is low
 	public override void CheckForNewState()
@@ -32,6 +33,12 @@ public class OgreAttack : State<OgreBehavior>
 //			ownerStateMachine.CurrentState = new Patrol();
 //			agent.Resume ();
 //		}
+
+		if(ownerObject.isDead)
+		{
+			anim.SetFloat ("Speed", 0.0f);
+			ownerStateMachine.CurrentState = new OgreDeath();
+		}
 	}
 	
 	public override void Update()
@@ -81,6 +88,20 @@ public class OgreAttack : State<OgreBehavior>
 			speed = 1.0f;
 			anim.SetFloat ("Speed", speed);
 			agent.SetDestination (finalDest);
+			hitPlayer = false;
+
+		}
+
+
+		if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.7f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f &&
+		   !anim.IsInTransition(0))
+		{
+			if(agent.remainingDistance < ownerObject.attackDist + 0.3f  && !hitPlayer)
+			{
+				Entity ent = ownerObject.currTarget.GetComponent<Entity>();
+				ent.TakeDamage (50, ownerObject.transform.position);
+				hitPlayer = true;
+			}
 		}
 		anim.SetFloat ("Speed", speed);
 	}
