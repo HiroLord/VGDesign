@@ -61,8 +61,8 @@ public class Shooting : MonoBehaviour
 		}
 
 		if (cooldown < Time.deltaTime) {
-			GetComponent<LineRenderer> ().enabled = false;
-			GetComponentInChildren<Light> ().enabled = false;
+//			GetComponent<LineRenderer> ().enabled = false;
+//			GetComponentInChildren<Light> ().enabled = false;
 		} else {
 			cooldown -= Time.deltaTime;
 		}
@@ -93,8 +93,8 @@ public class Shooting : MonoBehaviour
 	void Shoot()
 	{
 		timer = 0f;
-		GetComponent<LineRenderer> ().enabled = true;
-		GetComponentInChildren<Light> ().enabled = true;
+//		GetComponent<LineRenderer> ().enabled = true;
+//		GetComponentInChildren<Light> ().enabled = true;
 		cooldown = Time.deltaTime * 2;
 		gunAudio.Play();
 //
