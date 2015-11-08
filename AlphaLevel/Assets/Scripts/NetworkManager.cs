@@ -21,7 +21,7 @@ public class NetworkManager : MonoBehaviour {
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
 
-	private int timeBetween = 60;
+	private float timeBetween = 60;
 	
 	// Use this for initialization
 	void Start () {
@@ -69,6 +69,12 @@ public class NetworkManager : MonoBehaviour {
 				int newShoot = ReadByte();
 				players[movPID].GetComponent<PlayerInputManager>().setInputs(newH, newV, newShoot);
 				break;
+			case 4:
+				int turnPID = ReadByte ();
+				if (players[turnPID] == null) { break; }
+				float newTurn = ReadFloat ();
+				players[turnPID].GetComponent<PlayerInputManager>().setRotation(newTurn);
+				break;
 			case 10:
 				Debug.Log("New Player!");
 				int crPID = ReadByte ();
@@ -101,11 +107,24 @@ public class NetworkManager : MonoBehaviour {
 				WriteByte (3);
 				WriteFloat (player.getH());
 				WriteFloat (player.getV());
+				WriteByte (player.getShooting() ? 1 : 0);
 			}
 
-			timeBetween -= 1;
-			if (timeBetween < 1) {
-				timeBetween = 60;
+			if (player.HasTurned()) {
+				WriteByte (4);
+				WriteFloat (player.getRotation());
+			}
+
+			if (player.ReviveBtn()) {
+				// Find a player that needs reviving and do just that
+				/*for (GameObject pl : players) {
+
+				}*/
+			}
+
+			timeBetween -= Time.deltaTime;
+			if (timeBetween < Time.deltaTime) {
+				timeBetween = 120 * Time.deltaTime;
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);
@@ -130,7 +149,10 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 9;
 			break;
 		case 3:
-			sizeM = 9;
+			sizeM = 10;
+			break;
+		case 4:
+			sizeM = 5;
 			break;
 		case 10:
 			sizeM = 9;

@@ -44,6 +44,7 @@ class Client:
             elif (msgID == 3):
                 self.h = self.socket.readFloat();
                 self.v = self.socket.readFloat();
+                self.shoot = self.socket.readByte();
                 for client in clients:
                     if client.pID != self.pID:
                         print("Sending new movement.")
@@ -51,6 +52,15 @@ class Client:
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.h)
                         client.socket.writeFloat(self.v)
+                        client.socket.writeByte(self.shoot)
+
+            elif (msgID == 4):
+                self.rot = self.socket.readFloat()
+                for client in clients:
+                    if (client.pID != self.pID):
+                        client.socket.writeByte(4)
+                        client.socket.writeByte(self.pID)
+                        client.socket.writeFloat(self.rot)
 
 
     def canHandle(self):
@@ -63,7 +73,11 @@ class Client:
         elif(msgID == 2):
             size = 9
         elif(msgID == 3):
-            size = 9
+            size = 10
+        elif(msgID == 4):
+            size = 4
+        else:
+            print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):
             return True
         return False
