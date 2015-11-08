@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**
+ * Team: Fireflies
+ * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class AttackPlayer : State<Enemy> 
@@ -31,6 +36,7 @@ public class AttackPlayer : State<Enemy>
 	
 	public override void Update()
 	{
+		// Here the AI will try to predict the player's trajectory
 		Vector3 finalDest = ownerObject.currTarget.position;
 		if(prevLoc == null)
 		{

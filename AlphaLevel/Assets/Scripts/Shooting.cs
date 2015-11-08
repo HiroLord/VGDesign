@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**
+ * Team: Fireflies
+ * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
+ */
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -37,7 +42,6 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		print (weapon.currentAmmo);
 		timer += Time.deltaTime;
 		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= weapon.fireRate) {
 	   		if (Time.timeScale != 0 && weapon.currentAmmo > 0)
@@ -57,6 +61,11 @@ public class Shooting : MonoBehaviour
 		if(disp != null)
 		{
 			disp.text = "Ammo: " + weapon.currentAmmo + "/" + weapon.maxAmmo;
+		}
+
+		if(Input.GetKey("r"))
+		{
+			weapon.currentAmmo = weapon.maxAmmo;
 		}
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{
