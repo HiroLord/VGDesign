@@ -7,31 +7,24 @@ using UnityEngine;
 using System.Collections;
 
 //[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class Enemy : Entity 
+public class OgreBehavior : Entity 
 {
 	public Transform currTarget;
-	public int currPoint;
-	public Transform[] points;
-	public int pointsLen;
-	public Transform player;
 	public string enemyType;
-
+	
 	private Animator anim;
 	private NavMeshAgent agent;
-	private StateMachine<Enemy> stateMachine;
+	private StateMachine<OgreBehavior> stateMachine;
 
-	public float attackDist = 1.0f;
-
+	public float attackDist = 1.2f;
+	public bool playerFound;
+	
 	// Use this for initialization
 	void Start () 
 	{
 		agent = GetComponent<NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
-		//points = new Transform[3];
-		currPoint = 0;
-		currTarget = points [currPoint];
-		pointsLen = points.Length;
-		stateMachine = new StateMachine<Enemy> (new Patrol (), this);
+		stateMachine = new StateMachine<OgreBehavior> (new Guard (), this);
 		currentHealth = startingHealth;
 		currentEnergy = startingEnergy;
 	}
@@ -41,9 +34,19 @@ public class Enemy : Entity
 	{
 		stateMachine.Update ();
 	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		if(col.tag == "Player")
+		{
+			playerFound = true;
+			//player = col.transform;
+			currTarget = col.transform;
+		}
+	}
+	
 	void Death ()
 	{
-		isDead = true;
 		Destroy (gameObject);
 	}
 }
