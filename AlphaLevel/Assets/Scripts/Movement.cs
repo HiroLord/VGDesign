@@ -30,8 +30,8 @@ public class Movement : MonoBehaviour {
 	private bool isDead;
 	private Vector3 spawn;
 	private Vector3 direction;
-	private bool shooting;
-	private bool f, b, l, r;
+	//private bool shooting;
+	//private bool f, b, l, r;
 	private float ccHeight;
 
 	public int tester = 42;
@@ -52,7 +52,7 @@ public class Movement : MonoBehaviour {
 		floorMask = LayerMask.GetMask ("Floor");
 		direction = Vector3.zero;
 		speed = 5f;
-		shooting = false;
+		//shooting = false;
 		isGrounded = true;
 		spawn = transform.position;
 		RagDoll (false);
@@ -163,129 +163,4 @@ public class Movement : MonoBehaviour {
 		transform.position = spawn;
 	}
 
-	private float h;
-	private float v;
-	private float oldH = 0;
-	private float oldV = 0;
-	private bool needsUpdate = false;
-
-	public float getH() {
-		return h;
-	}
-
-	public float getV() {
-		return v;
-	}
-
-	public bool NeedsUpdate() {
-		if (needsUpdate) {
-			needsUpdate = false;
-			return true;
-		}
-		return false;
-	}
-
-	public void setInputs(float hh, float vv) {
-		h = hh;
-		v = vv;
-	}
-
-
-
-	// Update is called once per frame
-	//Moving this into PlayerInputManager
-	/*void Update () {
-		OverWater ();
-		if (isDead) {
-			//deadImage.color = Color.red;
-			return;
-		} else {
-			//deadImage.color = Color.Lerp (deadImage.color, Color.clear, Time.deltaTime * 10f);
-		}
-		isDead = false;
-
-		if (isPlayer) {
-			h = Input.GetAxisRaw ("Horizontal");
-			v = Input.GetAxisRaw ("Vertical");
-			if (h != oldH || v != oldV) {
-				oldH = h;
-				oldV = v;
-				needsUpdate = true;
-			}
-		}
-
-		if (Input.GetKey ("space")) {
-			shooting = true;
-		} else {
-			shooting = false;
-		}
-
-		if (Input.GetKey ("k")) {
-			RagDoll (true);
-		}
-
-		if (shooting) {
-			h = 0;
-			v = 0;
-		}
-		CapsuleCollider cc = GetComponent<CapsuleCollider> ();
-		if (shooting) {
-			h = 0;
-			v = 0;
-			cc.height = ccHeight * 0.8f;
-		} else {
-			cc.height = ccHeight;
-		}
-
-		Move (h, v);
-		Turning ();
-
-		float rot = transform.eulerAngles.y;
-
-		float sp = 0;
-		float dir = 0; 
-
-		if ( h != 0 || v != 0) {
-			float angle = rot;
-			float movAngle = Vector3.Angle (movement, new Vector3 (0, movement.y, 1));
-			//float movAngle = Vector3.Angle (new Vector3(h, 0, v), new Vector3 (0, 0, 1));
-
-			if (movement.x < -0.1f) {
-				movAngle = 360f - movAngle;
-			}
-
-			if (angle - movAngle > 180) {
-				angle -= 360f;
-			} else if (movAngle - angle > 180) {
-				angle += 360f;
-			}
-
-			sp =  Mathf.Abs( angle - movAngle ) <= 90f ? 1 : -1;
-
-
-			if (movAngle < rot - 180f) {
-				movAngle += 360;
-			}
-			angle = rot - movAngle;
-			dir = 1;
-
-			if (angle < 0f) {
-				angle = -angle;
-			} else {
-				dir = -1;
-			}
-
-			if (angle > 90f) {
-				angle = 180f - angle;
-			}
-
-			dir *= angle/90f;
-
-		}
-
-		anim.SetFloat ("Speed", sp);
-		anim.SetFloat ("Direction", dir, .25f, Time.deltaTime);
-
-		anim.SetBool ("Shooting", shooting);
-	}*/
 }

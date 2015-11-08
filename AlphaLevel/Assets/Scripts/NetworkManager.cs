@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviour {
 
 	public GameObject instance;
 	private GameObject[] players = new GameObject[256];
-	public Movement player;
+	public PlayerInputManager player;
 
 	private TcpClient client;
 	private bool connected = false;
@@ -66,7 +66,8 @@ public class NetworkManager : MonoBehaviour {
 				if (players[movPID] == null) { break; }
 				float newH = ReadFloat ();
 				float newV = ReadFloat ();
-				players[movPID].GetComponent<Movement>().setInputs(newH, newV);
+				int newShoot = ReadByte();
+				players[movPID].GetComponent<PlayerInputManager>().setInputs(newH, newV, newShoot);
 				break;
 			case 10:
 				Debug.Log("New Player!");

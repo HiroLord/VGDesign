@@ -18,6 +18,7 @@ public class PlayerInputManager : MonoBehaviour {
 	private Movement move;
 	private Animator anim;
 	private bool shooting = false;
+	private bool oldShooting = false;
 	private Vector3 movement;
 
 	// Use this for initialization
@@ -42,6 +43,11 @@ public class PlayerInputManager : MonoBehaviour {
 			shooting = false;
 		}
 
+		if (oldShooting != shooting) {
+			needsUpdate = true;
+			oldShooting = shooting;
+		}
+
 		//move into player health script
 		if (Input.GetKey ("k")) {
 			move.SetRagDoll (true);
@@ -64,6 +70,7 @@ public class PlayerInputManager : MonoBehaviour {
 		
 		move.Move (h, v);
 		move.Turning ();
+		movement = move.getMove ();
 
 		Vector2 spdir = DetermineDir (h, v);
 		anim.SetFloat ("Speed", spdir.x);
@@ -71,7 +78,37 @@ public class PlayerInputManager : MonoBehaviour {
 		anim.SetBool ("Shooting", shooting);
 	}
 
-	//Determines what to feed the player animator input based on Preston's crazy math I guess
+	public float getH() {
+		return h;
+	}
+	
+	public float getV() {
+		return v;
+	}
+	
+	public float getRotation() {
+		return transform.rotation.y;
+	}
+	
+	public bool NeedsUpdate() {
+		if (needsUpdate) {
+			needsUpdate = false;
+			return true;
+		}
+		return false;
+	}
+	
+	public void setInputs(float hh, float vv, int shoot) {
+		h = hh;
+		v = vv;
+		if (shoot > 0) {
+			shooting = true;
+		} else {
+			shooting = false;
+		}
+	}
+
+	//Determines what to feed the player animator input based on Preston's amazing math I guess
 	Vector2 DetermineDir(float h, float v) {
 		float rot = transform.eulerAngles.y;
 		float sp = 0;
