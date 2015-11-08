@@ -17,6 +17,9 @@ public class PostBossEvent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tempObjects = GameObject.Find ("TempObjects").transform;
+		geyser = GameObject.Find ("FireGeyser");
+		marker = GameObject.Find ("GeyserMarker");
+		player = GameObject.Find ("Player").GetComponent<Rigidbody> ();
 		active = false;
 		timer = 0;
 		geyserRate = 50;

@@ -17,6 +17,7 @@ public class GeyserDamageScript : MonoBehaviour {
 		if (other.name.Equals ("Player")) {
 			Player player = other.GetComponent<Player>();
 			if(player != null){
+				print ("Geyser burn");
 				player.currentHealth -= (int) (player.startingHealth * .10);
 			}
 		}
