@@ -79,7 +79,7 @@ public class WarriorAttack : State<WarriorBehavior>
 			float dist = Vector3.Distance (ownerObject.transform.position, ownerObject.currTarget.position);
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
-				Entity ent = ownerObject.currTarget.GetComponent<Entity>();
+				Player ent = ownerObject.currTarget.GetComponent<Player>();
 				ent.TakeDamage (20, ownerObject.transform.position);
 				hitPlayer = true;
 			}
@@ -94,6 +94,9 @@ public class WarriorAttack : State<WarriorBehavior>
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();
 		anim.SetFloat ("Speed", 1.0f);
+		AudioSource yell = ownerObject.GetComponent<AudioSource> ();
+		if (yell != null)
+			yell.PlayOneShot (yell.clip, 1.0f);
 		//owner.currTarget = owner.player;
 	}
 }
