@@ -48,7 +48,7 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (isPlayer) {
+		if (isPlayer && !move.GetDead()) {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
 			if (h != oldH || v != oldV) {
@@ -109,7 +109,7 @@ public class PlayerInputManager : MonoBehaviour {
 	
 	public void Turning() {
 		// Isometric turning
-		if (isPlayer) {
+		if (isPlayer && !move.GetDead()) {
 			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 			
 			RaycastHit floorHit;
@@ -146,7 +146,7 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 	
 	public float getRotation() {
-		return transform.rotation.y;
+		return transform.eulerAngles.y;
 	}
 	
 	public bool getShooting() {
@@ -181,7 +181,7 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 	
 	public void setRotation(float rot) {
-		transform.rotation.Set (0, rot, 0, 0);
+		transform.eulerAngles.Set (0, rot, 0);
 	}
 	
 	//Determines what to feed the player animator input based 2D rotation math
