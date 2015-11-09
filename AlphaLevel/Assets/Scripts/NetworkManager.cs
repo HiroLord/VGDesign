@@ -54,25 +54,25 @@ public class NetworkManager : MonoBehaviour {
 				break;
 			case 2:
 				int newPID = ReadByte ();
-				if (players[newPID] == null) { break; }
 				float newX = ReadFloat ();
 				float oldY = players[newPID].transform.position.y;
 				float newZ = ReadFloat ();
+				if (players[newPID] == null) { break; }
 				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
 				players[newPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(newX, oldY, newZ));
 				break;
 			case 3:
 				int movPID = ReadByte ();
-				if (players[movPID] == null) { break; }
 				float newH = ReadFloat ();
 				float newV = ReadFloat ();
 				int newShoot = ReadByte();
+				if (players[movPID] == null) { break; }
 				players[movPID].GetComponent<PlayerInputManager>().setInputs(newH, newV, newShoot);
 				break;
 			case 4:
 				int turnPID = ReadByte ();
-				if (players[turnPID] == null) { break; }
 				float newTurn = ReadFloat ();
+				if (players[turnPID] == null) { break; }
 				players[turnPID].GetComponent<PlayerInputManager>().setRotation(newTurn);
 				break;
 			case 10:

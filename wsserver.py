@@ -246,11 +246,12 @@ class Socket:
             data = bytearray(self.socket.recv(4096))
         except:
             self.disconnect()
-            return
+            return False
         if (len(data) == 0):
             self.disconnect()
-            return
+            return False
         self.parseData(data)
+        return True
         
     def parseData(self, data):
         if (len(data) < 1):

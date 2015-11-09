@@ -26,7 +26,9 @@ class Client:
     def handle(self):
         #if (self.socket.canHandleMsg() == False):
         #    return
-        if self.canHandle():
+        if self.socket.socket == None:
+            self.disconnect()
+        elif self.canHandle():
             msgID = self.socket.readByte()
             if (msgID == 1):
                 self.confirm()

@@ -121,7 +121,7 @@ public class PlayerInputManager : MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation (playerToMouse);
 			}
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 15 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 10 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}
@@ -181,7 +181,7 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 	
 	public void setRotation(float rot) {
-		transform.eulerAngles.Set (0, rot, 0);
+		transform.rotation = Quaternion.AngleAxis (rot, new Vector3 (0, 1, 0));
 	}
 	
 	//Determines what to feed the player animator input based 2D rotation math
