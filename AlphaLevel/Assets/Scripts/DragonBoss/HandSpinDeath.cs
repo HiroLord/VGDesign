@@ -66,7 +66,7 @@ public class HandSpinDeath : State<BossAgent> {
 			//move in a cicle
 			float cx = center.position.x;
 			float cz = center.position.z;
-			float radius = 10f;
+			float radius = 11f;
 			float newx = Mathf.Sin(Time.time*3) * radius;
 			float newz = Mathf.Cos(Time.time*3) * radius;
 			Vector3 right = new Vector3(cx-newx,1.5f,cz-newz);

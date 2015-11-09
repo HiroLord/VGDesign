@@ -6,6 +6,7 @@ public class Showboating : State<BossAgent> {
 	private Transform leftHand;
 	private Transform rightHand;
 	private Transform tail;
+	private Transform center;
 
 	private Quaternion startRot;
 	private Vector3 startPos;
@@ -25,10 +26,12 @@ public class Showboating : State<BossAgent> {
 	
 	float timer;
 	float handTimer;
+	float tailTimer;
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
 		handTimer = 0f;
+		tailTimer = 0f;
 	}
 	
 	//temporarily does nothing
@@ -88,8 +91,20 @@ public class Showboating : State<BossAgent> {
 			handTimer = 0f;
 		}
 
+		//tail animation
+		float cx = center.position.x - 5f;
+		float cz = center.position.z - 5f;
+		float radius = 5f;
+		float newx = Mathf.Sin(tailTimer) * radius;
+		float newz = Mathf.Cos(tailTimer) * radius;
+		float newy = Mathf.Cos (tailTimer)*2.5f;
+		Vector3 pos = new Vector3(cx+newx,newy,cz + newz);
+		tail.position = pos;
+
+		
 		timer += 0.1f;
 		handTimer += 0.1f;
+		tailTimer += 0.01f;
 	
 	}
 
@@ -106,5 +121,6 @@ public class Showboating : State<BossAgent> {
 		leftPos = leftHand.position;
 		rightPos = rightHand.position;
 		health = owner.health;
+		center = owner.center.transform;
 	}
 }
