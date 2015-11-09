@@ -29,11 +29,12 @@ public class OgreBehavior : Entity
 			return currentEState;
 		}
 		set {
+			Debug.Log("State change!");
 			currentEState = value;
 			changedState = true;
 		}
 	}
-	public bool changedState = false;
+	private bool changedState = false;
 
 	public bool getChangedState() {
 		if (changedState) {

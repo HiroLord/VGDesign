@@ -44,7 +44,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		if (CanHandleMsg()) {
+		while (CanHandleMsg()) {
 			int msgID = ReadByte ();
 			switch(msgID) {
 			case 254:
@@ -161,7 +161,7 @@ public class NetworkManager : MonoBehaviour {
 					continue;
 				}
 				if (enemies[e].original) {
-					if (enemies[e].changedState) {
+					if (enemies[e].getChangedState()) {
 						WriteByte (5);
 						WriteByte (e);
 						WriteByte (enemies[e].getEState());
