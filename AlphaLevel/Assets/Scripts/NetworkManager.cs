@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviour {
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
 	
-	private float timeBetween = 60;
+	private float timeBetween = 1;
 	
 	// Use this for initialization
 	void Start () {
@@ -150,13 +150,16 @@ public class NetworkManager : MonoBehaviour {
 			
 			timeBetween -= Time.deltaTime;
 			if (timeBetween < Time.deltaTime) {
-				timeBetween = 120 * Time.deltaTime;
+				timeBetween = 45 * Time.deltaTime;
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);
 			}
 
 			for (int e=0; e<enemies.Length; e++) {
+				if (enemies[e] == null) {
+					continue;
+				}
 				if (enemies[e].original) {
 					if (enemies[e].changedState) {
 						WriteByte (5);
