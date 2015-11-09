@@ -20,6 +20,8 @@ public class Showboating : State<BossAgent> {
 	private Vector3 leftDir;
 	private Vector3 rightDir;
 	private Vector3 tailDir;
+
+	private BossHealth health;
 	
 	float timer;
 	float handTimer;
@@ -37,7 +39,10 @@ public class Showboating : State<BossAgent> {
 		if (timer > 27f)
 		{
 			ownerStateMachine.CurrentState = new FireAtPlayer();
-			Debug.Log ("In Radius");
+		}
+
+		if (health.health <= 0) {
+			ownerStateMachine.CurrentState = new Die ();
 		}
 	}
 	// Update is called once per frame
@@ -100,5 +105,6 @@ public class Showboating : State<BossAgent> {
 		startPos = head.position;
 		leftPos = leftHand.position;
 		rightPos = rightHand.position;
+		health = owner.health;
 	}
 }

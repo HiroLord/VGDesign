@@ -16,6 +16,7 @@ public class BossAgent : MonoBehaviour {
 	public GameObject player;
 	public Fireball fire = null;
 	public GameObject origin;
+	public BossHealth health;
 
 	StateMachine<BossAgent> sm;
 
@@ -29,6 +30,5 @@ public class BossAgent : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		sm.Update ();
-	
 	}
 }

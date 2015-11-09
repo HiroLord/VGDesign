@@ -23,7 +23,9 @@ public class FireAtPlayer : State<BossAgent> {
 	private Vector3 leftDir;
 	private Vector3 rightDir;
 	private Vector3 tailDir;
-	
+
+	private BossHealth health;
+
 	float timer;
 	float handTimer;
 	float fireCooldown;
@@ -36,15 +38,9 @@ public class FireAtPlayer : State<BossAgent> {
 	//temporarily does nothing
 	public override void CheckForNewState()
 	{
-		/*// If the agent is close to the player then transition into an attack state
-		if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 10f)
-		{
-			if(ownerObject.currentEnergy > 500 && ownerObject.currentHealth > 50)
-			{
-				anim.SetFloat ("Speed", 0.0f);
-				ownerStateMachine.CurrentState = new AttackPlayer();
-			}
-		}*/
+		if (health.health <= 0) {
+			ownerStateMachine.CurrentState = new Die ();
+		}
 	}
 	// Update is called once per frame
 	public override void Update () {
@@ -119,5 +115,6 @@ public class FireAtPlayer : State<BossAgent> {
 		rightPos = rightHand.position;
 		fireball = owner.fire;
 		origin = owner.origin.transform;
+		health = owner.health;
 	}
 }
