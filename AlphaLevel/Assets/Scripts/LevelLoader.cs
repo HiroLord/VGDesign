@@ -1,22 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : Entity {
+public class LevelLoader : MonoBehaviour 
+{
 
 	// Use this for initialization
 	void Start () 
 	{
-		currentEnergy = startingEnergy;
-		currentHealth = startingHealth;
+	
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(isDead)
+	
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		print ("Collision!");
+		if(col.tag == "Player")
 		{
-			Movement p = GetComponent<Movement>();
-			//p.Kill();
+			Application.LoadLevel (1);
 		}
 	}
 }

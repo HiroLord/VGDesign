@@ -42,7 +42,7 @@ public class Showboating : State<BossAgent> {
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Debug.Log ("timer");
+		//Debug.Log ("timer");
 		//head.Rotate(Vector3.up * 50 * Time.deltaTime);
 		//leftHand.Translate (Vector3.forward * Time.deltaTime);
 
