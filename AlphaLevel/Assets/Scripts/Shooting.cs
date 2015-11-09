@@ -98,7 +98,7 @@ public class Shooting : MonoBehaviour
 		shootRay.direction = transform.forward;
 		if(Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
 		{
-			Enemy enemyHealth = shootHit.collider.GetComponent<Enemy>();
+			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
 			if(enemyHealth != null)
 			{
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
