@@ -32,15 +32,13 @@ public class Showboating : State<BossAgent> {
 	//temporarily does nothing
 	public override void CheckForNewState()
 	{
-		/*// If the agent is close to the player then transition into an attack state
-	   if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 10f)
+		// If the agent is close to the player then transition into an attack state
+	   //if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 35f)
+		if (timer > 5f)
 		{
-			if(ownerObject.currentEnergy > 500 && ownerObject.currentHealth > 50)
-			{
-				anim.SetFloat ("Speed", 0.0f);
-				ownerStateMachine.CurrentState = new AttackPlayer();
-			}
-		}*/
+			ownerStateMachine.CurrentState = new FireAtPlayer();
+			Debug.Log ("In Radius");
+		}
 	}
 	// Update is called once per frame
 	public override void Update () {

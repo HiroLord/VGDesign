@@ -2,10 +2,13 @@
 using System.Collections;
 
 public class FireAtPlayer : State<BossAgent> {
+	private Fireball fireball;
+
 	private Transform head;
 	private Transform leftHand;
 	private Transform rightHand;
 	private Transform tail;
+	private Transform origin;
 	
 	private Quaternion startRot;
 	private Vector3 startPos;
@@ -23,6 +26,7 @@ public class FireAtPlayer : State<BossAgent> {
 	
 	float timer;
 	float handTimer;
+	float fireCooldown;
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
@@ -44,7 +48,18 @@ public class FireAtPlayer : State<BossAgent> {
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Debug.Log ("timer");
+		Vector3 relativePos =  head.position - ownerObject.player.transform.position;
+		Quaternion rotation = Quaternion.LookRotation(relativePos);
+		head.rotation = Quaternion.Lerp(head.rotation, rotation, Time.deltaTime);
+
+		Vector3 fireVector = ownerObject.player.transform.position - head.position;
+
+		if (fireCooldown <= 0) {
+			fireball.createFireball(origin.position, fireVector * 1);
+			fireCooldown = 2f;
+		}
+		fireCooldown -= 0.1f;
+		/*Debug.Log ("timer");
 		//head.Rotate(Vector3.up * 50 * Time.deltaTime);
 		//leftHand.Translate (Vector3.forward * Time.deltaTime);
 		
@@ -86,7 +101,7 @@ public class FireAtPlayer : State<BossAgent> {
 		}
 		
 		timer += 0.1f;
-		handTimer += 0.1f;
+		handTimer += 0.1f;*/
 		
 	}
 	
@@ -102,5 +117,7 @@ public class FireAtPlayer : State<BossAgent> {
 		startPos = head.position;
 		leftPos = leftHand.position;
 		rightPos = rightHand.position;
+		fireball = owner.fire;
+		origin = owner.origin.transform;
 	}
 }

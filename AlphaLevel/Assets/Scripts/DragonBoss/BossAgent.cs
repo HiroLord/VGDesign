@@ -12,14 +12,18 @@ public class BossAgent : MonoBehaviour {
 	public GameObject leftHand;
 	public GameObject rightHand;
 	public GameObject tail;
-
-
+	public GameObject fireball;
+	public GameObject player;
+	public Fireball fire = null;
+	public GameObject origin;
 
 	StateMachine<BossAgent> sm;
 
 	// Use this for initialization
 	void Start () {
 		sm = new StateMachine<BossAgent> (new Showboating (), this);
+		fire = new Fireball ();
+		fire.fireball = fireball;
 	}
 	
 	// Update is called once per frame
