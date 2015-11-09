@@ -19,4 +19,23 @@ public class Player : Entity {
 			p.Kill();
 		}
 	}
+
+
+	public virtual void TakeDamage(int amount, Vector3 hitPoint)
+	{
+		if (isDead)
+			return;
+		currentHealth -= amount;
+		
+		if(currentHealth <= 0)
+		{
+			currentHealth = 0;
+			isDead = true;
+		}
+		else
+		{
+			AudioSource grunt = GetComponent<AudioSource>();
+			grunt.PlayOneShot (grunt.clip, 1.0f);
+		}
+	}
 }

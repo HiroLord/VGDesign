@@ -92,14 +92,13 @@ public class OgreAttack : State<OgreBehavior>
 
 		}
 
-
 		if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.7f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f &&
 		   !anim.IsInTransition(0))
 		{
 			float dist = Vector3.Distance (ownerObject.transform.position, ownerObject.currTarget.position);
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
-				Entity ent = ownerObject.currTarget.GetComponent<Entity>();
+				Player ent = ownerObject.currTarget.GetComponent<Player>();
 				ent.TakeDamage (50, ownerObject.transform.position);
 				hitPlayer = true;
 			}
@@ -114,6 +113,9 @@ public class OgreAttack : State<OgreBehavior>
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();
 		anim.SetFloat ("Speed", 1.0f);
+		AudioSource groan = ownerObject.GetComponent<AudioSource> ();
+		if(groan != null)
+			groan.PlayOneShot (groan.clip, 1.0f);
 		//owner.currTarget = owner.player;
 	}
 }
