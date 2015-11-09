@@ -14,12 +14,12 @@ public class Guard : State<OgreBehavior>
 	
 	public override void CheckForNewState()
 	{
-		if(ownerObject.playerFound)
+		if(ownerObject.playerFound && ownerObject.original)
 		{
 			ownerStateMachine.CurrentState = new OgreAttack();
 		}
 
-		if(ownerObject.isDead)
+		if(ownerObject.isDead && ownerObject.original)
 		{
 			anim.SetFloat ("Speed", 0.0f);
 			ownerStateMachine.CurrentState = new OgreDeath();
@@ -45,6 +45,7 @@ public class Guard : State<OgreBehavior>
 	public override void OnEnable(OgreBehavior owner, StateMachine<OgreBehavior> newStateMachine)
 	{
 		// Enable this state and grab components
+		owner.CurrentEState = OgreBehavior.EState.Guard;
 		base.OnEnable (owner, newStateMachine);
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();

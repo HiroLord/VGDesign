@@ -11,7 +11,9 @@ using System.Net.Sockets;
 using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
-	
+
+	public OgreBehavior[] enemies;
+
 	public GameObject instance;
 	private GameObject[] players = new GameObject[256];
 	public PlayerInputManager player;
@@ -51,6 +53,8 @@ public class NetworkManager : MonoBehaviour {
 				break;
 			case 1:
 				int pID = ReadByte();
+				player.playerID = pID;
+				players[pID] = player.gameObject;
 				break;
 			case 2:
 				int newPID = ReadByte ();
@@ -75,6 +79,13 @@ public class NetworkManager : MonoBehaviour {
 				if (players[turnPID] == null) { break; }
 				players[turnPID].GetComponent<PlayerInputManager>().setRotation(newTurn);
 				break;
+			case 5:
+				int enemyID = ReadByte();
+				int eState = ReadByte ();
+				int enemyTargetID = ReadByte();
+				enemies[enemyID].SetFromEState(eState);
+				enemies[enemyID].currTarget = players[enemyTargetID].transform;
+				break;
 			case 10:
 				Debug.Log("New Player!");
 				int crPID = ReadByte ();
@@ -82,6 +93,7 @@ public class NetworkManager : MonoBehaviour {
 				float crZ = ReadFloat ();
 				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
 				players[crPID] = newPlayer;
+				newPlayer.GetComponent<PlayerInputManager>().playerID = crPID;
 				newPlayer.GetComponent<PlayerInputManager>().setIsPlayer(false);
 				break;
 			}
@@ -95,6 +107,9 @@ public class NetworkManager : MonoBehaviour {
 				Connect (true);
 			} else if (Input.GetKey ("c")) {
 				Connect (false);
+				foreach (OgreBehavior enemy in enemies) {
+					enemy.original = false;
+				}
 			}
 		} else {
 			while (client.GetStream().DataAvailable) {
@@ -133,6 +148,17 @@ public class NetworkManager : MonoBehaviour {
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);
 			}
+
+			for (int e=0; e<enemies.Length; e++) {
+				if (enemies[e].original) {
+					if (enemies[e].changedState) {
+						WriteByte (5);
+						WriteByte (e);
+						WriteByte (enemies[e].getEState());
+						WriteByte (enemies[e].currTargetID);
+					}
+				}
+			}
 		}
 	}
 	
@@ -157,6 +183,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 4:
 			sizeM = 5;
+			break;
+		case 5:
+			sizeM = 3;
 			break;
 		case 10:
 			sizeM = 9;

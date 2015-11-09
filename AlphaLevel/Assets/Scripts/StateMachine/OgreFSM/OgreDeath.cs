@@ -25,6 +25,7 @@ public class OgreDeath : State<OgreBehavior> {
 	public override void OnEnable(OgreBehavior owner, StateMachine<OgreBehavior> newStateMachine)
 	{
 		// Enable this state and grab components
+		owner.CurrentEState = OgreBehavior.EState.OgreDeath;
 		base.OnEnable (owner, newStateMachine);
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();

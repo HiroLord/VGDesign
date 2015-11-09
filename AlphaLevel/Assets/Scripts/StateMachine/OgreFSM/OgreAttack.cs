@@ -34,7 +34,7 @@ public class OgreAttack : State<OgreBehavior>
 //			agent.Resume ();
 //		}
 
-		if(ownerObject.isDead)
+		if(ownerObject.isDead && ownerObject.original)
 		{
 			anim.SetFloat ("Speed", 0.0f);
 			ownerStateMachine.CurrentState = new OgreDeath();
@@ -110,6 +110,7 @@ public class OgreAttack : State<OgreBehavior>
 	public override void OnEnable(OgreBehavior owner, StateMachine<OgreBehavior> newStateMachine)
 	{
 		// Get components and set target to player
+		owner.CurrentEState = OgreBehavior.EState.OgreAttack;
 		base.OnEnable (owner, newStateMachine);
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();

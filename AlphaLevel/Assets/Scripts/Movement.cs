@@ -25,6 +25,7 @@ public class Movement : MonoBehaviour {
 	private bool isDead;
 	private Vector3 spawn;
 	private Vector3 direction;
+	private float targetTurn = 0f;
 	//private bool shooting;
 	//private bool f, b, l, r;
 	private float ccHeight;
@@ -54,6 +55,10 @@ public class Movement : MonoBehaviour {
 	
 	public void SetRagDoll(bool rag) {
 		RagDoll (rag);
+	}
+
+	public void setTargetTurn(float target) {
+		targetTurn = target;
 	}
 	
 	public bool GetDead() {
@@ -138,6 +143,8 @@ public class Movement : MonoBehaviour {
 		
 		movement = Vector3.Lerp(movement, acceleration, Time.deltaTime * slide);
 		movement.y = gravity / Time.deltaTime;
+
+		LerpRotation ();
 		
 		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime));
 		Vector3 vl = playerRigidbody.velocity;
@@ -146,6 +153,12 @@ public class Movement : MonoBehaviour {
 			newSpeed = 0.1f;
 		}
 		anim.speed = newSpeed;
+	}
+
+	private void LerpRotation() {
+		if (targetTurn != 0f) {
+
+		}
 	}
 	
 	//respawns, won't be needed in final version

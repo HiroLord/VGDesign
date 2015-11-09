@@ -65,6 +65,17 @@ class Client:
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.rot)
 
+            elif (msgID == 5):
+                enemyID = self.socket.readByte()
+                enemyEState = self.socket.readByte()
+                enemyTargetID = self.socket.readByte()
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(5)
+                        client.socket.writeByte(enemyID)
+                        client.socket.writeByte(enemyEState)
+                        client.socket.writeByte(enemyTargetID)
+
 
     def canHandle(self):
         if (self.socket.hasData() == False):
@@ -79,6 +90,8 @@ class Client:
             size = 10
         elif(msgID == 4):
             size = 4
+        elif(msgID == 5):
+            size = 3
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):

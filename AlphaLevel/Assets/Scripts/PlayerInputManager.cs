@@ -9,6 +9,8 @@ using System.Collections;
 public class PlayerInputManager : MonoBehaviour {
 	
 	public bool isPlayer;
+
+	public int playerID;
 	
 	//I feel like this should be in a seperate networking manager tbh
 	private float h;

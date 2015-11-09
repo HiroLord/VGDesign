@@ -10,6 +10,7 @@ using System.Collections;
 public class OgreBehavior : Entity 
 {
 	public Transform currTarget;
+	public int currTargetID;
 	public string enemyType;
 	
 	private Animator anim;
@@ -18,15 +19,55 @@ public class OgreBehavior : Entity
 
 	public float attackDist = 1.2f;
 	public bool playerFound;
-	
+
+	public bool original = true;
+
+	public enum EState : int {Guard=0, OgreAttack=1, OgreDeath=2};
+	private EState currentEState;
+	public EState CurrentEState{
+		get {
+			return currentEState;
+		}
+		set {
+			currentEState = value;
+			changedState = true;
+		}
+	}
+	public bool changedState = false;
+
+	public bool getChangedState() {
+		if (changedState) {
+			changedState = false;
+			return true;
+		}
+		return false;
+	}
+
+	public int getEState() {
+		return (int)currentEState;
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
 		agent = GetComponent<NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
+
+		currTargetID = 0;
+
 		stateMachine = new StateMachine<OgreBehavior> (new Guard (), this);
 		currentHealth = startingHealth;
 		currentEnergy = startingEnergy;
+	}
+
+	public void SetFromEState(int st) {
+		if (st == (int)EState.Guard) {
+			stateMachine.CurrentState = new Guard ();
+		} else if (st == (int)EState.OgreAttack) {
+			stateMachine.CurrentState = new OgreAttack ();
+		} else if (st == (int)EState.OgreDeath) {
+			stateMachine.CurrentState = new OgreDeath ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -37,11 +78,12 @@ public class OgreBehavior : Entity
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player")
+		if(col.tag == "Player" && original)
 		{
 			playerFound = true;
 			//player = col.transform;
 			currTarget = col.transform;
+			currTargetID = col.gameObject.GetComponent<PlayerInputManager>().playerID;
 		}
 	}
 	
