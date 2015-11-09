@@ -34,7 +34,7 @@ public class Showboating : State<BossAgent> {
 	{
 		// If the agent is close to the player then transition into an attack state
 	   //if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 35f)
-		if (timer > 5f)
+		if (timer > 27f)
 		{
 			ownerStateMachine.CurrentState = new FireAtPlayer();
 			Debug.Log ("In Radius");

@@ -55,8 +55,8 @@ public class FireAtPlayer : State<BossAgent> {
 		Vector3 fireVector = ownerObject.player.transform.position - head.position;
 
 		if (fireCooldown <= 0) {
-			fireball.createFireball(origin.position, fireVector * 1);
-			fireCooldown = 2f;
+			fireball.createFireball(origin.position, fireVector);
+			fireCooldown = 3.5f;
 		}
 		fireCooldown -= 0.1f;
 		/*Debug.Log ("timer");
