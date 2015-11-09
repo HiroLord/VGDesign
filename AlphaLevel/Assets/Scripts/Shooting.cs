@@ -116,9 +116,13 @@ public class Shooting : MonoBehaviour
 			{
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
 			}
+			//should be somewhere else I'm sorry
+			if (shootHit.collider.gameObject.tag == ("Dragon")) {
+				Debug.Log ("Hit");
+				shootHit.collider.gameObject.GetComponentInParent<BossHealth>().Damage(10f);
+			}
 			gunLine.SetPosition (1, shootHit.point);
-		} else
-		{
+		} else {
 			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * 10);
 		}
 	}
