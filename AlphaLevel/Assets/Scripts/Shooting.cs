@@ -61,7 +61,7 @@ public class Shooting : MonoBehaviour
 				}
 			}
 		} else {
-			timer = -5 * Time.deltaTime;
+			timer = -3 * Time.deltaTime;
 		}
 
 		if (cooldown < Time.deltaTime) {
