@@ -76,6 +76,16 @@ class Client:
                         client.socket.writeByte(enemyEState)
                         client.socket.writeByte(enemyTargetID)
 
+            elif (msgID == 6):
+                enemyHID = self.socket.readByte()
+                enemyDHealth = self.socket.readByte()
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(6)
+                        client.socket.writeByte(enemyHID)
+                        client.socket.writeByte(enemyDHealth)
+
+
 
     def canHandle(self):
         if (self.socket.hasData() == False):
@@ -92,6 +102,8 @@ class Client:
             size = 4
         elif(msgID == 5):
             size = 3
+        elif(msgID == 6):
+            size = 2
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):

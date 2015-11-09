@@ -6,7 +6,22 @@ public abstract class Entity : MonoBehaviour {
 	public int startingEnergy = 1000;
 	public bool isDead;
 	public int currentHealth;
+	private int oldHealth;
 	public int currentEnergy;
+
+	public int getHealthDiff() {
+		int diff = oldHealth - currentHealth;
+		oldHealth = currentHealth;
+		return diff;
+	}
+
+	public void changeHealth(int deltaH) {
+		if (isDead)
+			return;
+		currentHealth -= deltaH;
+		oldHealth = currentHealth;
+		checkDeath ();
+	}
 
 	public virtual void TakeDamage(int amount, Vector3 hitPoint)
 	{
@@ -14,6 +29,10 @@ public abstract class Entity : MonoBehaviour {
 			return;
 		currentHealth -= amount;
 		
+		checkDeath ();
+	}
+
+	protected virtual void checkDeath() {
 		if(currentHealth <= 0)
 		{
 			currentHealth = 0;

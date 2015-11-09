@@ -83,8 +83,15 @@ public class NetworkManager : MonoBehaviour {
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
 				int enemyTargetID = ReadByte();
+				Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
 				enemies[enemyID].currTarget = players[enemyTargetID].transform;
+				break;
+			case 6:
+				int enemyHID = ReadByte ();
+				int enemyDH = ReadByte ();
+				Debug.Log ("Enemy health change " + enemyDH.ToString());
+				enemies[enemyHID].changeHealth(-enemyDH);
 				break;
 			case 10:
 				Debug.Log("New Player!");
@@ -157,6 +164,12 @@ public class NetworkManager : MonoBehaviour {
 						WriteByte (enemies[e].getEState());
 						WriteByte (enemies[e].currTargetID);
 					}
+					int deltaHealth = enemies[e].getHealthDiff();
+					if (deltaHealth > 0) {
+						WriteByte(6);
+						WriteByte(e);
+						WriteByte(deltaHealth);
+					}
 				}
 			}
 		}
@@ -186,6 +199,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 5:
 			sizeM = 3;
+			break;
+		case 6:
+			sizeM = 2;
 			break;
 		case 10:
 			sizeM = 9;
