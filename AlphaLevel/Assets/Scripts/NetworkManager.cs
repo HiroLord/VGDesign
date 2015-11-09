@@ -85,7 +85,9 @@ public class NetworkManager : MonoBehaviour {
 				int enemyTargetID = ReadByte();
 				Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
-				enemies[enemyID].currTarget = players[enemyTargetID].transform;
+				if (enemyTargetID > 0) {
+					enemies[enemyID].currTarget = players[enemyTargetID].transform;
+				}
 				break;
 			case 6:
 				int enemyHID = ReadByte ();
@@ -162,12 +164,14 @@ public class NetworkManager : MonoBehaviour {
 				}
 				if (enemies[e].original) {
 					if (enemies[e].getChangedState()) {
+						Debug.Log ("State change!");
 						WriteByte (5);
 						WriteByte (e);
 						WriteByte (enemies[e].getEState());
 						WriteByte (enemies[e].currTargetID);
 					}
-					int deltaHealth = enemies[e].getHealthDiff();
+					// Not right; needs to be changed to enemies on non-hosts
+					int deltaHealth = 0; //enemies[e].getHealthDiff();
 					if (deltaHealth > 0) {
 						WriteByte(6);
 						WriteByte(e);
