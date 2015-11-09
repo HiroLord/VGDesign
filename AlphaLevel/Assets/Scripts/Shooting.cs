@@ -55,11 +55,9 @@ public class Shooting : MonoBehaviour
 				if (Time.timeScale != 0 && weapon.currentAmmo > 0) {
 					weapon.currentAmmo--;
 					Shoot ();
-					Debug.Log("Shooting!");
 				} else {
 					timer = 0f;
 					emptyClip.Play ();
-					print ("Empty!");
 				}
 			}
 		} else {
@@ -72,7 +70,7 @@ public class Shooting : MonoBehaviour
 			cooldown -= Time.deltaTime;
 		}
 
-		if(disp != null)
+		if (disp != null && GetComponentInParent<PlayerInputManager>().isPlayer)
 		{
 			disp.text = "Ammo: " + weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
