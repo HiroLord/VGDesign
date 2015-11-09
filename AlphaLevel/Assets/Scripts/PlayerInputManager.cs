@@ -88,6 +88,8 @@ public class PlayerInputManager : MonoBehaviour {
 				v = 0;
 			}
 		}
+
+		GetComponentInChildren<Shooting> ().setShooting (shooting);
 		
 		//this should be somewhere else
 		/*CapsuleCollider cc = GetComponent<CapsuleCollider> ();
