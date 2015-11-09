@@ -21,6 +21,7 @@ class Client:
 
         self.x = 0;
         self.y = 0;
+        self.confirmed = False
     
     def handle(self):
         #if (self.socket.canHandleMsg() == False):
@@ -35,7 +36,7 @@ class Client:
                 self.x = self.socket.readFloat();
                 self.y = self.socket.readFloat();
                 for client in clients:
-                    if client.pID != self.pID:
+                    if client.pID != self.pID and client.confirmed:
                         print("Sending new position.")
                         client.socket.writeByte(2)
                         client.socket.writeByte(self.pID)
@@ -46,7 +47,7 @@ class Client:
                 self.v = self.socket.readFloat();
                 self.shoot = self.socket.readByte();
                 for client in clients:
-                    if client.pID != self.pID:
+                    if client.pID != self.pID and client.confirmed:
                         print("Sending new movement.")
                         client.socket.writeByte(3)
                         client.socket.writeByte(self.pID)
@@ -57,7 +58,7 @@ class Client:
             elif (msgID == 4):
                 self.rot = self.socket.readFloat()
                 for client in clients:
-                    if (client.pID != self.pID):
+                    if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(4)
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.rot)
@@ -103,9 +104,13 @@ class Client:
             client.socket.writeFloat(self.y)
             #client.socket.sendMessage()
 
+        self.confirmed = True
+
     def disconnect(self):
         print("Lost client.")
+        print(clients)
         clients.remove(self)
+        print(clients)
         self.socket = None
         return
 
