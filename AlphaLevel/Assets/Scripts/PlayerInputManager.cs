@@ -42,6 +42,10 @@ public class PlayerInputManager : MonoBehaviour {
 	public bool ReviveBtn() {
 		return reviveBtn;
 	}
+
+	public void setIsPlayer(bool isPlay) {
+		this.isPlayer = isPlay;
+	}
 	
 	void Update () {
 		if (isPlayer) {
@@ -117,7 +121,7 @@ public class PlayerInputManager : MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation (playerToMouse);
 			}
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 10 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 15 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}

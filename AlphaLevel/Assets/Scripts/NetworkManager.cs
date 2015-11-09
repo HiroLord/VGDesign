@@ -11,23 +11,23 @@ using System.Net.Sockets;
 using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
-
+	
 	public GameObject instance;
 	private GameObject[] players = new GameObject[256];
 	public PlayerInputManager player;
-
+	
 	private TcpClient client;
 	private bool connected = false;
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
-
-	private int timeBetween = 60;
+	
+	private float timeBetween = 60;
 	
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("NetworkingManager initialized");
 	}
-
+	
 	void Connect(bool host) {
 		try {
 			client = new TcpClient("128.61.30.151", 25001);
@@ -40,7 +40,7 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log(ex.Message);
 		}
 	}
-
+	
 	void FixedUpdate() {
 		if (CanHandleMsg()) {
 			int msgID = ReadByte ();
@@ -69,6 +69,12 @@ public class NetworkManager : MonoBehaviour {
 				int newShoot = ReadByte();
 				players[movPID].GetComponent<PlayerInputManager>().setInputs(newH, newV, newShoot);
 				break;
+			case 4:
+				int turnPID = ReadByte ();
+				if (players[turnPID] == null) { break; }
+				float newTurn = ReadFloat ();
+				players[turnPID].GetComponent<PlayerInputManager>().setRotation(newTurn);
+				break;
 			case 10:
 				Debug.Log("New Player!");
 				int crPID = ReadByte ();
@@ -76,6 +82,7 @@ public class NetworkManager : MonoBehaviour {
 				float crZ = ReadFloat ();
 				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
 				players[crPID] = newPlayer;
+				newPlayer.GetComponent<PlayerInputManager>().setIsPlayer(false);
 				break;
 			}
 		}
@@ -96,23 +103,36 @@ public class NetworkManager : MonoBehaviour {
 				recvBufferSize += 1;
 				Debug.Log ("Read data " + recvBufferSize.ToString());
 			}
-
+			
 			if (player.NeedsUpdate()) {
 				WriteByte (3);
 				WriteFloat (player.getH());
 				WriteFloat (player.getV());
+				WriteByte (player.getShooting() ? 1 : 0);
 			}
+			
+			if (player.HasTurned()) {
+				WriteByte (4);
+				WriteFloat (player.getRotation());
+			}
+			
+			if (player.ReviveBtn()) {
+				// Find a player that needs reviving and do just that
+				/*for (GameObject pl : players) {
 
-			timeBetween -= 1;
-			if (timeBetween < 1) {
-				timeBetween = 60;
+				}*/
+			}
+			
+			timeBetween -= Time.deltaTime;
+			if (timeBetween < Time.deltaTime) {
+				timeBetween = 120 * Time.deltaTime;
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);
 			}
 		}
 	}
-
+	
 	private bool CanHandleMsg() {
 		if (!connected || recvBufferSize < 1) {
 			return false;
@@ -130,7 +150,10 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 9;
 			break;
 		case 3:
-			sizeM = 9;
+			sizeM = 10;
+			break;
+		case 4:
+			sizeM = 5;
 			break;
 		case 10:
 			sizeM = 9;
@@ -147,15 +170,15 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log ("Cannot handle message " + msgID.ToString ());
 		return false;
 	}
-
+	
 	private int PeekByte() {
 		return recvBuffer [0];
 	}
-
+	
 	private int ReadByte() {
 		return ShiftData (1)[0];
 	}
-
+	
 	private byte[] ShiftData(int amnt) {
 		byte[] output = new byte[amnt];
 		for (int i=0; i<amnt; i++) {
@@ -167,30 +190,30 @@ public class NetworkManager : MonoBehaviour {
 		recvBufferSize -= amnt;
 		return output;
 	}
-
+	
 	private String ReadString() {
 		int length = ReadByte ();
 		return System.Text.Encoding.UTF8.GetString (ShiftData (length));
 	}
-
+	
 	private float ReadFloat() {
 		byte[] bytes = ShiftData (4);
 		return BitConverter.ToSingle (bytes, 0);
 	}
-
+	
 	private void WriteFloat(float f) {
 		NetworkStream stream = client.GetStream ();
 		byte[] buffer = BitConverter.GetBytes(f);
 		stream.Write (buffer, 0, buffer.Length);
 		stream.Flush ();
 	}
-
+	
 	private void WriteByte(int data) {
 		NetworkStream stream = client.GetStream ();
 		stream.WriteByte ((byte)data);
 		stream.Flush ();
 	}
-
+	
 	private void WriteString(string data) {
 		NetworkStream stream = client.GetStream ();
 		stream.WriteByte ((byte)data.Length);
