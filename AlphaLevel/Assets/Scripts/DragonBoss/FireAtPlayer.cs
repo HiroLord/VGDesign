@@ -48,11 +48,11 @@ public class FireAtPlayer : State<BossAgent> {
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Vector3 relativePos =  head.position - ownerObject.player.transform.position;
+		Vector3 relativePos =  head.position - ownerObject.players[0].transform.position;
 		Quaternion rotation = Quaternion.LookRotation(relativePos);
 		head.rotation = Quaternion.Lerp(head.rotation, rotation, Time.deltaTime);
 
-		Vector3 fireVector = ownerObject.player.transform.position - head.position;
+		Vector3 fireVector = ownerObject.players[0].transform.position - head.position;
 
 		if (fireCooldown <= 0) {
 			fireball.createFireball(origin.position, fireVector);

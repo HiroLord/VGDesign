@@ -13,7 +13,7 @@ public class BossAgent : MonoBehaviour {
 	public GameObject rightHand;
 	public GameObject tail;
 	public GameObject fireball;
-	public GameObject player;
+	public GameObject[] players;
 	public Fireball fire = null;
 	public GameObject origin;
 	public BossHealth health;
@@ -23,6 +23,8 @@ public class BossAgent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// Needs to be changed to account for all characters
+		players = GameObject.FindGameObjectsWithTag("Player");
 		sm = new StateMachine<BossAgent> (new Showboating (), this);
 		fire = new Fireball ();
 		fire.fireball = fireball;

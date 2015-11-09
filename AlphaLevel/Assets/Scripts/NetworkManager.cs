@@ -28,6 +28,7 @@ public class NetworkManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("NetworkingManager initialized");
+		DontDestroyOnLoad (gameObject);
 	}
 	
 	void Connect(bool host) {
