@@ -8,7 +8,7 @@ public class HandSpinDeath : State<BossAgent> {
 	private Transform rightHand;
 	private Transform tail;
 	private Transform origin;
-	
+	private Transform center;
 	private Quaternion startRot;
 	private Vector3 startPos;
 	
@@ -36,6 +36,10 @@ public class HandSpinDeath : State<BossAgent> {
 		if (health.health <= 0) {
 			ownerStateMachine.CurrentState = new Die ();
 		}
+
+		if (timer > 45f) {
+			ownerStateMachine.CurrentState = new Showboating ();
+		}
 	}
 	// Update is called once per frame
 	public override void Update () {
@@ -49,8 +53,8 @@ public class HandSpinDeath : State<BossAgent> {
 			leftHand.Translate (Vector3.up * 5 * Time.deltaTime);
 			rightHand.Translate (Vector3.up * 5 * Time.deltaTime);
 		} else if (timer < 5.3f) {
-			leftHand.Translate (Vector3.left * 3 * Time.deltaTime);
-			rightHand.Translate (Vector3.right * 3 * Time.deltaTime);
+			leftHand.Translate (Vector3.left * 5 * Time.deltaTime);
+			rightHand.Translate (Vector3.right * 5 * Time.deltaTime);
 		} else if (timer < 6.1f) {
 			leftHand.Translate (Vector3.down * 16 * Time.deltaTime);
 			rightHand.Translate (Vector3.down * 16 * Time.deltaTime);
@@ -60,17 +64,19 @@ public class HandSpinDeath : State<BossAgent> {
 			//do nothing
 		} else if(handTimer < 30) {
 			//move in a cicle
-			/*float cx = head.position.x;
-			float cz = head.position.z;
-			float radius = 16f;
-			float newx = head.position.x * Mathf.Sin(Time) * radius;
-			float newz = head.position.z * Mathf.Cos(Time) * radius;
-			Vector3 right = new Vector3(cx+newx,0,cz+newz);
-			Vector3 left = new Vector3(cx-newx,0,cz-newz);
-			leftHand.position = Vector3.Lerp(leftHand.position, left, Time.deltaTime);
-			rightHand.position = Vector3.Lerp(rightHand.position, right, Time.deltaTime);*/
-		} else {
-			handTimer = 0f;
+			float cx = center.position.x;
+			float cz = center.position.z;
+			float radius = 10f;
+			float newx = Mathf.Sin(Time.time*3) * radius;
+			float newz = Mathf.Cos(Time.time*3) * radius;
+			Vector3 right = new Vector3(cx-newx,1.5f,cz-newz);
+			Vector3 left = new Vector3(cx+newx,1.5f,cz + newz);
+			leftHand.position = left;
+			rightHand.position = right;
+		} else if(handTimer < 45f) {
+			//reset for loop
+			leftHand.position = Vector3.Lerp(leftHand.position, leftPos, Time.deltaTime);
+			rightHand.position = Vector3.Lerp(rightHand.position, rightPos, Time.deltaTime);
 		}
 		
 		handTimer += 0.1f;
@@ -92,5 +98,6 @@ public class HandSpinDeath : State<BossAgent> {
 		rightPos = rightHand.position;
 		origin = owner.origin.transform;
 		health = owner.health;
+		center = owner.center.transform;
 	}
 }
