@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireAtPlayer : State<BossAgent> {
-	private Fireball fireball;
-
+public class HandSpinDeath : State<BossAgent> {
+	
 	private Transform head;
 	private Transform leftHand;
 	private Transform rightHand;
 	private Transform tail;
 	private Transform origin;
-	
+	private Transform center;
 	private Quaternion startRot;
 	private Vector3 startPos;
 	
@@ -18,14 +17,10 @@ public class FireAtPlayer : State<BossAgent> {
 	
 	private Quaternion rightRot;
 	private Vector3 rightPos;
+
 	
-	private Vector3 headDir;
-	private Vector3 leftDir;
-	private Vector3 rightDir;
-	private Vector3 tailDir;
-
 	private BossHealth health;
-
+	
 	float timer;
 	float handTimer;
 	float fireCooldown;
@@ -42,8 +37,8 @@ public class FireAtPlayer : State<BossAgent> {
 			ownerStateMachine.CurrentState = new Die ();
 		}
 
-		if (timer > 14.5) {
-			ownerStateMachine.CurrentState = new HandSpinDeath();
+		if (timer > 45f) {
+			ownerStateMachine.CurrentState = new Showboating ();
 		}
 	}
 	// Update is called once per frame
@@ -51,29 +46,42 @@ public class FireAtPlayer : State<BossAgent> {
 		Vector3 relativePos =  head.position - ownerObject.player.transform.position;
 		Quaternion rotation = Quaternion.LookRotation(relativePos);
 		head.rotation = Quaternion.Lerp(head.rotation, rotation, Time.deltaTime);
-
+		
 		Vector3 fireVector = ownerObject.player.transform.position - head.position;
 
-		if (fireCooldown <= 0) {
-			fireball.createFireball(origin.position, fireVector);
-			fireCooldown = 3.5f;
+		if (timer < 2f) {
+			leftHand.Translate (Vector3.up * 5 * Time.deltaTime);
+			rightHand.Translate (Vector3.up * 5 * Time.deltaTime);
+		} else if (timer < 5.3f) {
+			leftHand.Translate (Vector3.left * 5 * Time.deltaTime);
+			rightHand.Translate (Vector3.right * 5 * Time.deltaTime);
+		} else if (timer < 6.1f) {
+			leftHand.Translate (Vector3.down * 16 * Time.deltaTime);
+			rightHand.Translate (Vector3.down * 16 * Time.deltaTime);
 		}
-		fireCooldown -= 0.1f;
-		
 		//hand animation
-		if (handTimer < 5f) {
-			leftHand.Translate (Vector3.down * 3 * Time.deltaTime);
-			rightHand.Translate (Vector3.down * 3 * Time.deltaTime);
-		} else if(handTimer < 15) {
+		if (handTimer < 7f) {
+			//do nothing
+		} else if(handTimer < 30) {
+			//move in a cicle
+			float cx = center.position.x;
+			float cz = center.position.z;
+			float radius = 10f;
+			float newx = Mathf.Sin(Time.time*3) * radius;
+			float newz = Mathf.Cos(Time.time*3) * radius;
+			Vector3 right = new Vector3(cx-newx,1.5f,cz-newz);
+			Vector3 left = new Vector3(cx+newx,1.5f,cz + newz);
+			leftHand.position = left;
+			rightHand.position = right;
+		} else if(handTimer < 45f) {
 			//reset for loop
 			leftHand.position = Vector3.Lerp(leftHand.position, leftPos, Time.deltaTime);
 			rightHand.position = Vector3.Lerp(rightHand.position, rightPos, Time.deltaTime);
-		} else {
-			handTimer = 0f;
 		}
-	
+		
 		handTimer += 0.1f;
 		timer += 0.1f;
+		
 	}
 	
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
@@ -88,8 +96,8 @@ public class FireAtPlayer : State<BossAgent> {
 		startPos = head.position;
 		leftPos = leftHand.position;
 		rightPos = rightHand.position;
-		fireball = owner.fire;
 		origin = owner.origin.transform;
 		health = owner.health;
+		center = owner.center.transform;
 	}
 }

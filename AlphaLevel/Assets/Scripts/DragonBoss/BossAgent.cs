@@ -17,6 +17,7 @@ public class BossAgent : MonoBehaviour {
 	public Fireball fire = null;
 	public GameObject origin;
 	public BossHealth health;
+	public GameObject center;
 
 	StateMachine<BossAgent> sm;
 
