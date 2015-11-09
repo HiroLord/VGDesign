@@ -25,10 +25,11 @@ public class Movement : MonoBehaviour {
 	private bool isDead;
 	private Vector3 spawn;
 	private Vector3 direction;
-	private float targetTurn = 0f;
+	private Quaternion? targetTurn = null;
 	//private bool shooting;
 	//private bool f, b, l, r;
 	private float ccHeight;
+	private float rotSpeed = 1f;
 	
 	//swaps back and forth between third person and perspective
 	public bool inThirdPerson = true;
@@ -57,8 +58,12 @@ public class Movement : MonoBehaviour {
 		RagDoll (rag);
 	}
 
-	public void setTargetTurn(float target) {
+	public void setTargetTurn(Quaternion target) {
 		targetTurn = target;
+		rotSpeed = Quaternion.Angle (transform.rotation, target) / 45f;
+		if (rotSpeed < 1.5f) {
+			rotSpeed = 1.5f;
+		}
 	}
 	
 	public bool GetDead() {
@@ -156,8 +161,8 @@ public class Movement : MonoBehaviour {
 	}
 
 	private void LerpRotation() {
-		if (targetTurn != 0f) {
-
+		if (targetTurn != null) {
+			transform.rotation = Quaternion.Lerp(transform.rotation, (Quaternion)targetTurn, rotSpeed * Time.deltaTime);
 		}
 	}
 	

@@ -88,6 +88,8 @@ public class PlayerInputManager : MonoBehaviour {
 				v = 0;
 			}
 		}
+
+		GetComponentInChildren<Shooting> ().setShooting (shooting);
 		
 		//this should be somewhere else
 		/*CapsuleCollider cc = GetComponent<CapsuleCollider> ();
@@ -183,7 +185,7 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 	
 	public void setRotation(float rot) {
-		transform.rotation = Quaternion.AngleAxis (rot, new Vector3 (0, 1, 0));
+		move.setTargetTurn(Quaternion.AngleAxis (rot, new Vector3 (0, 1, 0)));
 	}
 	
 	//Determines what to feed the player animator input based 2D rotation math

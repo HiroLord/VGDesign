@@ -18,6 +18,7 @@ public class Shooting : MonoBehaviour
 	AudioSource gunAudio;
 	AudioSource emptyClip;
 	public Text disp;
+	private bool shooting;
 
 	private float cooldown;
 
@@ -49,7 +50,7 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if (/*Input.GetButton ("Fire1") && */Input.GetButton ("Jump")) {
+		if (shooting) {
 			if (timer >= weapon.fireRate) {
 				if (Time.timeScale != 0 && weapon.currentAmmo > 0) {
 					weapon.currentAmmo--;
@@ -57,7 +58,6 @@ public class Shooting : MonoBehaviour
 				} else {
 					timer = 0f;
 					emptyClip.Play ();
-					print ("Empty!");
 				}
 			}
 		} else {
@@ -70,7 +70,7 @@ public class Shooting : MonoBehaviour
 			cooldown -= Time.deltaTime;
 		}
 
-		if(disp != null)
+		if (disp != null && GetComponentInParent<PlayerInputManager>().isPlayer)
 		{
 			disp.text = "Ammo: " + weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
@@ -83,7 +83,10 @@ public class Shooting : MonoBehaviour
 //			{
 //				DisableEffects ();
 //			}
-//		}
+	}
+
+	public void setShooting (bool shoot){
+		shooting = shoot;
 	}
 
 

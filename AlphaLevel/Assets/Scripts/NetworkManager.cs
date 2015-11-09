@@ -124,7 +124,7 @@ public class NetworkManager : MonoBehaviour {
 			while (client.GetStream().DataAvailable) {
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
 				recvBufferSize += 1;
-				Debug.Log ("Read data. Buffer size: " + recvBufferSize.ToString());
+				//Debug.Log ("Read data. Buffer size: " + recvBufferSize.ToString());
 				String data = "Data:";
 				for (int i=0; i<recvBufferSize; i++) {
 					data+= " " + recvBuffer[i].ToString();
