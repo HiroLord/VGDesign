@@ -18,6 +18,10 @@ public class Shooting : MonoBehaviour
 	AudioSource gunAudio;
 	AudioSource emptyClip;
 	public Text disp;
+
+	private float cooldown;
+
+	private LineRenderer gunLine;
 	// ParticleSystem gunParticles;
 	// LineRenderer gunLine;
 	// Light gunLight;
@@ -29,8 +33,10 @@ public class Shooting : MonoBehaviour
 		soundEff = GetComponents<AudioSource> ();
 		gunAudio = soundEff [0];
 		emptyClip = soundEff [1];
-		weapon = new Weapon ("Default", 10, .15f, 100f, 30, 30);
+		weapon = new Weapon ("Default", 10, .15f, 100f, 60, 60);
 		weapon.currentAmmo = weapon.maxAmmo;
+
+		gunLine = GetComponent<LineRenderer> ();
 
 		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
 		//print (disp.ToString());
@@ -43,19 +49,25 @@ public class Shooting : MonoBehaviour
 	void Update () 
 	{
 		timer += Time.deltaTime;
-		if(/*Input.GetButton ("Fire1") && */Input.GetButton("Jump") && timer >= weapon.fireRate) {
-	   		if (Time.timeScale != 0 && weapon.currentAmmo > 0)
-			{
-				weapon.currentAmmo--;
-				Shoot();
+		if (/*Input.GetButton ("Fire1") && */Input.GetButton ("Jump")) {
+			if (timer >= weapon.fireRate) {
+				if (Time.timeScale != 0 && weapon.currentAmmo > 0) {
+					weapon.currentAmmo--;
+					Shoot ();
+				} else {
+					timer = 0f;
+					emptyClip.Play ();
+					print ("Empty!");
+				}
 			}
-			else
-			{
-				// For some reason this clip is not playing
-				timer = 0f;
-				emptyClip.Play();
-				print ("Empty!");
-			}
+		} else {
+			timer = -5 * Time.deltaTime;
+		}
+
+		if (cooldown < Time.deltaTime) {
+			gunLine.enabled = false;
+		} else {
+			cooldown -= Time.deltaTime;
 		}
 
 		if(disp != null)
@@ -85,14 +97,15 @@ public class Shooting : MonoBehaviour
 	{
 		timer = 0f;
 		gunAudio.Play();
+		cooldown = 2 * Time.deltaTime;
 //
 //		gunLight.enabled = true;
 //
 //		gunParticles.Stop();
 //		gunParticles.Play();
 //
-//		gunLine.enabled = true;
-//		gunLine.SetPosition(0, transform.position);
+		gunLine.enabled = true;
+		gunLine.SetPosition(0, transform.position);
 
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
@@ -103,11 +116,11 @@ public class Shooting : MonoBehaviour
 			{
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
 			}
+			gunLine.SetPosition (1, shootHit.point);
+		} else
+		{
+			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * 10);
 		}
-//		else
-//		{
-//			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
-//		}
 	}
 
 	public void changeWeapon(Weapon weapon){

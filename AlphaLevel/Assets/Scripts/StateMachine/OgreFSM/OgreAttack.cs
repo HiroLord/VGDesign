@@ -15,7 +15,7 @@ public class OgreAttack : State<OgreBehavior>
 	float damping = 2.0f;
 	Vector3 prevLoc;
 	bool hitPlayer = false;
-	
+
 	// the Ogre will not flee until he runs out of energy, the troll will not flee if his health is low
 	public override void CheckForNewState()
 	{
