@@ -40,7 +40,6 @@ public class PlayerInputManager : MonoBehaviour {
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
 		DontDestroyOnLoad (gameObject);
-		Debug.Log (Input.GetJoystickNames()[0].ToString());
 	}
 	
 	public bool ReviveBtn() {
@@ -59,11 +58,15 @@ public class PlayerInputManager : MonoBehaviour {
 			v = Input.GetAxisRaw ("Vertical");
 			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickX);
 			float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
-			if (Mathf.Abs(xaxis) > 0.1f) {
-				h = xaxis;
+			if (Mathf.Abs(xaxis) > 0.5f) {
+				h = Mathf.Max (Mathf.Min(xaxis, 1f), -1f);
+			} else { 
+				h = 0;
 			}
-			if (Mathf.Abs (yaxis) > 0.1f) {
-				v = yaxis;
+			if (Mathf.Abs (yaxis) > 0.5f) {
+				v = -Mathf.Max (Mathf.Min(yaxis, 1f), -1f);
+			} else {
+				v = 0;
 			}
 			if (h != oldH || v != oldV) {
 				oldH = h;
@@ -131,22 +134,24 @@ public class PlayerInputManager : MonoBehaviour {
 			Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 			
 			RaycastHit floorHit;
-			
-			if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) {
-				Vector3 playerToMouse = floorHit.point - transform.position;
-				playerToMouse.y = 0f;
-				
-				transform.rotation = Quaternion.LookRotation (playerToMouse);
+
+			if (Input.GetJoystickNames().Length == 0) {
+				if (Physics.Raycast (camRay, out floorHit, camRayLength, floorMask)) {
+					Vector3 playerToMouse = floorHit.point - transform.position;
+					playerToMouse.y = 0f;
+					
+					transform.rotation = Quaternion.LookRotation (playerToMouse);
+				}
 			}
 			// Rotation
-			/*
+
 			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickX);
 			float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickY);
 			if (Mathf.Abs(xaxis) > 0.1f || Mathf.Abs (yaxis) > 0.1f) {
 				Vector3 aiming = new Vector3(xaxis, 0, yaxis);
 				transform.rotation = Quaternion.LookRotation (aiming);
 			}
-			*/
+
 			turnTime += Time.deltaTime;
 			if (transform.rotation.y != oldRotation && turnTime > 10 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
