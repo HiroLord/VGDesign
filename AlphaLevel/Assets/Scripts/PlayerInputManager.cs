@@ -57,7 +57,7 @@ public class PlayerInputManager : MonoBehaviour {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
 			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickX);
-			float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
+			float yaxis = -ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
 			if (Mathf.Abs(xaxis) > 0.5f) {
 				h = Mathf.Max (Mathf.Min(xaxis, 1f), -1f);
 			} else { 
@@ -99,11 +99,13 @@ public class PlayerInputManager : MonoBehaviour {
 			} else {
 				reviveBtn = false;
 			}
-			
+
+			/*
 			if (shooting) {
 				h = 0;
 				v = 0;
 			}
+			*/
 		}
 
 		GetComponentInChildren<Shooting> ().setShooting (shooting);
@@ -123,7 +125,11 @@ public class PlayerInputManager : MonoBehaviour {
 		movement = move.getMove ();
 		
 		Vector2 spdir = DetermineDir (h, v);
-		anim.SetFloat ("Speed", spdir.x);
+		move.backwards = spdir.x < 0;
+		if (spdir.x == 0) {
+			spdir.x = 0.05f;
+		}
+		anim.SetFloat ("SpeedAmnt", (spdir.x));
 		anim.SetFloat ("Direction", spdir.y, .25f, Time.deltaTime);
 		anim.SetBool ("Shooting", shooting);
 	}

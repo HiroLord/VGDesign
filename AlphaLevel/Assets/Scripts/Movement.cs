@@ -30,6 +30,7 @@ public class Movement : MonoBehaviour {
 	//private bool f, b, l, r;
 	private float ccHeight;
 	private float rotSpeed = 1f;
+	public bool backwards = false;
 	
 	//swaps back and forth between third person and perspective
 	public bool inThirdPerson = true;
