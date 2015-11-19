@@ -15,6 +15,7 @@ public class CameraMovement : MonoBehaviour {
 	
 	void Start() {
 		offset = transform.position - target.position;
+		DontDestroyOnLoad (gameObject);
 	}
 	
 	void FixedUpdate() {
