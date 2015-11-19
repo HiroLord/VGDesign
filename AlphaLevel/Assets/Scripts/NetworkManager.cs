@@ -12,6 +12,8 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
+	public String IPAddress = "128.61.20.216";
+
 	public OgreBehavior[] enemies;
 
 	public GameObject instance;
@@ -33,7 +35,7 @@ public class NetworkManager : MonoBehaviour {
 	
 	void Connect(bool host) {
 		try {
-			client = new TcpClient("128.61.30.151", 25001);
+			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
 			WriteByte (host ? 1 : 0);
 			Debug.Log ("Connected!");
