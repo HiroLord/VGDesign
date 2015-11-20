@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 public class WeaponPickup : MonoBehaviour {
-
+	public GameObject effect;
 	// Use this for initialization
 	void Start () {
 	
@@ -19,12 +19,16 @@ public class WeaponPickup : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Component other){
-		Shooting s = other.GetComponent<Shooting>();
+		Shooting s = other.GetComponentInChildren<Shooting>();
+		print (effect);
+		GameObject shot = GameObject.Instantiate (effect, gameObject.transform.position,Quaternion.LookRotation(Vector3.up)) as GameObject;
+		shot.transform.parent = GameObject.Find ("TempObjects").transform;
 		if (s != null) {
 			string name = this.gameObject.name;
 			name = name.Substring(0,name.IndexOf("Pickup"));
 			s.changeWeapon (WeaponLibrary.weapons [name]);
+			s.weapon.effect = this.effect;
+			print (s.weapon.name);
 		}
-		print (s.weapon.name);
 	}
 }
