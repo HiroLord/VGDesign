@@ -92,6 +92,7 @@ class Client:
             return False
         msgID = self.socket.peekByte()
         print(msgID)
+        size = 256
         if (msgID == 1):
             size = 0
         elif(msgID == 2):
