@@ -38,4 +38,12 @@ public class Player : Entity {
 			grunt.PlayOneShot (grunt.clip, 1.0f);
 		}
 	}
+
+	public virtual void GiveHealth(int amount)
+	{
+		currentHealth += amount;
+		if (currentHealth > startingHealth)
+			currentHealth = startingHealth;
+	}
+
 }
