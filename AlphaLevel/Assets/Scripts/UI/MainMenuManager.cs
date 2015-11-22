@@ -66,12 +66,12 @@ public class MainMenuManager : MonoBehaviour {
 		float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
 		int size = menu.Length;
 		int t = currentSelection;
-		if (h > 0) {
+		if (h < 0) {
 			currentSelection = (currentSelection + 1);
 			if (currentSelection > size -1) {
 				currentSelection = size - 1;
 			}
-		} else if (h < 0) {
+		} else if (h > 0) {
 			currentSelection = (currentSelection - 1);
 			if (currentSelection < 0) {
 				currentSelection = 0;
