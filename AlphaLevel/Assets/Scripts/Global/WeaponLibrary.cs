@@ -15,6 +15,7 @@ public class WeaponLibrary:MonoBehaviour{
 		weapons.Add ("Pistol", new Weapon ("Pistol", 17, .5f, 40f, 12, 12));
 		weapons.Add ("Shotgun", new Weapon ("Shotgun", 50, .5f, 20f, 20, 20));
 		weapons.Add ("Flakgun", new Weapon ("Flakgun", 60, .5f, 20f, 20, 20, "Flak"));
+		weapons.Add ("Creepergun", new Weapon ("Creepergun", 60, .5f, 20f, 20, 20, "Creeper"));
 	}
 
 }

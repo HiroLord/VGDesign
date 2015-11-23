@@ -112,6 +112,7 @@ public class Shooting : MonoBehaviour
 
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
+
 		if(Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
 		{
 			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
@@ -124,9 +125,18 @@ public class Shooting : MonoBehaviour
 				Debug.Log ("Hit");
 				shootHit.collider.gameObject.GetComponentInParent<BossHealth>().Damage(10f);
 			}
-			gunLine.SetPosition (1, shootHit.point);
-		} else {
-			gunLine.SetPosition(1, shootRay.origin + shootRay.direction * 10);
+			if(weapon.hasEffect){
+				weapon.shootEffect(shootRay.origin,Quaternion.LookRotation(shootRay.direction));
+			} else{
+				gunLine.SetPosition (1, shootHit.point);
+			}
+		} else {	
+			if(weapon.hasEffect){
+				weapon.shootEffect(shootRay.origin,Quaternion.LookRotation(shootRay.direction));
+			}else{
+				gunLine.SetPosition(1, shootRay.origin + shootRay.direction * 10);
+			}
+
 		}
 	}
 

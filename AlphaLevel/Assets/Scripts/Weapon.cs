@@ -13,7 +13,7 @@ public class Weapon{
 	public float range;
 	public int maxAmmo;
 	public int currentAmmo;
-	public GameObject effect;
+	public string effect;
 	public Transform tempObjects;
 	public bool hasEffect;
 	// Use this for initialization
@@ -24,10 +24,8 @@ public class Weapon{
 		this.range = range;
 		this.maxAmmo = maxAmmo;
 		this.currentAmmo = currentAmmo;
-		this.effect = GameObject.Find (effect);
-		tempObjects = GameObject.Find ("TempObjects").transform;
+		this.effect = effect;
 		hasEffect = true;
-		shootEffect (new Vector3 (0, 0, 0), Quaternion.LookRotation (Vector3.up));
 	}
 
 	public Weapon(string name, int damage, float fireRate, float range, int maxAmmo, int currentAmmo){
@@ -46,8 +44,10 @@ public class Weapon{
 	}
 
 	public void shootEffect(Vector3 location, Quaternion direction){
-		Debug.Log ("shoot effect" + effect);
-		GameObject shot = GameObject.Instantiate (effect, location,direction) as GameObject;
-		shot.transform.parent = tempObjects;
+		GameObject shot = (GameObject)GameObject.Instantiate (Resources.Load (effect),location,direction);
+		Debug.Log ("shooteffect" + shot);
+		ParticleSystem ps = shot.GetComponent <ParticleSystem>();
+		ps.Play ();
+		shot.transform.parent = GameObject.Find ("TempObjects").transform;
 	}
 }
