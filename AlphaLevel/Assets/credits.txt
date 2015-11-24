@@ -1,9 +1,9 @@
 -- The Fireflies --
-Preston Turner
-Sarah Alsmiller
-Clayton Pierce
-Sam Wood
-Justin Le
+Preston Turner : Networking and Player Design
+Sarah Alsmiller : Level Design and Boss Design
+Clayton Pierce : AI and Shooting Mechanics
+Sam Wood : HUD Design and Music Sourcing
+Justin Le : Supplementary Scripts
 
 
 

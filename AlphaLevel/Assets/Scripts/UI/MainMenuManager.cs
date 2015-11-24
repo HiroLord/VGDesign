@@ -39,6 +39,7 @@ public class MainMenuManager : MonoBehaviour {
 		if (currentSelection != num) {
 			oldSelection = currentSelection;
 			menu [oldSelection].text = oldCopy;
+			menu[oldSelection].fontSize = 25;
 			currentSelection = num;
 			oldCopy = menu [currentSelection].text;
 			//set to selected version
@@ -142,7 +143,7 @@ public class MainMenuManager : MonoBehaviour {
 		}
 
 		//handles selections
-		if (Input.GetKey ("space") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
+		if (Input.GetKey ("space") || Input.GetKey ("return") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
 			if (canSelect) {
 				handleSelection(menu[currentSelection].name);
 				canSelect = false;
