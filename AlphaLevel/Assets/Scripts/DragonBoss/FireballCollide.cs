@@ -8,5 +8,11 @@ public class FireballCollide : MonoBehaviour {
 		if (c.gameObject.tag == "Ground") {
 			Destroy (gameObject);
 		}
+
+		if (c.gameObject.tag == "Player") {
+			Entity player = c.gameObject.GetComponent<Entity>();
+			player.TakeDamage (50, gameObject.transform.position);
+			Destroy (gameObject);
+		}
 	}
 }

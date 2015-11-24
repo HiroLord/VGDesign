@@ -29,6 +29,7 @@ public class FireAtPlayer : State<BossAgent> {
 	float timer;
 	float handTimer;
 	float fireCooldown;
+	float fireTime = 2.0f;
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
@@ -56,7 +57,7 @@ public class FireAtPlayer : State<BossAgent> {
 
 		if (fireCooldown <= 0) {
 			fireball.createFireball(origin.position, fireVector);
-			fireCooldown = 3.5f;
+			fireCooldown = fireTime;
 		}
 		fireCooldown -= 0.1f;
 		
