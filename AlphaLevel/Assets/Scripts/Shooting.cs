@@ -72,7 +72,7 @@ public class Shooting : MonoBehaviour
 
 		if (disp != null && GetComponentInParent<PlayerInputManager>().isPlayer)
 		{
-			disp.text = "Ammo: " + weapon.currentAmmo + "/" + weapon.maxAmmo;
+			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
 
 		if(Input.GetKey("r"))
