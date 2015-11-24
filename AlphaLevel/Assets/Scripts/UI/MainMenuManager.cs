@@ -29,7 +29,7 @@ public class MainMenuManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (bingBang.transform.position != endPosition) {
-			bingBang.transform.position = Vector3.Lerp(bingBang.transform.position, endPosition, Time.deltaTime * 5);
+			bingBang.transform.position = Vector3.Lerp(bingBang.transform.position, endPosition, Time.deltaTime * 3);
 		}
 		handleMenuInput ();
 		bounceSelection ();
