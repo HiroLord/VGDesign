@@ -6,12 +6,17 @@ public class MainMenuManager : MonoBehaviour {
 	bool playingOpening;
 	public GameObject mainMenu;
 	public GameObject bingBang;
+	public GameObject fireflies;
 	Vector3 endPosition;
+	Vector3 endFireflies;
 	public Text[] menu;
-	int currentSelection;
+	int currentSelection = 0;
+	int oldSelection = 0;
 	string oldCopy;
 	float sizeTimer = 0f;
 	bool getBigger = true;
+	public float fireflyWait = 10f;
+	float fTimer;
 
 	public GameObject credits;
 	GameObject createdCredits;
@@ -20,31 +25,54 @@ public class MainMenuManager : MonoBehaviour {
 	void Start () {
 		playingOpening = true;
 		endPosition = bingBang.transform.position;
+		endFireflies = fireflies.transform.position;
+		fireflies.transform.position = new Vector3(-40f, 3.19f, -40f);
 		bingBang.transform.position = new Vector3 (15f, 3.19f, 20f);
 		oldCopy = menu [currentSelection].text;
 		menu[currentSelection].text = "- " + menu[currentSelection].text + " -";
 		createdCredits = null;
+		fTimer = 0;
 	}
-	
+
+	public void hoverOption(int num) {
+		//reset old menu item
+		if (currentSelection != num) {
+			oldSelection = currentSelection;
+			menu [oldSelection].text = oldCopy;
+			currentSelection = num;
+			oldCopy = menu [currentSelection].text;
+			//set to selected version
+			menu [currentSelection].text = "- " + menu [currentSelection].text + " -";
+			sizeTimer = 0f;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (bingBang.transform.position != endPosition) {
-			bingBang.transform.position = Vector3.Lerp(bingBang.transform.position, endPosition, Time.deltaTime * 5);
+			bingBang.transform.position = Vector3.Lerp(bingBang.transform.position, endPosition, Time.deltaTime * 3);
 		}
 		handleMenuInput ();
 		bounceSelection ();
 		sizeTimer += 1;
+		if ((fTimer >= fireflyWait) && (fireflies.transform.position != endFireflies)) {
+			fireflies.transform.position = Vector3.Lerp (fireflies.transform.position, endFireflies, Time.deltaTime * 3);
+		} else if (fTimer < fireflyWait) {
+			fTimer += Time.deltaTime;
+		}
+		Debug.Log (fTimer);
 	}
 
-	void selectConnect() {
+	public void selectConnect() {
 		Debug.Log ("Connect selected");
 	}
 
-	void selectHost() {
+	public void selectHost() {
 		Debug.Log ("Host selected");
+		Application.LoadLevel ("Level1");
 	}
 
-	void selectCredits() {
+	public void selectCredits() {
 		if (!createdCredits) {
 			createdCredits = (GameObject)Instantiate (credits, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0));
 			createdCredits.transform.parent = mainMenu.transform;
@@ -72,6 +100,7 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	void handleSelection(string name) {
+		Debug.Log (name);
 		if (name.Equals ("Connect")) {
 			selectConnect ();
 		} else if (name.Equals ("Host")) {
@@ -89,36 +118,33 @@ public class MainMenuManager : MonoBehaviour {
 		float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
 		int size = menu.Length;
 		int t = currentSelection;
+		int nextSelection = t;
 		if (h != 0 && canMove) {
 			canMove = false;
 			if (h < 0) {
-				currentSelection = (currentSelection + 1);
-				if (currentSelection > size - 1) {
-					currentSelection = size - 1;
+				nextSelection = (currentSelection + 1);
+				if (nextSelection > size - 1) {
+					nextSelection = 0;
 				}
 			} else if (h > 0) {
-				currentSelection = (currentSelection - 1);
-				if (currentSelection < 0) {
-					currentSelection = 0;
+				nextSelection = (currentSelection - 1);
+				if (nextSelection < 0) {
+					nextSelection = size - 1;
 				}
 			}
 		} else if (h == 0){
 			canMove = true;
 		}
 
-		if (t != currentSelection) {
-			//reset old menu item
-			menu[t].text = oldCopy;
-			oldCopy = menu[currentSelection].text;
-			//set to selected version
-			menu[currentSelection].text = "- " + menu[currentSelection].text + " -";
-			sizeTimer = 0f;
+		if (t != nextSelection) {
+			oldSelection = t;
+			hoverOption(nextSelection);
 		}
 
 		//handles selections
 		if (Input.GetKey ("space") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
 			if (canSelect) {
-				handleSelection (oldCopy);
+				handleSelection(menu[currentSelection].name);
 				canSelect = false;
 			}
 		} else {

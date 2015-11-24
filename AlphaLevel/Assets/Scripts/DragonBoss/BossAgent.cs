@@ -7,7 +7,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class BossAgent : MonoBehaviour {
+public class BossAgent : Entity {
 	public GameObject head;
 	public GameObject leftHand;
 	public GameObject rightHand;
