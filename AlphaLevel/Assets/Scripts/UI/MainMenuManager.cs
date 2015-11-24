@@ -36,15 +36,16 @@ public class MainMenuManager : MonoBehaviour {
 		sizeTimer += 1;
 	}
 
-	void selectConnect() {
+	public void selectConnect() {
 		Debug.Log ("Connect selected");
 	}
 
-	void selectHost() {
+	public void selectHost() {
 		Debug.Log ("Host selected");
+		Application.LoadLevel ("Level1");
 	}
 
-	void selectCredits() {
+	public void selectCredits() {
 		if (!createdCredits) {
 			createdCredits = (GameObject)Instantiate (credits, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0));
 			createdCredits.transform.parent = mainMenu.transform;
@@ -72,6 +73,7 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	void handleSelection(string name) {
+		Debug.Log (name);
 		if (name.Equals ("Connect")) {
 			selectConnect ();
 		} else if (name.Equals ("Host")) {
@@ -118,7 +120,7 @@ public class MainMenuManager : MonoBehaviour {
 		//handles selections
 		if (Input.GetKey ("space") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
 			if (canSelect) {
-				handleSelection (oldCopy);
+				handleSelection(menu[currentSelection].name);
 				canSelect = false;
 			}
 		} else {

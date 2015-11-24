@@ -1,5 +1,36 @@
-These are the credits.
+-- The Fireflies --
+Preston Turner
+Sarah Alsmiller
+Clayton Pierce
+Sam Wood
+Justin Le
 
-Hello everyone.
 
-How are you doing today?
+
+-- Title Music --
+Hero Down by Kevin MacLeod is licensed under Creative Commons Attribution license 4.0
+Source: http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100880
+Artist: http://incompetech.com/
+
+-- Sound Effects --
+soundbible.com
+freesound.com
+
+-- In-game Effects --
+Water Effects: Unity standard assets
+Fire Effects: https://www.assetstore.unity3d.com/en/#!/content/11158
+
+-- Models --
+Player: http://tf3dm.com/3d-model/army-pilot-fully-rigged-animated-20-animations-57044.html
+Troll: https://www.assetstore.unity3d.com/en/#!/content/18219
+Ogre and Warrior: mixamo.com
+Cactus Pack: https://www.assetstore.unity3d.com/en/#!/content/11547
+Dead tree:  https://sketchfab.com/models/06b6d911f5154f3e8dd1ba50855bfe19
+Dead trees: http://tf3dm.com/3d-model/some-dead-trees-32880.html
+Rocks: http://tf3dm.com/3d-model/low-poly-rock-set-5-different-rocks-92678.html
+Ice: http://www.goodtextures.com/files/TileableMarbleLarge.jpg
+Fire Tree: https://www.assetstore.unity3d.com/en/#!/content/32410
+
+-- Textures --
+Rock: https://www.pinterest.com/pin/317644579946636375/
+
