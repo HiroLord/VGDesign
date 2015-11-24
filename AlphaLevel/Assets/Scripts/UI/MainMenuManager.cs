@@ -6,12 +6,16 @@ public class MainMenuManager : MonoBehaviour {
 	bool playingOpening;
 	public GameObject mainMenu;
 	public GameObject bingBang;
+	public GameObject fireflies;
 	Vector3 endPosition;
+	Vector3 endFireflies;
 	public Text[] menu;
 	int currentSelection;
 	string oldCopy;
 	float sizeTimer = 0f;
 	bool getBigger = true;
+	public float fireflyWait = 10f;
+	float fTimer;
 
 	public GameObject credits;
 	GameObject createdCredits;
@@ -20,10 +24,13 @@ public class MainMenuManager : MonoBehaviour {
 	void Start () {
 		playingOpening = true;
 		endPosition = bingBang.transform.position;
+		endFireflies = fireflies.transform.position;
+		fireflies.transform.position = new Vector3(-40f, 3.19f, -40f);
 		bingBang.transform.position = new Vector3 (15f, 3.19f, 20f);
 		oldCopy = menu [currentSelection].text;
 		menu[currentSelection].text = "- " + menu[currentSelection].text + " -";
 		createdCredits = null;
+		fTimer = 0;
 	}
 	
 	// Update is called once per frame
@@ -34,6 +41,12 @@ public class MainMenuManager : MonoBehaviour {
 		handleMenuInput ();
 		bounceSelection ();
 		sizeTimer += 1;
+		if ((fTimer >= fireflyWait) && (fireflies.transform.position != endFireflies)) {
+			fireflies.transform.position = Vector3.Lerp (fireflies.transform.position, endFireflies, Time.deltaTime * 3);
+		} else if (fTimer < fireflyWait) {
+			fTimer += 0.01f;
+		}
+		Debug.Log (fTimer);
 	}
 
 	void selectConnect() {
