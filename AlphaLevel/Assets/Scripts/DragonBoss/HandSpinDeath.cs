@@ -24,10 +24,20 @@ public class HandSpinDeath : State<BossAgent> {
 	float timer;
 	float handTimer;
 	float fireCooldown;
+	Vector3 sRight;
+	Vector3 sLeft;
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
 		handTimer = 0f;
+		//move these circling calculations into their own function
+		float cx = center.position.x;
+		float cz = center.position.z;
+		float radius = 11f;
+		float newx = Mathf.Sin(0.2f * 3) * radius;
+		float newz = Mathf.Cos(0.2f * 3) * radius;
+		sRight = new Vector3(cx-newx,2.0f,cz-newz);
+		sLeft = new Vector3(cx+newx,2.0f,cz + newz);
 	}
 	
 	//temporarily does nothing
@@ -37,7 +47,7 @@ public class HandSpinDeath : State<BossAgent> {
 			ownerStateMachine.CurrentState = new Die ();
 		}
 
-		if (timer > 45f) {
+		if (handTimer > 20f) {
 			ownerStateMachine.CurrentState = new Showboating ();
 		}
 	}
@@ -52,35 +62,39 @@ public class HandSpinDeath : State<BossAgent> {
 		if (timer < 2f) {
 			leftHand.Translate (Vector3.up * 5 * Time.deltaTime);
 			rightHand.Translate (Vector3.up * 5 * Time.deltaTime);
-		} else if (timer < 5.3f) {
+		} else if (timer < 2.5f) {
 			leftHand.Translate (Vector3.left * 5 * Time.deltaTime);
 			rightHand.Translate (Vector3.right * 5 * Time.deltaTime);
-		} else if (timer < 6.1f) {
+		} else if (timer < 3f) {
 			leftHand.Translate (Vector3.down * 16 * Time.deltaTime);
 			rightHand.Translate (Vector3.down * 16 * Time.deltaTime);
-		}
-		//hand animation
-		if (handTimer < 7f) {
-			//do nothing
-		} else if(handTimer < 30) {
+		} else if(handTimer < 0.25f) {
+			//set for circling
+			//I can't get this to work properly
+			//leftHand.position = Vector3.Lerp(leftHand.position, sLeft, Time.deltaTime * 0.2f);
+			//rightHand.position = Vector3.Lerp(rightHand.position, sRight, Time.deltaTime);
+		} else if(handTimer < 15f) {
 			//move in a cicle
 			float cx = center.position.x;
 			float cz = center.position.z;
 			float radius = 11f;
-			float newx = Mathf.Sin(Time.time*3) * radius;
-			float newz = Mathf.Cos(Time.time*3) * radius;
-			Vector3 right = new Vector3(cx-newx,1.5f,cz-newz);
-			Vector3 left = new Vector3(cx+newx,1.5f,cz + newz);
+			float newx = Mathf.Sin(handTimer*3) * radius;
+			float newz = Mathf.Cos(handTimer*3) * radius;
+			Vector3 right = new Vector3(cx-newx,2.0f,cz-newz);
+			Vector3 left = new Vector3(cx+newx,2.0f,cz + newz);
 			leftHand.position = left;
 			rightHand.position = right;
-		} else if(handTimer < 45f) {
+		} else if(handTimer < 20f) {
 			//reset for loop
 			leftHand.position = Vector3.Lerp(leftHand.position, leftPos, Time.deltaTime);
 			rightHand.position = Vector3.Lerp(rightHand.position, rightPos, Time.deltaTime);
 		}
-		
-		handTimer += 0.1f;
-		timer += 0.1f;
+
+		if (timer < 3f) {
+			timer += Time.deltaTime;
+		} else {
+			handTimer += Time.deltaTime;
+		}
 		
 	}
 	

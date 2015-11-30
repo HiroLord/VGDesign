@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class BossHealth : MonoBehaviour {
 	public float health;
 	public Slider healthSlider;
+	public PostDeath postDeath;
 	private bool isDead = false;
 
 	// Use this for initialization
@@ -17,6 +18,7 @@ public class BossHealth : MonoBehaviour {
 
 		if (health <= 0) {
 			isDead = true;
+			postDeath.isDead = true;
 		}
 		healthSlider.value = health;
 	}

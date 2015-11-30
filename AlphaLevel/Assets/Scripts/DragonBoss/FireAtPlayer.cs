@@ -2,13 +2,12 @@
 using System.Collections;
 
 public class FireAtPlayer : State<BossAgent> {
-	private Fireball fireball;
-
 	private Transform head;
 	private Transform leftHand;
 	private Transform rightHand;
 	private Transform tail;
 	private Transform origin;
+	private GameObject fireball;
 	
 	private Quaternion startRot;
 	private Vector3 startPos;
@@ -24,6 +23,9 @@ public class FireAtPlayer : State<BossAgent> {
 	private Vector3 rightDir;
 	private Vector3 tailDir;
 
+	private Rigidbody targetRigidBody;
+	private GameObject target;
+	private Transform targetTransform;
 	private BossHealth health;
 
 	float timer;
@@ -43,20 +45,20 @@ public class FireAtPlayer : State<BossAgent> {
 			ownerStateMachine.CurrentState = new Die ();
 		}
 
-		if (timer > 14.5) {
-			ownerStateMachine.CurrentState = new HandSpinDeath();
+		if (timer > 7f) {
+			//ownerStateMachine.CurrentState = new HandSpinDeath();
 		}
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Vector3 relativePos =  head.position - ownerObject.players[0].transform.position;
+		Vector3 relativePos =  origin.position - targetTransform.position;
 		Quaternion rotation = Quaternion.LookRotation(relativePos);
 		head.rotation = Quaternion.Lerp(head.rotation, rotation, Time.deltaTime);
 
-		Vector3 fireVector = ownerObject.players[0].transform.position - head.position;
-
+		Vector3 fireVector = targetTransform.position - origin.position;
+		Debug.DrawLine (origin.position, fireVector);
 		if (fireCooldown <= 0) {
-			fireball.createFireball(origin.position, fireVector);
+			Fireball.createFireball(fireball, origin.position, fireVector);
 			fireCooldown = fireTime;
 		}
 		fireCooldown -= 0.1f;
@@ -73,10 +75,18 @@ public class FireAtPlayer : State<BossAgent> {
 			handTimer = 0f;
 		}
 	
-		handTimer += 0.1f;
-		timer += 0.1f;
+		handTimer += Time.deltaTime;
+		timer += Time.deltaTime;
 	}
-	
+
+	//To rotate the player currently being targeted
+	public void targetPlayer(GameObject player) {
+		target = player;
+		targetRigidBody = player.GetComponent<Rigidbody> ();
+		targetTransform = target.transform.Find ("ActualTransform");
+		Debug.Log (targetTransform.position);
+		Debug.Log (target.transform.position);
+	}
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
 		// Enable this state and grab components
@@ -89,8 +99,11 @@ public class FireAtPlayer : State<BossAgent> {
 		startPos = head.position;
 		leftPos = leftHand.position;
 		rightPos = rightHand.position;
-		fireball = owner.fire;
 		origin = owner.origin.transform;
 		health = owner.health;
+		fireball = owner.fireball;
+		//right now just attacks the first player in the array;
+		targetPlayer (ownerObject.players [0]);
 	}
+	
 }
