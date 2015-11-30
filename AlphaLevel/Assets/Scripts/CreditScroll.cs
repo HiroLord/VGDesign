@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**
+ * Team: Fireflies
+ * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
+ */
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Text;
@@ -30,7 +35,7 @@ public class CreditScroll : MonoBehaviour {
 			reader.Close();
 		}
 
-		GetComponentInChildren<Text> ().text = text;
+		//GetComponentInChildren<Text> ().text = text;
 		float height = LayoutUtility.GetPreferredHeight (rTransform);
 		rTransform.anchoredPosition = new Vector2 (0, -rTransform.rect.height);
 		y = rTransform.anchoredPosition.y;

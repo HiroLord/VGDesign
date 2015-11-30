@@ -39,7 +39,6 @@ public class PlayerInputManager : MonoBehaviour {
 		anim = move.anim;
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
-		DontDestroyOnLoad (gameObject);
 	}
 	
 	public bool ReviveBtn() {

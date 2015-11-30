@@ -77,16 +77,6 @@ public class OgreBehavior : Entity
 		stateMachine.Update ();
 	}
 
-	void OnTriggerEnter(Collider col)
-	{
-		if(col.tag == "Player" && original)
-		{
-			playerFound = true;
-			//player = col.transform;
-			currTarget = col.transform;
-			currTargetID = col.gameObject.GetComponent<PlayerInputManager>().playerID;
-		}
-	}
 	
 	public void Death ()
 	{

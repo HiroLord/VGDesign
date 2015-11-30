@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**
+ * Team: Fireflies
+ * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
+ */
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 

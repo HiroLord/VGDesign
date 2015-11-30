@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/**
+ * Team: Fireflies
+ * @author: Clayton Pierce, Sarah Alsmiller, Preston Turner, Justin Le, Sam Wood
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class LevelLoader : MonoBehaviour 
@@ -26,7 +31,7 @@ public class LevelLoader : MonoBehaviour
 				p.GetComponent<Rigidbody>().MovePosition(new Vector3(0,1f,6));
 			}
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 9;
-			Application.LoadLevel (1);
+			Application.LoadLevel ("BossLevel");
 		}
 	}
 }
