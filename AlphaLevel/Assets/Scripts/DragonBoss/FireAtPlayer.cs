@@ -56,14 +56,17 @@ public class FireAtPlayer : State<BossAgent> {
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Vector3 relativePos =  origin.position - targetTransform.position;
+		Vector3 lookAt = targetTransform.position;
+		lookAt.y += 1f;
+
+		Vector3 relativePos =  origin.position - lookAt;
 		Quaternion rotation = Quaternion.LookRotation(relativePos);
 		head.rotation = Quaternion.Lerp(head.rotation, rotation, Time.deltaTime);
 
-		Vector3 fireVector = targetTransform.position - origin.position;
-		Debug.DrawLine (origin.position, fireVector);
+		//Vector3 fireVector = targetTransform.position - origin.position;
+		//Debug.DrawLine (origin.position, targetTransform.position);
 		if (fireCooldown <= 0) {
-			Fireball.createFireball(fireball, origin.position, fireVector);
+			Fireball.createFireball(fireball, origin.position, lookAt);
 			fireCooldown = fireTime;
 		}
 		fireCooldown -= 0.1f;
@@ -92,6 +95,7 @@ public class FireAtPlayer : State<BossAgent> {
 		Debug.Log (targetTransform.position);
 		Debug.Log (target.transform.position);
 	}
+
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
 		// Enable this state and grab components
