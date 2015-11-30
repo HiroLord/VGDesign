@@ -12,12 +12,12 @@ public class BossAgent : Entity {
 	public GameObject leftHand;
 	public GameObject rightHand;
 	public GameObject tail;
-	public GameObject fireball;
 	public GameObject[] players;
-	public Fireball fire = null;
+	public GameObject fireball;
 	public GameObject origin;
 	public BossHealth health;
 	public GameObject center;
+	public Transform targetTransform;
 
 	StateMachine<BossAgent> sm;
 
@@ -26,8 +26,6 @@ public class BossAgent : Entity {
 		// Needs to be changed to account for all characters
 		players = GameObject.FindGameObjectsWithTag("Player");
 		sm = new StateMachine<BossAgent> (new Showboating (), this);
-		fire = new Fireball ();
-		fire.fireball = fireball;
 	}
 	
 	// Update is called once per frame

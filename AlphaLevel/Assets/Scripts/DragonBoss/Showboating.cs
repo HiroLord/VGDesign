@@ -42,9 +42,10 @@ public class Showboating : State<BossAgent> {
 	//temporarily does nothing
 	public override void CheckForNewState()
 	{
+		ownerStateMachine.CurrentState = new FireAtPlayer();
 		// If the agent is close to the player then transition into an attack state
 	   //if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 35f)
-		if (timer > 27f)
+		if ((timer >= 8.9f) && (handTimer >= 3.8f))
 		{
 			ownerStateMachine.CurrentState = new FireAtPlayer();
 		}
@@ -58,37 +59,35 @@ public class Showboating : State<BossAgent> {
 		//Debug.Log ("timer");
 		//head.Rotate(Vector3.up * 50 * Time.deltaTime);
 		//leftHand.Translate (Vector3.forward * Time.deltaTime);
-
+		Debug.Log (handTimer);
 		//head animation
-		if (timer < 7.5f) {
+		if (timer < 2.5f) {
 			head.Translate (Vector3.up * Time.deltaTime);
 			head.Rotate (Vector3.left * 10 * Time.deltaTime);
-		} else if (timer < 11.5f) {
+		} else if (timer < 3.1f) {
 			head.Translate (Vector3.down * Time.deltaTime);
 			head.Rotate (Vector3.up * Time.deltaTime * 100);
-
-		} else if (timer < 15.5) {
+		} else if (timer < 3.8f) {
 			head.Translate (Vector3.right * Time.deltaTime);
 			head.Rotate (Vector3.down * Time.deltaTime * 150);
-		} else if (timer < 19.5) {
+		} else if (timer < 5.6f) {
 			head.Translate (Vector3.down * Time.deltaTime);
 			head.Rotate (Vector3.right * 2 * Time.deltaTime);
-		} else if(timer < 28) {
+			head.Rotate (Vector3.up * 2 * Time.deltaTime);
+		} else if(timer < 9f) {
 			//reset for loop
 			head.rotation = Quaternion.Lerp(head.rotation, startRot, Time.deltaTime);
 			head.position = Vector3.Lerp(head.position, startPos, Time.deltaTime);
-		} else {
-			timer = 0f;
 		}
 
 		//hand animation
-		if (handTimer < 5f) {
+		if (handTimer < 2f) {
 			leftHand.Translate (Vector3.up * 2 * Time.deltaTime);
 			rightHand.Translate (Vector3.down * 2 * Time.deltaTime);
-		} else if (handTimer < 10f) {
+		} else if (handTimer < 4f) {
 			leftHand.Translate (Vector3.down * 2 * Time.deltaTime);
 			rightHand.Translate (Vector3.up * 2 * Time.deltaTime);
-		} else if(handTimer < 15) {
+		} else if(handTimer < 4.14f) {
 			//reset for loop
 			leftHand.position = Vector3.Lerp(leftHand.position, leftPos, Time.deltaTime);
 			rightHand.position = Vector3.Lerp(rightHand.position, rightPos, Time.deltaTime);
@@ -107,9 +106,9 @@ public class Showboating : State<BossAgent> {
 		tail.position = pos;
 
 		
-		timer += 0.1f;
-		handTimer += 0.1f;
-		tailTimer += 0.01f;
+		timer += Time.deltaTime;
+		handTimer += Time.deltaTime;
+		tailTimer += Time.deltaTime;
 	
 	}
 

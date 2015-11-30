@@ -7,10 +7,23 @@ using UnityEngine;
 using System.Collections;
 
 public class Fireball : MonoBehaviour {
-	public GameObject fireball;
+	Vector3 dest;
 
-	public void createFireball(Vector3 position, Vector3 velocity) {
+	public static void createFireball(GameObject fireball, Vector3 position, Vector3 destination) {
 		GameObject ball = (GameObject) Instantiate(fireball, position, Quaternion.identity);
-		ball.GetComponent<Rigidbody> ().AddForce (velocity, ForceMode.Impulse);
+		Fireball ballScript = ball.AddComponent<Fireball> ();
+		ballScript.setDestination (destination);
 	}
+
+	void Update() {
+		if (dest != null) {
+			gameObject.transform.position = Vector3.Lerp (gameObject.transform.position,dest,Time.deltaTime);
+		}
+	}
+
+
+	public void setDestination(Vector3 dest) {
+		this.dest = dest;
+	}
+
 }
