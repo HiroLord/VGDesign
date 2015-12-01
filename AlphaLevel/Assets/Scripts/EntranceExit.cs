@@ -8,7 +8,7 @@ using System.Collections;
 
 public class EntranceExit : MonoBehaviour {
 
-    //Test varaible
+    //Test variable
     public bool isExit = false;
 
     //String name of next level
@@ -19,22 +19,35 @@ public class EntranceExit : MonoBehaviour {
     public float z = 0f;
 
     //Cooldown timer
-    public float countdownMax = 1f;
-    private float countdown = 0f;
+    public float introCountdownMax = 1.5f;
+    private float introCountdown = 0f;
+    public float exitCountdownMax = 1.5f;
+    private float exitCountdown = 0f;
 
     GameObject player;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Player");
-        countdown = countdownMax;
+        introCountdown = introCountdownMax;
+        exitCountdown = exitCountdownMax;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if (countdownMax > 0)
+        if (introCountdown > 0)
         {
-            countdown -= Time.deltaTime;
+            introCountdown -= Time.deltaTime;
+        }
+        else if (isExit)
+        {
+            exitCountdown -= Time.deltaTime;
+        }
+
+        if (exitCountdown <= 0)
+        {
+            //Application.LoadLevel(nextLevel);
+            player.transform.position = new Vector3(x, y, z);
         }
 	}
 
@@ -42,21 +55,18 @@ public class EntranceExit : MonoBehaviour {
     {
         if (col.gameObject == player)
         {
-            isExit = true;
-            if (countdown <= 0)
+            if (introCountdown <= 0)
             {
-                //Application.LoadLevel(nextLevel);
-                player.transform.position = new Vector3(x, y, z);
-                countdown = countdownMax;
+                isExit = true;
             }
         }
     }
 
-    void OnCollisionExit(Collision col)
-    {
-        if (col.gameObject == player)
-        {
-            isExit = false;
-        }
-    }
+    //void OnCollisionExit(Collision col)
+    //{
+    //    if (col.gameObject == player)
+    //    {
+    //        isExit = false;
+    //    }
+    //}
 }
