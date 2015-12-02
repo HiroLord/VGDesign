@@ -6,10 +6,11 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 public class Shooting : MonoBehaviour 
 {
 	public Weapon weapon;
+	public List<WeaponItem> weaponItems;
 	float timer;
 	Ray shootRay;
 	RaycastHit shootHit;
@@ -36,6 +37,7 @@ public class Shooting : MonoBehaviour
 		emptyClip = soundEff [1];
 		weapon = new Weapon ("Default", 10, .15f, 100f, 60, 60);
 		weapon.currentAmmo = weapon.maxAmmo;
+		weaponItems = new List<WeaponItem>();
 
 		gunLine = GetComponent<LineRenderer> ();
 
@@ -142,6 +144,12 @@ public class Shooting : MonoBehaviour
 
 	public void changeWeapon(Weapon weapon){
 		this.weapon = weapon;
+	}
+
+	public void addWeaponItem(WeaponItem item){
+		weaponItems.Add (item);
+		item.doItemEffect (weapon);
+		print (weapon.damage);
 	}
 
 }

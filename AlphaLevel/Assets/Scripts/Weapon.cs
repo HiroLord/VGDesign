@@ -50,4 +50,8 @@ public class Weapon{
 		ps.Play ();
 		shot.transform.parent = GameObject.Find ("TempObjects").transform;
 	}
+
+	public void setDamage(int damage){
+		this.damage = damage;
+	}
 }
