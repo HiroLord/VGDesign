@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviour {
 
 	public String IPAddress = "128.61.20.216";
 
-	public OgreBehavior[] enemies;
+	public EnemyNetwork[] enemies;
 
 	public GameObject instance;
 	private GameObject[] players = new GameObject[256];

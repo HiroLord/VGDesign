@@ -31,6 +31,8 @@ public class Movement : MonoBehaviour {
 	private float ccHeight;
 	private float rotSpeed = 1f;
 	public bool backwards = false;
+
+	private int groundMask;
 	
 	//swaps back and forth between third person and perspective
 	public bool inThirdPerson = true;
@@ -53,6 +55,9 @@ public class Movement : MonoBehaviour {
 		spawn = transform.position;
 		RagDoll (false);
 		ccHeight = GetComponent<CapsuleCollider>().height;
+		groundMask = LayerMask.GetMask ("Ground");
+
+		//Physics.IgnoreLayerCollision(LayerMask.GetMask ("Character"), LayerMask.GetMask ("Floor"), true);
 	}
 	
 	public void SetRagDoll(bool rag) {
@@ -129,7 +134,7 @@ public class Movement : MonoBehaviour {
 		
 		//THIS SHOULD ALL BE A SEPERATE CLASS
 		
-		if (Physics.Raycast (new Ray (pos, Vector3.down), out hitInfo, 1.1f, 1 << 11)) {
+		if (Physics.Raycast (new Ray (pos, Vector3.down), out hitInfo, 1.1f, groundMask)) {
 			if (hitInfo.collider.CompareTag ("Ice")) {
 				slide = 1f;
 			} else if (hitInfo.collider.CompareTag("Snow")) {

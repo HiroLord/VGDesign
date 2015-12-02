@@ -146,6 +146,7 @@ public class PlayerInputManager : MonoBehaviour {
 					playerToMouse.y = 0f;
 					
 					transform.rotation = Quaternion.LookRotation (playerToMouse);
+					//floorHit.transform.position = new Vector3(0, transform.position.y + 1f, 0);
 				}
 			}
 			// Rotation

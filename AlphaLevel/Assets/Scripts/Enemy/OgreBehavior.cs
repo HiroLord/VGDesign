@@ -7,10 +7,8 @@ using UnityEngine;
 using System.Collections;
 
 //[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class OgreBehavior : Entity 
+public class OgreBehavior : EnemyNetwork 
 {
-	public Transform currTarget;
-	public int currTargetID;
 	public string enemyType;
 	
 	private Animator anim;
@@ -19,8 +17,6 @@ public class OgreBehavior : Entity
 
 	public float attackDist = 1.2f;
 	public bool playerFound;
-
-	public bool original = true;
 
 	public enum EState : int {Guard=0, OgreAttack=1, OgreDeath=2};
 	private EState currentEState;
@@ -36,7 +32,7 @@ public class OgreBehavior : Entity
 	}
 	private bool changedState = false;
 
-	public bool getChangedState() {
+	public override bool getChangedState() {
 		if (changedState) {
 			changedState = false;
 			return true;
@@ -44,7 +40,7 @@ public class OgreBehavior : Entity
 		return false;
 	}
 
-	public int getEState() {
+	public override int getEState() {
 		return (int)currentEState;
 	}
 
@@ -61,7 +57,7 @@ public class OgreBehavior : Entity
 		currentEnergy = startingEnergy;
 	}
 
-	public void SetFromEState(int st) {
+	public override void SetFromEState(int st) {
 		if (st == (int)EState.Guard) {
 			stateMachine.CurrentState = new Guard ();
 		} else if (st == (int)EState.OgreAttack) {
