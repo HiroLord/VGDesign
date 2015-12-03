@@ -5,14 +5,18 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : Entity {
-
+	List<PlayerItem> playerItems;
+	int defense;
 	// Use this for initialization
 	void Start () 
 	{
+		playerItems = new List<PlayerItem> ();
 		currentEnergy = startingEnergy;
 		currentHealth = startingHealth;
+		defense = 0;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +34,7 @@ public class Player : Entity {
 	{
 		if (isDead)
 			return;
-		currentHealth -= amount;
+		currentHealth -= (amount - defense);
 		
 		if(currentHealth <= 0)
 		{
@@ -49,6 +53,20 @@ public class Player : Entity {
 		currentHealth += amount;
 		if (currentHealth > startingHealth)
 			currentHealth = startingHealth;
+	}
+
+	public void addPlayerItem(PlayerItem item){
+		playerItems.Add (item);
+		item.doItemEffect (this);
+		print (defense);
+	}
+
+	public void setDefense(int defense){
+		this.defense = defense;
+	}
+
+	public int getDefense(){
+		return defense;
 	}
 
 }

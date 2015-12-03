@@ -9,7 +9,9 @@ public class ItemLibrary:MonoBehaviour{
 		weaponItems = new Dictionary<string, WeaponItem> ();
 		playerItems = new Dictionary<string, PlayerItem> ();
 
-		weaponItems.Add ("WeaponPowerUp", new WeaponPowerUpItem ("WeaponPowerUp"));
+		weaponItems.Add ("WeaponPowerUp", new WeaponPowerUpItem ());
+
+		playerItems.Add ("PlayerDefenseUp", new PlayerDefenseUpItem ());
 	}
 
 
