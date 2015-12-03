@@ -122,11 +122,11 @@ public class Shooting : MonoBehaviour
 			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
 			if(enemyHealth != null)
 			{
+				Debug.Log ("Hit");
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
 			}
 			//should be somewhere else I'm sorry
 			if (shootHit.collider.gameObject.tag == ("Dragon")) {
-				Debug.Log ("Hit");
 				shootHit.collider.gameObject.GetComponentInParent<BossHealth>().Damage(10f);
 			}
 			if(weapon.hasEffect){
