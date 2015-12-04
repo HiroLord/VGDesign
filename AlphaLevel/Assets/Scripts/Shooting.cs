@@ -24,6 +24,8 @@ public class Shooting : MonoBehaviour
 	private float cooldown;
 
 	private LineRenderer gunLine;
+	public Material[] gunLineMaterials;
+	public int gunLineMaterial;
 	// ParticleSystem gunParticles;
 	// LineRenderer gunLine;
 	// Light gunLight;
@@ -40,7 +42,6 @@ public class Shooting : MonoBehaviour
 		weaponItems = new List<WeaponItem>();
 
 		gunLine = GetComponent<LineRenderer> ();
-
 		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
 		//print (disp.ToString());
 		// gunLight = GetComponent<Light> ();
@@ -51,6 +52,7 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		gunLine.SetColors(Color.red, Color.green);
 		timer += Time.deltaTime;
 		if (shooting) {
 			if (timer >= weapon.fireRate) {
@@ -120,11 +122,11 @@ public class Shooting : MonoBehaviour
 			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
 			if(enemyHealth != null)
 			{
+				Debug.Log ("Hit");
 				enemyHealth.TakeDamage(weapon.damage, shootHit.point);
 			}
 			//should be somewhere else I'm sorry
 			if (shootHit.collider.gameObject.tag == ("Dragon")) {
-				Debug.Log ("Hit");
 				shootHit.collider.gameObject.GetComponentInParent<BossHealth>().Damage(10f);
 			}
 			if(weapon.hasEffect){
@@ -148,6 +150,9 @@ public class Shooting : MonoBehaviour
 
 	public void addWeaponItem(WeaponItem item){
 		weaponItems.Add (item);
+		if (item is WeaponPowerUpItem) {
+			gunLine.material = gunLineMaterials[1];
+		}
 		item.doItemEffect (weapon);
 		print (weapon.damage);
 	}

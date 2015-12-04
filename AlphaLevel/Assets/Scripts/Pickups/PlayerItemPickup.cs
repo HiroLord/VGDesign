@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerItemPickup : MonoBehaviour {
+public class PlayerItemPickup : Pickup {
 
-	// Use this for initialization
-	void Start () {
-	
+	Player player;
+	public override void OnTriggerEnter(Component other){
+		try{
+			player = other.GetComponentInChildren<Player>();
+		}catch(UnityException e){
+		}
+		string name = this.gameObject.name;
+		name = name.Substring(0,name.IndexOf("Item"));
+		player.addPlayerItem (ItemLibrary.playerItems [name]);
+		GameObject.Destroy (this.gameObject);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
