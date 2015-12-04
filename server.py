@@ -27,7 +27,8 @@ class Client:
         #    return
         if self.socket.socket == None:
             self.disconnect()
-        elif self.canHandle():
+            return
+        while self.canHandle():
             msgID = self.socket.readByte()
             if (msgID == 1):
                 hostCode = ""

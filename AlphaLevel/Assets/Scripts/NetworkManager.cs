@@ -108,7 +108,7 @@ public class NetworkManager : MonoBehaviour {
 				float enemyX = ReadFloat ();
 				float enemyZ = ReadFloat ();
 				float oldEY = enemies[enemyPID].transform.position.y;
-				enemies[enemyPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(enemyX, oldEY, enemyZ));
+				enemies[enemyPID].transform.position = new Vector3(enemyX, oldEY, enemyZ);
 				break;
 			case 8: // Reviving player
 				Debug.Log ("Reviving player!");

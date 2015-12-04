@@ -12,11 +12,13 @@ public abstract class EnemyNetwork : Entity {
 	public abstract int getEState();
 
 	private bool needUpdate;
-	private float updateTimer = 0;
+	private float updateTimer = 0f;
 
 	protected void Update() {
-		if (updateTimer > 60) {
+		if (updateTimer > 60f * Time.deltaTime) {
+			Debug.Log ("Ready!");
 			needUpdate = true;
+			updateTimer = 0f;
 		}
 		updateTimer += Time.deltaTime;
 	}
