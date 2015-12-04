@@ -6,12 +6,11 @@ from wsserver import *
 
 from time import sleep
 
-def setupMessages():
-    m1 = createMsgStruct(1, False)
-    m1.addString()
+class Game:
 
-    i1 = createMsgStruct(1, True)
-    i1.addChars(2)
+    def __init__(self, hostCode):
+        self.hostCode = hostCode
+        self.players = players
 
 class Client:
 
@@ -19,8 +18,8 @@ class Client:
         self.socket = socket
         self.pID = pID
 
-        self.x = 0;
-        self.y = 0;
+        self.x = 0
+        self.y = 0
         self.confirmed = False
     
     def handle(self):
@@ -28,9 +27,14 @@ class Client:
         #    return
         if self.socket.socket == None:
             self.disconnect()
-        elif self.canHandle():
+            return
+        while self.canHandle():
             msgID = self.socket.readByte()
             if (msgID == 1):
+                hostCode = ""
+                for _ in range(4):
+                    hostCode += str(self.socket.readByte())
+                print("Host code:", hostCode);
                 self.confirm()
             elif (msgID == 2):
                 print("Updated position.")
@@ -85,6 +89,24 @@ class Client:
                         client.socket.writeByte(enemyHID)
                         client.socket.writeByte(enemyDHealth)
 
+            elif (msgID == 7):
+                enemyPID = self.socket.readByte()
+                enemyX = self.socket.readFloat()
+                enemyZ = self.socket.readFloat()
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(7)
+                        client.socket.writeByte(enemyPID)
+                        client.socket.writeFloat(enemyX)
+                        client.socket.writeFloat(enemyZ)
+
+            elif (msgID == 8):
+                revID = self.socket.readByte()
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(8)
+                        client.socket.writeByte(revID)
+
 
 
     def canHandle(self):
@@ -94,7 +116,7 @@ class Client:
         print(msgID)
         size = 256
         if (msgID == 1):
-            size = 0
+            size = 5
         elif(msgID == 2):
             size = 9
         elif(msgID == 3):
@@ -105,6 +127,10 @@ class Client:
             size = 3
         elif(msgID == 6):
             size = 2
+        elif(msgID == 7):
+            size = 9
+        elif(msgID == 8):
+            size = 1
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):
@@ -155,7 +181,6 @@ def main():
     global gameStarted
     global stage
     try:
-        setupMessages()
         server = startServer(25001)
         while True:
             newClient = handleNetwork()
