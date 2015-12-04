@@ -77,11 +77,16 @@ public class Movement : MonoBehaviour {
 	}
 	
 	public void Kill() {
+		GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.None;
 		setDead (true);
 	}
 	
 	public void Revive() {
+		GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
 		setDead (false);
+		Entity e = GetComponent<Entity> ();
+		e.currentHealth = e.startingHealth;
+		e.isDead = false;
 	}
 	
 	public void setDead(bool dead) {
@@ -103,6 +108,11 @@ public class Movement : MonoBehaviour {
 				//continue;
 			}
 			body.isKinematic = !rag;
+			if (rag) {
+				body.interpolation = RigidbodyInterpolation.None;
+			} else {
+				body.interpolation = RigidbodyInterpolation.Interpolate;
+			}
 		}
 		GetComponent<Rigidbody> ().isKinematic = rag;
 		foreach (Collider c in GetComponentsInChildren<Collider> ()) {

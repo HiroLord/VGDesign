@@ -40,6 +40,10 @@ public class PlayerInputManager : MonoBehaviour {
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
 	}
+
+	public Movement getMove() {
+		return move;
+	}
 	
 	public bool ReviveBtn() {
 		return reviveBtn;
@@ -52,59 +56,50 @@ public class PlayerInputManager : MonoBehaviour {
 	void Update () {
 		if (ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.A))
 			Debug.Log ("A");
-		if (isPlayer && !move.GetDead()) {
+		if (isPlayer) {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
-			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickX);
-			float yaxis = -ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
-			if (Mathf.Abs(xaxis) > 0.5f) {
-				h = Mathf.Max (Mathf.Min(xaxis, 1f), -1f);
+			float xaxis = ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickX);
+			float yaxis = -ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickY);
+			if (Mathf.Abs (xaxis) > 0.5f) {
+				h = Mathf.Max (Mathf.Min (xaxis, 1f), -1f);
 			} else { 
 				h = 0;
 			}
 			if (Mathf.Abs (yaxis) > 0.5f) {
-				v = -Mathf.Max (Mathf.Min(yaxis, 1f), -1f);
+				v = -Mathf.Max (Mathf.Min (yaxis, 1f), -1f);
 			} else {
 				v = 0;
 			}
+
+			if (Input.GetKey ("space") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
+				shooting = true;
+			} else {
+				shooting = false;
+			}
+
+			if (move.GetDead ()) {
+				h = 0;
+				v = 0;
+				shooting = false;
+			}
+
 			if (h != oldH || v != oldV) {
 				oldH = h;
 				oldV = v;
 				needsUpdate = true;
 			}
-			
-			if (Input.GetKey ("space") || ControlInputWrapper.GetButton(ControlInputWrapper.Buttons.RightBumper)) {
-				shooting = true;
-			} else {
-				shooting = false;
-			}
-			
+
 			if (oldShooting != shooting) {
 				needsUpdate = true;
 				oldShooting = shooting;
 			}
 			
-			//move into player health script
-			/*
-			if (Input.GetKey ("k")) {
-				move.SetRagDoll (true);
-			} else if (Input.GetKey ("l")){
-				move.SetRagDoll (false);
-			}
-			*/
-			
-			if (Input.GetKey ("r")) {
+			if (Input.GetKey ("q")) {
 				reviveBtn = true;
 			} else {
 				reviveBtn = false;
 			}
-
-			/*
-			if (shooting) {
-				h = 0;
-				v = 0;
-			}
-			*/
 		}
 
 		GetComponentInChildren<Shooting> ().setShooting (shooting);
@@ -118,7 +113,7 @@ public class PlayerInputManager : MonoBehaviour {
 		} else {
 			cc.height = ccHeight;
 		}*/
-		
+	
 		move.Move (h, v);
 		Turning ();
 		movement = move.getMove ();

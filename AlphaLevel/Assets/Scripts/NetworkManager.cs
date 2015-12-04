@@ -12,12 +12,12 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
-	public String IPAddress = "128.61.20.216";
+	public String IPAddress = "128.61.31.181";
 
 	public EnemyNetwork[] enemies;
 
 	public GameObject instance;
-	private GameObject[] players = new GameObject[256];
+	private PlayerInputManager[] players = new PlayerInputManager[256];
 	public PlayerInputManager player;
 	
 	private TcpClient client;
@@ -53,13 +53,17 @@ public class NetworkManager : MonoBehaviour {
 			case 254:
 				// Send our information
 				WriteByte (1);
+				WriteByte (9);
+				WriteByte (2);
+				WriteByte (1);
+				WriteByte (8);
 				break;
-			case 1:
+			case 1: // My own player ID
 				int pID = ReadByte();
 				player.playerID = pID;
-				players[pID] = player.gameObject;
+				players[pID] = player;
 				break;
-			case 2:
+			case 2: // Updating player position
 				int newPID = ReadByte ();
 				float newX = ReadFloat ();
 				float oldY = players[newPID].transform.position.y;
@@ -68,21 +72,21 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
 				players[newPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(newX, oldY, newZ));
 				break;
-			case 3:
+			case 3: // Player is moving or stopping
 				int movPID = ReadByte ();
 				float newH = ReadFloat ();
 				float newV = ReadFloat ();
 				int newShoot = ReadByte();
 				if (players[movPID] == null) { break; }
-				players[movPID].GetComponent<PlayerInputManager>().setInputs(newH, newV, newShoot);
+				players[movPID].setInputs(newH, newV, newShoot);
 				break;
-			case 4:
+			case 4: // Player is turning
 				int turnPID = ReadByte ();
 				float newTurn = ReadFloat ();
 				if (players[turnPID] == null) { break; }
-				players[turnPID].GetComponent<PlayerInputManager>().setRotation(newTurn);
+				players[turnPID].setRotation(newTurn);
 				break;
-			case 5:
+			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
 				int enemyTargetID = ReadByte();
@@ -92,21 +96,36 @@ public class NetworkManager : MonoBehaviour {
 					enemies[enemyID].currTarget = players[enemyTargetID].transform;
 				}
 				break;
-			case 6:
+			case 6: // Enemy health has changed
 				int enemyHID = ReadByte ();
 				int enemyDH = ReadByte ();
 				Debug.Log ("Enemy health change " + enemyDH.ToString());
 				enemies[enemyHID].changeHealth(-enemyDH);
 				break;
-			case 10:
+			case 7: // Enemy position update
+				Debug.Log ("New enemy position.");
+				int enemyPID = ReadByte ();
+				float enemyX = ReadFloat ();
+				float enemyZ = ReadFloat ();
+				float oldEY = enemies[enemyPID].transform.position.y;
+				enemies[enemyPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(enemyX, oldEY, enemyZ));
+				break;
+			case 8: // Reviving player
+				Debug.Log ("Reviving player!");
+				int revID = ReadByte ();
+				if (revID > 0) {
+					players[revID].getMove().Revive();
+				}
+				break;
+			case 10: // New player
 				Debug.Log("New Player!");
 				int crPID = ReadByte ();
 				float crX = ReadFloat ();
 				float crZ = ReadFloat ();
 				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
-				players[crPID] = newPlayer;
-				newPlayer.GetComponent<PlayerInputManager>().playerID = crPID;
-				newPlayer.GetComponent<PlayerInputManager>().setIsPlayer(false);
+				players[crPID] = newPlayer.GetComponent<PlayerInputManager>();
+				players[crPID].playerID = crPID;
+				players[crPID].setIsPlayer(false);
 				break;
 			}
 		}
@@ -119,7 +138,7 @@ public class NetworkManager : MonoBehaviour {
 				Connect (true);
 			} else if (Input.GetKey ("c")) {
 				Connect (false);
-				foreach (OgreBehavior enemy in enemies) {
+				foreach (EnemyNetwork enemy in enemies) {
 					enemy.original = false;
 				}
 			}
@@ -148,9 +167,13 @@ public class NetworkManager : MonoBehaviour {
 			
 			if (player.ReviveBtn()) {
 				// Find a player that needs reviving and do just that
-				/*for (GameObject pl : players) {
-
-				}*/
+				foreach (PlayerInputManager pl in players) {
+					if (pl.getMove ().GetDead()) {
+						pl.getMove().Revive();
+						WriteByte (8);
+						WriteByte (player.playerID);
+					}
+				}
 			}
 			
 			timeBetween -= Time.deltaTime;
@@ -172,6 +195,12 @@ public class NetworkManager : MonoBehaviour {
 						WriteByte (e);
 						WriteByte (enemies[e].getEState());
 						WriteByte (enemies[e].currTargetID);
+					}
+					if (enemies[e].NeedsUpdate()) {
+						WriteByte (7);
+						WriteByte (e);
+						WriteFloat (enemies[e].transform.position.x);
+						WriteFloat (enemies[e].transform.position.z);
 					}
 					// Not right; needs to be changed to enemies on non-hosts
 					int deltaHealth = 0; //enemies[e].getHealthDiff();
@@ -212,6 +241,12 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 6:
 			sizeM = 2;
+			break;
+		case 7:
+			sizeM = 9;
+			break;
+		case 8:
+			sizeM = 1;
 			break;
 		case 10:
 			sizeM = 9;

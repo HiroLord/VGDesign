@@ -70,6 +70,7 @@ public class OgreBehavior : EnemyNetwork
 	// Update is called once per frame
 	void Update () 
 	{
+		base.Update ();
 		stateMachine.Update ();
 	}
 
