@@ -15,8 +15,7 @@ public abstract class EnemyNetwork : Entity {
 	private float updateTimer = 0f;
 
 	protected void Update() {
-		if (updateTimer > 60f * Time.deltaTime) {
-			Debug.Log ("Ready!");
+		if (updateTimer > 90f * Time.deltaTime) {
 			needUpdate = true;
 			updateTimer = 0f;
 		}

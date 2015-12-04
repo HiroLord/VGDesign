@@ -178,7 +178,7 @@ public class NetworkManager : MonoBehaviour {
 			
 			timeBetween -= Time.deltaTime;
 			if (timeBetween < Time.deltaTime) {
-				timeBetween = 45 * Time.deltaTime;
+				timeBetween = 60 * Time.deltaTime;
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);

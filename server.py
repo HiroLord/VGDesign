@@ -116,7 +116,7 @@ class Client:
         print(msgID)
         size = 256
         if (msgID == 1):
-            size = 4
+            size = 5
         elif(msgID == 2):
             size = 9
         elif(msgID == 3):
