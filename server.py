@@ -72,13 +72,11 @@ class Client:
             elif (msgID == 5):
                 enemyID = self.socket.readByte()
                 enemyEState = self.socket.readByte()
-                enemyTargetID = self.socket.readByte()
                 for client in clients:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(5)
                         client.socket.writeByte(enemyID)
                         client.socket.writeByte(enemyEState)
-                        client.socket.writeByte(enemyTargetID)
 
             elif (msgID == 6):
                 enemyHID = self.socket.readByte()
@@ -124,7 +122,7 @@ class Client:
         elif(msgID == 4):
             size = 4
         elif(msgID == 5):
-            size = 3
+            size = 2
         elif(msgID == 6):
             size = 2
         elif(msgID == 7):
