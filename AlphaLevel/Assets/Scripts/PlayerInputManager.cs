@@ -29,6 +29,7 @@ public class PlayerInputManager : MonoBehaviour {
 	private Vector3 movement;
 	
 	private bool reviveBtn = false;
+	private Shooting shooter;
 	
 	int floorMask;
 	float camRayLength = 100f;
@@ -39,6 +40,8 @@ public class PlayerInputManager : MonoBehaviour {
 		anim = move.anim;
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
+
+		shooter = GetComponentInChildren<Shooting> ();
 	}
 
 	public Movement getMove() {
@@ -51,6 +54,7 @@ public class PlayerInputManager : MonoBehaviour {
 
 	public void setIsPlayer(bool isPlay) {
 		this.isPlayer = isPlay;
+		this.shooter.setOriginal (isPlay);
 	}
 	
 	void Update () {
@@ -102,7 +106,17 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 		}
 
-		GetComponentInChildren<Shooting> ().setShooting (shooting);
+		if (!move.GetDead ()) {
+			if (Input.GetKey ("k")) {
+				move.Kill ();
+			}
+		} else {
+			if (Input.GetKey ("q")) {
+				move.Revive();
+			}
+		}
+
+		shooter.setShooting (shooting);
 		
 		//this should be somewhere else
 		/*CapsuleCollider cc = GetComponent<CapsuleCollider> ();
@@ -113,7 +127,7 @@ public class PlayerInputManager : MonoBehaviour {
 		} else {
 			cc.height = ccHeight;
 		}*/
-	
+
 		move.Move (h, v);
 		Turning ();
 		movement = move.getMove ();
@@ -123,9 +137,11 @@ public class PlayerInputManager : MonoBehaviour {
 		if (spdir.x == 0) {
 			spdir.x = 0.05f;
 		}
-		anim.SetFloat ("SpeedAmnt", (spdir.x));
-		anim.SetFloat ("Direction", spdir.y, .25f, Time.deltaTime);
-		anim.SetBool ("Shooting", shooting);
+		if (!move.GetDead ()) {
+			anim.SetFloat ("SpeedAmnt", (spdir.x));
+			anim.SetFloat ("Direction", spdir.y, .25f, Time.deltaTime);
+			anim.SetBool ("Shooting", shooting);
+		}
 	}
 	
 	public void Turning() {
@@ -154,7 +170,7 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 10 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 30 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}
