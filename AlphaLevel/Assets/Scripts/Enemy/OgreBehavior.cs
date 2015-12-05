@@ -63,7 +63,7 @@ public class OgreBehavior : EnemyNetwork
 			stateMachine.CurrentState = new Guard ();
 		} else if (st == (int)EState.OgreAttack) {
 			stateMachine.CurrentState = new OgreAttack ();
-		} else if (st == (int)EState.OgreDeath) {
+		}else if (st == (int)EState.OgreDeath) {
 			stateMachine.CurrentState = new OgreDeath ();
 		}
 	}
