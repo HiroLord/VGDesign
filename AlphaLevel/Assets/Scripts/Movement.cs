@@ -150,10 +150,10 @@ public class Movement : MonoBehaviour {
 			} else if (hitInfo.collider.CompareTag("Snow")) {
 				overSnow = true;
 			}
-			AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
-			if (sources.Length > 0) {
-				footstepSound = sources [0];
-			}
+			//AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
+			//if (sources.Length > 0) {
+			//	footstepSound = sources [0];
+			//}
 			gravity = 0;
 		}
 		

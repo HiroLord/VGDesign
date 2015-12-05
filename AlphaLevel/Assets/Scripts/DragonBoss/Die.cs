@@ -34,6 +34,8 @@ public class Die : State<BossAgent> {
 		parts[2] = owner.rightHand;
 		parts[3] = owner.tail;
 
+		parts[1].GetComponent<Collider> ().isTrigger = false;
+		parts[2].GetComponent<Collider> ().isTrigger = false;
 		foreach (GameObject prop in parts) {
 			Rigidbody rigid = prop.GetComponent<Rigidbody>();
 			rigid.constraints = RigidbodyConstraints.None;

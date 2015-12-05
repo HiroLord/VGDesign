@@ -18,5 +18,10 @@ public class HealthSlider : MonoBehaviour {
 		
 	void Update() {
 		slider.value = entity.currentHealth;
+		if (entity.currentHealth < 0) {
+			slider.enabled = false;
+		} else if ((slider.enabled = false) && (entity.currentHealth > 0)) {
+			slider.enabled = true;
+		}
 	}
 }
