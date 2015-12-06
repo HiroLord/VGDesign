@@ -54,7 +54,7 @@ public class PlayerInputManager : MonoBehaviour {
 	float camRayLength = 100f;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		move = gameObject.GetComponent<Movement>();
 		anim = move.anim;
 		movement = move.getMove ();

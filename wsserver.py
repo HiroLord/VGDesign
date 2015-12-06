@@ -256,9 +256,9 @@ class Socket:
     def parseData(self, data):
         if (len(data) < 1):
             return
-        print("New data:", data)
+        #print("New data:", data)
         self.data.extend(data);
-        print("Add data:", self.data)
+        #print("Add data:", self.data)
 
     def disconnect(self):
         print("Lost client.")

@@ -105,7 +105,7 @@ public class NetworkManager : MonoBehaviour {
 			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
-				//Debug.Log ("New enemy state " + eState.ToString());
+				Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
 				break;
 			case 6: // Enemy health has changed
@@ -213,6 +213,7 @@ public class NetworkManager : MonoBehaviour {
 				// Not right; needs to be changed to enemies on non-hosts
 				int deltaHealth = enemies[e].getHealthDiff();
 				if (deltaHealth != 0) {
+					Debug.Log ("Health changed!");
 					WriteByte(6);
 					WriteByte(e);
 					WriteFloat(deltaHealth);
@@ -287,10 +288,10 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		}
 		if (sizeM < recvBufferSize) {
-			Debug.Log("Handling message " + msgID.ToString());
+			//Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
-		Debug.Log ("Waiting to handle message " + msgID.ToString ());
+		//Debug.Log ("Waiting to handle message " + msgID.ToString ());
 		return false;
 	}
 	

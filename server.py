@@ -38,13 +38,11 @@ class Client:
                 print("Host code:", hostCode);
                 self.confirm()
             elif (msgID == 2):
-                print("Updated position.")
                 # Player position
                 self.x = self.socket.readFloat();
                 self.y = self.socket.readFloat();
                 for client in clients:
                     if client.pID != self.pID and client.confirmed:
-                        print("Sending new position.")
                         client.socket.writeByte(2)
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.x)
@@ -55,7 +53,6 @@ class Client:
                 self.shoot = self.socket.readByte();
                 for client in clients:
                     if client.pID != self.pID and client.confirmed:
-                        print("Sending new movement.")
                         client.socket.writeByte(3)
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.h)
@@ -81,7 +78,7 @@ class Client:
 
             elif (msgID == 6):
                 enemyHID = self.socket.readByte()
-                enemyDHealth = self.socket.readByte()
+                enemyDHealth = self.socket.readFloat()
                 for client in clients:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(6)
@@ -133,7 +130,7 @@ class Client:
         elif(msgID == 5):
             size = 2
         elif(msgID == 6):
-            size = 2
+            size = 5
         elif(msgID == 7):
             size = 9
         elif(msgID == 8):
