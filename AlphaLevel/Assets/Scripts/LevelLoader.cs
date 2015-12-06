@@ -13,10 +13,20 @@ public class LevelLoader : MonoBehaviour
 
 	private int count = 0;
 
+	private bool host = true;
+	public bool Ready = false;
+	public bool Host {
+		set {
+			this.host = value;
+		}
+	}
+
 	// Use this for initialization
-	void Start () 
-	{
-	
+	void Start () {
+		GameObject obj = GameObject.Find ("NetworkManager");
+		if (obj) {
+			obj.GetComponent<NetworkManager> ().levelLoader = this;
+		}
 	}
 	
 	// Update is called once per frame
@@ -24,7 +34,7 @@ public class LevelLoader : MonoBehaviour
 	
 	}
 
-	void Transititon() {
+	public void Transititon() {
 		GameObject obj = GameObject.Find ("NetworkManager");
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().ClearEnemies();
@@ -44,16 +54,17 @@ public class LevelLoader : MonoBehaviour
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player") {
+		if(host && col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
+				Ready = true;
 				Transititon();
 			}
 		}
 	}
 
 	void OnTriggerExit(Collider col) {
-		if (col.tag == "Player") {
+		if (host && col.tag == "Player") {
 			count -= 1;
 		}
 	}

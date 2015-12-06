@@ -112,6 +112,11 @@ class Client:
                         client.socket.writeByte(enemyAID)
                         client.socket.writeByte(enemyTarget)
 
+            elif (msgID == 11):
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(11)
+
 
 
     def canHandle(self):
@@ -137,6 +142,8 @@ class Client:
             size = 1
         elif(msgID == 9):
             size = 2
+        elif(msgID == 11):
+            size = 0
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):

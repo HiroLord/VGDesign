@@ -28,6 +28,8 @@ public class NetworkManager : MonoBehaviour {
 	private bool host = true;
 	
 	private float timeBetween = 1;
+
+	public LevelLoader levelLoader;
 	
 	// Use this for initialization
 	void Start () {
@@ -50,6 +52,7 @@ public class NetworkManager : MonoBehaviour {
 	
 	void Connect(bool host) {
 		this.host = host;
+		levelLoader.Host = host;
 		try {
 			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
@@ -147,6 +150,9 @@ public class NetworkManager : MonoBehaviour {
 				players[crPID].PlayerID = crPID;
 				players[crPID].setIsPlayer(false);
 				break;
+			case 11:
+				levelLoader.Transititon();
+				break;
 			}
 		}
 	}
@@ -171,6 +177,10 @@ public class NetworkManager : MonoBehaviour {
 				for (int i=0; i<recvBufferSize; i++) {
 					data+= " " + recvBuffer[i].ToString();
 				}
+			}
+
+			if (levelLoader.Ready) {
+				WriteByte (11);
 			}
 			
 			if (player.NeedsUpdate()) {
@@ -281,6 +291,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 10:
 			sizeM = 9;
+			break;
+		case 11:
+			sizeM = 0;
 			break;
 		default:
 			Debug.Log ("MSG ID " + msgID.ToString() + " does not exist.");
