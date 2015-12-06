@@ -37,7 +37,7 @@ public abstract class EnemyNetwork : Entity {
 	}
 
 	void OnDestroy() {
-		//GameObject.Find ("NetworkManager").GetComponent<NetworkManager> ().RemoveEnemy (this);
+		GameObject.Find ("NetworkManager").GetComponent<NetworkManager> ().RemoveEnemy (this);
 	}
 
 	protected void Update() {
