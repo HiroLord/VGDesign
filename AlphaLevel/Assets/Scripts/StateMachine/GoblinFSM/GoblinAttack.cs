@@ -60,7 +60,7 @@ public class GoblinAttack : State<GoblinBehavior>
 		Quaternion rot = Quaternion.LookRotation(ownerObject.currTarget.position - ownerObject.transform.position);
 		ownerObject.transform.rotation = Quaternion.Slerp(ownerObject.transform.rotation, rot, Time.deltaTime * damping);
 		
-		if(agent.remainingDistance <= ownerObject.attackDist && !attacking && agent.remainingDistance != 0)
+		if(agent.remainingDistance <= ownerObject.attackDist-1 && !attacking && agent.remainingDistance != 0)
 		{
 			speed = 0.0f;
 			anim.SetFloat ("Speed", speed);
@@ -93,13 +93,13 @@ public class GoblinAttack : State<GoblinBehavior>
 		}
 		
 		if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.7f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f &&
-		   !anim.IsInTransition(0))
+		   !anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsTag ("Attack"))
 		{
 			float dist = Vector3.Distance (ownerObject.transform.position, ownerObject.currTarget.position);
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
 				Player ent = ownerObject.currTarget.GetComponent<Player>();
-				ent.TakeDamage (30, ownerObject.transform.position);
+				ent.TakeDamage (5, ownerObject.transform.position);
 				hitPlayer = true;
 			}
 		}
@@ -114,7 +114,9 @@ public class GoblinAttack : State<GoblinBehavior>
 		anim = owner.GetComponent<Animator> ();
 		agent = owner.GetComponent<NavMeshAgent>();
 		anim.SetFloat ("Speed", 1.0f);
-		ownerObject.currTarget = GameObject.FindWithTag ("Player").transform;
+		GameObject[] obs = GameObject.FindGameObjectsWithTag ("Player");
+		int index = Random.Range (0, obs.Length);
+		ownerObject.currTarget = obs[index].transform;
 		//AudioSource groan = ownerObject.GetComponent<AudioSource> ();
 //		if(groan != null)
 //			groan.PlayOneShot (groan.clip, 1.0f);

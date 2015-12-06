@@ -29,7 +29,8 @@ public class EnemySpawner : MonoBehaviour
 		}
 		else
 		{
-			Instantiate (enemy, spawnPoints [0].position, spawnPoints [0].rotation);
+			int index = Random.Range (0, spawnPoints.Length);
+			Instantiate (enemy, spawnPoints [index].position, spawnPoints [index].rotation);
 		}
 	}
 }

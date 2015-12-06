@@ -93,7 +93,7 @@ public class OgreAttack : State<OgreBehavior>
 		}
 
 		if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.7f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f &&
-		   !anim.IsInTransition(0))
+		   !anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsTag ("Attack"))
 		{
 			float dist = Vector3.Distance (ownerObject.transform.position, ownerObject.currTarget.position);
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
