@@ -31,7 +31,7 @@ public abstract class EnemyNetwork : Entity {
 			obj.GetComponent<NetworkManager> ().AddEnemy (this);
 		}
 		currentHealth = 0;
-		changeHealthHard (-startingHealth);
+		changeHealthHard (startingHealth);
 		currentEnergy = startingEnergy;
 
 	}
