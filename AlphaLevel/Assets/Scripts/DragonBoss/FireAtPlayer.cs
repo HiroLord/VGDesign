@@ -36,7 +36,7 @@ public class FireAtPlayer : State<BossAgent> {
 	float timer;
 	float handTimer;
 	float fireCooldown;
-	float fireTime = 2.0f;
+	float fireTime = 3.5f;
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
@@ -51,7 +51,7 @@ public class FireAtPlayer : State<BossAgent> {
 		}
 
 		if (timer > 7f) {
-			//ownerStateMachine.CurrentState = new HandSpinDeath();
+			ownerStateMachine.CurrentState = new HandSpinDeath();
 		}
 	}
 	// Update is called once per frame

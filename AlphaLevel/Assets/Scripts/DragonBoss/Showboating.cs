@@ -42,7 +42,7 @@ public class Showboating : State<BossAgent> {
 	//temporarily does nothing
 	public override void CheckForNewState()
 	{
-		ownerStateMachine.CurrentState = new FireAtPlayer();
+		//ownerStateMachine.CurrentState = new FireAtPlayer();
 		// If the agent is close to the player then transition into an attack state
 	   //if(Vector3.Distance(ownerObject.player.transform.position, ownerObject.transform.position) < 35f)
 		if ((timer >= 8.9f) && (handTimer >= 3.8f))

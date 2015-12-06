@@ -52,7 +52,6 @@ public class GoblinBehavior : EnemyNetwork
 		anim = GetComponent<Animator> ();
 		
 		CurrTargetID = 0;
-		
 		stateMachine = new StateMachine<GoblinBehavior> (new GoblinAttack (), this);
 		currentHealth = startingHealth;
 		currentEnergy = startingEnergy;

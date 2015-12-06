@@ -8,6 +8,8 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour 
 {
+	public string nextLevel;
+	public Vector3 startPosition;
 
 	// Use this for initialization
 	void Start () 
@@ -23,15 +25,19 @@ public class LevelLoader : MonoBehaviour
 
 	void OnTriggerEnter(Collider col)
 	{
-		print ("Collision!");
 		if(col.tag == "Player")
 		{
 			foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) {
-				p.transform.position = new Vector3(0, 1f, 6);
-				p.GetComponent<Rigidbody>().MovePosition(new Vector3(0,1f,6));
+				//p.transform.position = new Vector3(0, 1f, 6);
+				p.transform.position = startPosition;
+				p.GetComponent<Rigidbody>().MovePosition(startPosition);
 			}
-			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 9;
-			Application.LoadLevel ("BossLevel");
+			if (nextLevel == "BossLevel") {
+				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 9;
+			} else if (nextLevel == "PostBoss") {
+				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 5;
+			}
+			Application.LoadLevel (nextLevel);
 		}
 	}
 }
