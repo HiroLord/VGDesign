@@ -106,13 +106,21 @@ class Client:
                         client.socket.writeByte(8)
                         client.socket.writeByte(revID)
 
+            elif (msgID == 9):
+                enemyAID = self.socket.readByte()
+                enemyTarget = self.socket.readByte()
+                for client in clients:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(9)
+                        client.socket.writeByte(enemyAID)
+                        client.socket.writeByte(enemyTarget)
+
 
 
     def canHandle(self):
         if (self.socket.hasData() == False):
             return False
         msgID = self.socket.peekByte()
-        print(msgID)
         size = 256
         if (msgID == 1):
             size = 5
@@ -130,10 +138,14 @@ class Client:
             size = 9
         elif(msgID == 8):
             size = 1
+        elif(msgID == 9):
+            size = 2
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):
+            print("Parsing MsgID", msgID)
             return True
+        print("Waiting to parse MsgID", msgID)
         return False
 
     # This is called to confirm to the client that they have been accepted,

@@ -127,6 +127,7 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log ("New enemy target " + enemyTargetID.ToString());
 				if (enemyTargetID > 0) {
 					enemies[enemyTID].currTarget = players[enemyTargetID].transform;
+					enemies[enemyTID].CurrTargetID = enemyTID;
 				}
 				break;
 			case 10: // New player
