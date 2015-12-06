@@ -60,7 +60,7 @@ public class PlayerInputManager : MonoBehaviour {
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
 
-		shooter = GetComponentInChildren<Shooting> ();
+		this.shooter = GetComponentInChildren<Shooting> ();
 	}
 
 	public void SnapTo(float newX, float newZ) {
@@ -193,7 +193,7 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 30 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 20 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}
