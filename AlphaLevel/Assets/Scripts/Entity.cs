@@ -20,11 +20,15 @@ public abstract class Entity : MonoBehaviour {
 		return diff;
 	}
 
+	public void changeHealthHard(int deltaH) {
+		changeHealth (deltaH);
+		oldHealth = currentHealth;
+	}
+
 	public void changeHealth(int deltaH) {
 		if (isDead)
 			return;
 		currentHealth -= deltaH;
-		oldHealth = currentHealth;
 		checkDeath ();
 	}
 

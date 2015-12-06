@@ -117,6 +117,7 @@ public class GoblinAttack : State<GoblinBehavior>
 		GameObject[] obs = GameObject.FindGameObjectsWithTag ("Player");
 		int index = Random.Range (0, obs.Length);
 		ownerObject.currTarget = obs[index].transform;
+		ownerObject.CurrTargetID = ownerObject.currTarget.gameObject.GetComponent<PlayerInputManager>().PlayerID;
 		//AudioSource groan = ownerObject.GetComponent<AudioSource> ();
 //		if(groan != null)
 //			groan.PlayOneShot (groan.clip, 1.0f);

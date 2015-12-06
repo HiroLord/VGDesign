@@ -112,7 +112,7 @@ public class NetworkManager : MonoBehaviour {
 				int enemyHID = ReadByte ();
 				int enemyDH = ReadByte ();
 				Debug.Log ("Enemy health change " + enemyDH.ToString());
-				enemies[enemyHID].changeHealth(-enemyDH);
+				enemies[enemyHID].changeHealthHard(-enemyDH);
 				break;
 			case 7: // Enemy position update
 				Debug.Log ("New enemy position.");
