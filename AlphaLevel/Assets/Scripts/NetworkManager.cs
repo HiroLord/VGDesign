@@ -9,12 +9,13 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections;
+using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour {
 
 	public String IPAddress = "128.61.31.181";
 
-	public EnemyNetwork[] enemies;
+	public List<EnemyNetwork> enemies = new List<EnemyNetwork> ();
 
 	public GameObject instance;
 	private PlayerInputManager[] players = new PlayerInputManager[256];
@@ -31,6 +32,14 @@ public class NetworkManager : MonoBehaviour {
 	void Start () {
 		Debug.Log ("NetworkingManager initialized");
 		DontDestroyOnLoad (gameObject);
+	}
+
+	public void AddEnemy(EnemyNetwork enemy) {
+		enemies.Add (enemy);
+	}
+
+	public void RemoveEnemy(EnemyNetwork enemy) {
+		enemies.Remove (enemy);
 	}
 	
 	void Connect(bool host) {
@@ -89,12 +98,8 @@ public class NetworkManager : MonoBehaviour {
 			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
-				int enemyTargetID = ReadByte();
 				Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
-				if (enemyTargetID > 0) {
-					enemies[enemyID].currTarget = players[enemyTargetID].transform;
-				}
 				break;
 			case 6: // Enemy health has changed
 				int enemyHID = ReadByte ();
@@ -113,8 +118,15 @@ public class NetworkManager : MonoBehaviour {
 			case 8: // Reviving player
 				Debug.Log ("Reviving player!");
 				int revID = ReadByte ();
-				if (revID > 0) {
-					players[revID].getMove().Revive();
+				if (players[revID] == null) { break; }
+				players[revID].getMove().Revive();
+				break;
+			case 9: // Enemy state has changed
+				int enemyTID = ReadByte();
+				int enemyTargetID = ReadByte();
+				Debug.Log ("New enemy target " + enemyTargetID.ToString());
+				if (enemyTargetID > 0) {
+					enemies[enemyTID].currTarget = players[enemyTargetID].transform;
 				}
 				break;
 			case 10: // New player
@@ -169,9 +181,11 @@ public class NetworkManager : MonoBehaviour {
 				// Find a player that needs reviving and do just that
 				foreach (PlayerInputManager pl in players) {
 					if (pl.getMove ().GetDead()) {
-						pl.getMove().Revive();
-						WriteByte (8);
-						WriteByte (player.playerID);
+						if (Vector3.Distance(pl.transform.position, player.transform.position) < 3f) {
+							pl.getMove().Revive();
+							WriteByte (8);
+							WriteByte (player.playerID);
+						}
 					}
 				}
 			}
@@ -184,7 +198,7 @@ public class NetworkManager : MonoBehaviour {
 				WriteFloat (player.transform.position.z);
 			}
 
-			for (int e=0; e<enemies.Length; e++) {
+			for (int e=0; e<enemies.Count; e++) {
 				if (enemies[e] == null) {
 					continue;
 				}
@@ -194,7 +208,12 @@ public class NetworkManager : MonoBehaviour {
 						WriteByte (5);
 						WriteByte (e);
 						WriteByte (enemies[e].getEState());
-						WriteByte (enemies[e].currTargetID);
+						//WriteByte (enemies[e].currTargetID);
+					}
+					if (enemies[e].TargetChanged()) {
+						WriteByte (9);
+						WriteByte (e);
+						WriteByte (enemies[e].CurrTargetID);
 					}
 					if (enemies[e].NeedsUpdate()) {
 						WriteByte (7);
@@ -203,7 +222,7 @@ public class NetworkManager : MonoBehaviour {
 						WriteFloat (enemies[e].transform.position.z);
 					}
 					// Not right; needs to be changed to enemies on non-hosts
-					int deltaHealth = 0; //enemies[e].getHealthDiff();
+					int deltaHealth = enemies[e].getHealthDiff();
 					if (deltaHealth > 0) {
 						WriteByte(6);
 						WriteByte(e);
@@ -237,7 +256,7 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 5;
 			break;
 		case 5:
-			sizeM = 3;
+			sizeM = 2;
 			break;
 		case 6:
 			sizeM = 2;
@@ -247,6 +266,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 8:
 			sizeM = 1;
+			break;
+		case 9:
+			sizeM = 2;
 			break;
 		case 10:
 			sizeM = 9;

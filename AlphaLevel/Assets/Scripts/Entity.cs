@@ -38,8 +38,7 @@ public abstract class Entity : MonoBehaviour {
 	}
 
 	protected virtual void checkDeath() {
-		if(currentHealth <= 0)
-		{
+		if(currentHealth <= 0) {
 			currentHealth = 0;
 			isDead = true;
 		}

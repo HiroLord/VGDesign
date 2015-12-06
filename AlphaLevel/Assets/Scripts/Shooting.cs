@@ -20,6 +20,7 @@ public class Shooting : MonoBehaviour
 	AudioSource emptyClip;
 	public Text disp;
 	private bool shooting;
+	private bool original = true;
 
 	private float cooldown;
 
@@ -30,6 +31,10 @@ public class Shooting : MonoBehaviour
 	// LineRenderer gunLine;
 	// Light gunLight;
 	// float effectsDisplayTime = 0.2f;
+
+	public void setOriginal(bool o) {
+		original = o;
+	}
 
 	void Awake()
 	{
@@ -74,7 +79,7 @@ public class Shooting : MonoBehaviour
 			cooldown -= Time.deltaTime;
 		}
 
-		if (disp != null && GetComponentInParent<PlayerInputManager>().isPlayer)
+		if (original && disp != null)
 		{
 			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
@@ -117,7 +122,7 @@ public class Shooting : MonoBehaviour
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
 
-		if(Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
+		if(original && Physics.Raycast (shootRay, out shootHit, weapon.range, shootableMask))
 		{
 			Entity enemyHealth = shootHit.collider.GetComponent<Entity>();
 			if(enemyHealth != null)

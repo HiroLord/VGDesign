@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 /**
@@ -42,7 +43,12 @@ public class Movement : MonoBehaviour {
 	}
 	
 	private AudioSource footstepSound;
-	
+
+	private Rigidbody gun;
+
+	private Dictionary<string, Vector3> savedLocalPositions = new Dictionary<string, Vector3>();
+	private Dictionary<string, Quaternion> savedLocalRotations = new Dictionary<string, Quaternion>();
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -93,8 +99,25 @@ public class Movement : MonoBehaviour {
 		isDead = dead;
 		RagDoll (isDead);
 	}
-	
+
+	private bool save = false;
+
 	void RagDoll(bool rag) {
+		Transform[] transforms = GetComponentsInChildren<Transform> ();
+		Vector3 lp = new Vector3();
+		if (!save) {
+			foreach (Transform body in transforms) {
+				if (body.name == "M4MB") {
+					gun = body.GetComponent<Rigidbody>();
+				}
+				Debug.Log (body.name);
+				if (!savedLocalPositions.ContainsKey(body.name)) {
+					savedLocalPositions.Add (body.name, body.transform.localPosition);
+					savedLocalRotations.Add (body.name, body.transform.localRotation);
+				}
+			}
+			save = true;
+		}
 		if (rag) {
 			anim.enabled = false;
 			isDead = true;
@@ -104,22 +127,14 @@ public class Movement : MonoBehaviour {
 		}
 		Rigidbody[] bodies = GetComponentsInChildren<Rigidbody> ();
 		foreach (Rigidbody body in bodies) {
-			if (body.name == "Player") { 
-				//continue;
-			}
 			body.isKinematic = !rag;
-			if (rag) {
-				body.interpolation = RigidbodyInterpolation.None;
-			} else {
-				body.interpolation = RigidbodyInterpolation.Interpolate;
-			}
 		}
 		GetComponent<Rigidbody> ().isKinematic = rag;
 		foreach (Collider c in GetComponentsInChildren<Collider> ()) {
 			c.enabled = rag;
 		}
 		GetComponent<CapsuleCollider>().enabled = !rag;
-		GetComponent<Rigidbody> ().isKinematic = rag;
+		//GetComponent<Rigidbody> ().isKinematic = rag;
 	}
 	
 	void FootStep() {
@@ -129,6 +144,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	public void Move(float h, float v) {
+
 		acceleration.Set (h, movement.y, v);
 		acceleration = acceleration.normalized;
 		
@@ -150,10 +166,10 @@ public class Movement : MonoBehaviour {
 			} else if (hitInfo.collider.CompareTag("Snow")) {
 				overSnow = true;
 			}
-			AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
-			if (sources.Length > 0) {
-				footstepSound = sources [0];
-			}
+			//AudioSource[] sources = hitInfo.transform.gameObject.GetComponents<AudioSource> ();
+			//if (sources.Length > 0) {
+			//	footstepSound = sources [0];
+			//}
 			gravity = 0;
 		}
 		

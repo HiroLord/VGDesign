@@ -8,16 +8,33 @@ using System.Collections;
 
 public class FireballCollide : MonoBehaviour {
 
-	// Use this for initialization
+	void OnTriggerEnter(Collider c) {
+		if (c.gameObject.tag == "Ground") {
+			explode ();
+		}
+		
+		if (c.gameObject.tag == "Player") {
+			Entity player = c.gameObject.GetComponent<Entity>();
+			player.TakeDamage (50, gameObject.transform.position);
+			explode ();
+		}
+	}
+
 	void OnCollisionEnter(Collision c) {
 		if (c.gameObject.tag == "Ground") {
-			Destroy (gameObject);
+			explode ();
 		}
 
 		if (c.gameObject.tag == "Player") {
 			Entity player = c.gameObject.GetComponent<Entity>();
 			player.TakeDamage (50, gameObject.transform.position);
-			Destroy (gameObject);
+			explode ();
 		}
+	}
+
+	void explode() {
+		var exp = GetComponent<ParticleSystem>();
+		exp.Play();
+		Destroy(gameObject, exp.duration);
 	}
 }
