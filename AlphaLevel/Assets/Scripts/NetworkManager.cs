@@ -78,7 +78,7 @@ public class NetworkManager : MonoBehaviour {
 				float oldY = players[newPID].transform.position.y;
 				float newZ = ReadFloat ();
 				if (players[newPID] == null) { break; }
-				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
+				//Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
 				players[newPID].SnapTo(newX, newZ);
 				break;
 			case 3: // Player is moving or stopping
@@ -98,7 +98,7 @@ public class NetworkManager : MonoBehaviour {
 			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
-				Debug.Log ("New enemy state " + eState.ToString());
+				//Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
 				break;
 			case 6: // Enemy health has changed
@@ -185,7 +185,7 @@ public class NetworkManager : MonoBehaviour {
 						if (Vector3.Distance(pl.transform.position, player.transform.position) < 3f) {
 							pl.getMove().Revive();
 							WriteByte (8);
-							WriteByte (player.PlayerID);
+							WriteByte (pl.PlayerID);
 						}
 					}
 				}

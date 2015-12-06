@@ -193,7 +193,7 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 30 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 20 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}
