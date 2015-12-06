@@ -12,7 +12,7 @@ public class PlayerItemPickup : Pickup {
 		string name = this.gameObject.name;
 		name = name.Substring(0,name.IndexOf("Item"));
 		player.addPlayerItem (ItemLibrary.playerItems [name]);
-		GameObject.Destroy (this.gameObject);
+		destroyObject ();
 	}
 	
 }
