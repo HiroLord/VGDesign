@@ -79,7 +79,7 @@ public class NetworkManager : MonoBehaviour {
 				float newZ = ReadFloat ();
 				if (players[newPID] == null) { break; }
 				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
-				players[newPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(newX, oldY, newZ));
+				players[newPID].SnapTo(newX, newZ);
 				break;
 			case 3: // Player is moving or stopping
 				int movPID = ReadByte ();
@@ -283,7 +283,7 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
-		Debug.Log ("Cannot handle message " + msgID.ToString ());
+		Debug.Log ("Waiting to handle message " + msgID.ToString ());
 		return false;
 	}
 	

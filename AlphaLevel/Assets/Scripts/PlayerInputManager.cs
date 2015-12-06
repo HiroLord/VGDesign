@@ -63,6 +63,10 @@ public class PlayerInputManager : MonoBehaviour {
 		shooter = GetComponentInChildren<Shooting> ();
 	}
 
+	public void SnapTo(float newX, float newZ) {
+		move.SetOffset (newX, newZ);
+	}
+
 	public Movement getMove() {
 		return move;
 	}
