@@ -11,5 +11,6 @@ public class WeaponPowerUpItem : WeaponItem {
 //		shooting.weapon.setDamage (shooting.weapon.damage + powerUp);
 	}
 	public override void removeItemEffect(Weapon weapon){
+		weapon.setDamage (weapon.damage / powerUp);
 	}
 }

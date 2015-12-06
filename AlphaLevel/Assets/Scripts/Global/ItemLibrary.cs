@@ -14,6 +14,16 @@ public class ItemLibrary:MonoBehaviour{
 		playerItems.Add ("PlayerDefenseUp", new PlayerDefenseUpItem ());
 	}
 
+	
+	public static void createDefenseUpItem(Vector3 vector){
+		GameObject item = GameObject.Instantiate(Resources.Load("PlayerDefenseUpItem", typeof(GameObject)),vector,Quaternion.LookRotation(Vector3.up)) as GameObject;
+		item.name = "PlayerDefenseUpItem";
+	}
+
+	public static void createRandomItem(Vector3 vector){
+		string name = (Random.Range (0, 100) > 50) ? "PlayerDefenseUpItem" : "WeaponPowerUpItem"; 
+		GameObject item = GameObject.Instantiate(Resources.Load(name, typeof(GameObject)),vector,Quaternion.LookRotation(Vector3.up)) as GameObject;
+	}
 
 }
 
