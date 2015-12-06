@@ -86,7 +86,7 @@ class Client:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(6)
                         client.socket.writeByte(enemyHID)
-                        client.socket.writeByte(enemyDHealth)
+                        client.socket.writeFloat(enemyDHealth)
 
             elif (msgID == 7):
                 enemyPID = self.socket.readByte()

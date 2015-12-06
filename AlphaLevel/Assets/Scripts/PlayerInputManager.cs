@@ -61,6 +61,7 @@ public class PlayerInputManager : MonoBehaviour {
 		floorMask = LayerMask.GetMask ("Floor");
 
 		this.shooter = GetComponentInChildren<Shooting> ();
+		Debug.Log ("Set Shooter.");
 	}
 
 	public void SnapTo(float newX, float newZ) {

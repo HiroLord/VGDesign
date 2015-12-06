@@ -110,9 +110,9 @@ public class NetworkManager : MonoBehaviour {
 				break;
 			case 6: // Enemy health has changed
 				int enemyHID = ReadByte ();
-				int enemyDH = ReadByte ();
+				float enemyDH = ReadFloat ();
 				Debug.Log ("Enemy health change " + enemyDH.ToString());
-				enemies[enemyHID].changeHealthHard(-enemyDH);
+				enemies[enemyHID].changeHealthHard(-((int)enemyDH));
 				break;
 			case 7: // Enemy position update
 				Debug.Log ("New enemy position.");
@@ -212,10 +212,10 @@ public class NetworkManager : MonoBehaviour {
 				}
 				// Not right; needs to be changed to enemies on non-hosts
 				int deltaHealth = enemies[e].getHealthDiff();
-				if (deltaHealth > 0) {
+				if (deltaHealth != 0) {
 					WriteByte(6);
 					WriteByte(e);
-					WriteByte(deltaHealth);
+					WriteFloat(deltaHealth);
 				}
 				if (enemies[e].original) {
 					if (enemies[e].getChangedState()) {
