@@ -47,10 +47,11 @@ public class VampBehavior : EnemyNetwork
 	// Use this for initialization
 	void Start () 
 	{
+		base.Start ();
 		agent = GetComponent<NavMeshAgent> ();
 		anim = GetComponent<Animator> ();
 		
-		currTargetID = 0;
+		CurrTargetID = 0;
 		
 		stateMachine = new StateMachine<VampBehavior> (new VampGuard (), this);
 		currentHealth = startingHealth;
