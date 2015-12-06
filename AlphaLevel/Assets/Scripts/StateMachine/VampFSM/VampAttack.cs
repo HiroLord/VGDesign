@@ -47,7 +47,7 @@ public class VampAttack : State<VampBehavior>
 		Quaternion rot = Quaternion.LookRotation(ownerObject.currTarget.position - ownerObject.transform.position);
 		ownerObject.transform.rotation = Quaternion.Slerp(ownerObject.transform.rotation, rot, Time.deltaTime * damping);
 		
-		if(agent.remainingDistance <= ownerObject.attackDist && !attacking && agent.remainingDistance != 0)
+		if(agent.remainingDistance <= ownerObject.attackDist-1 && !attacking && agent.remainingDistance != 0)
 		{
 			parts[0].Clear ();
 			parts[0].Play ();
@@ -119,6 +119,7 @@ public class VampAttack : State<VampBehavior>
 		parts = owner.GetComponentsInChildren<ParticleSystem> ();
 		lgt = owner.GetComponentInChildren <Light> ();
 		lgt.enabled = false;
+		agent.SetDestination (owner.currTarget.position);
 		//part = owner.GetComponentInChildren<ParticleSystem> ();
 //		AudioSource groan = ownerObject.GetComponent<AudioSource> ();
 //		if(groan != null)
