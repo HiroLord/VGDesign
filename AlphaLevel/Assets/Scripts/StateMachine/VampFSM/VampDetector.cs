@@ -22,7 +22,7 @@ public class VampDetector : MonoBehaviour {
 			ogre.playerFound = true;
 			//player = col.transform;
 			ogre.currTarget = col.transform;
-			ogre.currTargetID = col.gameObject.GetComponent<PlayerInputManager>().playerID;
+			ogre.CurrTargetID = col.gameObject.GetComponent<PlayerInputManager>().PlayerID;
 		}
 	}
 }
