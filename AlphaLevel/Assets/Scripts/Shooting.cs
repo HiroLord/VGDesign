@@ -21,6 +21,8 @@ public class Shooting : MonoBehaviour
 	public Text disp;
 	private bool shooting;
 	private bool original = true;
+	private int clipAmount;
+	public RawImage[] clips;
 
 	private float cooldown;
 
@@ -47,6 +49,7 @@ public class Shooting : MonoBehaviour
 		weaponItems = new List<WeaponItem>();
 
 		gunLine = GetComponent<LineRenderer> ();
+		clipAmount = clips.Length;
 		//disp = GameObject.Find ("Text").GetComponent<GUIText> ();
 		//print (disp.ToString());
 		// gunLight = GetComponent<Light> ();
@@ -83,11 +86,18 @@ public class Shooting : MonoBehaviour
 			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
 		//debug stuff
-		if (Input.GetKey ("r")) {
-			weapon.currentAmmo = weapon.maxAmmo;
+		if (Input.GetKeyUp ("r")) {
+			if(clipAmount > 0 && clips.Length != 0)
+			{
+				weapon.currentAmmo = weapon.maxAmmo;
+				clipAmount--;
+				clips[clipAmount].enabled = false;
+			}
 		} else if (Input.GetKeyDown ("x")) {
 			ItemLibrary.createRandomItem(this.gameObject.transform.position);
 		}
+//		if (Input.GetKeyUp ("m"))
+//			addClip ();
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{
 //				DisableEffects ();
@@ -160,6 +170,14 @@ public class Shooting : MonoBehaviour
 		}
 		item.doItemEffect (weapon);
 		print (weapon.damage);
+	}
+
+	public void addClip()
+	{
+		int cLen = clips.Length;
+		if (clipAmount == cLen && clips.Length == 0)
+			return;
+		clips [clipAmount++].enabled = true;
 	}
 
 }
