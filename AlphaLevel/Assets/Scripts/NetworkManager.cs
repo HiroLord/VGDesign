@@ -69,7 +69,7 @@ public class NetworkManager : MonoBehaviour {
 				break;
 			case 1: // My own player ID
 				int pID = ReadByte();
-				player.playerID = pID;
+				player.PlayerID = pID;
 				players[pID] = player;
 				break;
 			case 2: // Updating player position
@@ -136,7 +136,7 @@ public class NetworkManager : MonoBehaviour {
 				float crZ = ReadFloat ();
 				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
 				players[crPID] = newPlayer.GetComponent<PlayerInputManager>();
-				players[crPID].playerID = crPID;
+				players[crPID].PlayerID = crPID;
 				players[crPID].setIsPlayer(false);
 				break;
 			}
@@ -184,7 +184,7 @@ public class NetworkManager : MonoBehaviour {
 						if (Vector3.Distance(pl.transform.position, player.transform.position) < 3f) {
 							pl.getMove().Revive();
 							WriteByte (8);
-							WriteByte (player.playerID);
+							WriteByte (player.PlayerID);
 						}
 					}
 				}

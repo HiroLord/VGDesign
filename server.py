@@ -11,6 +11,7 @@ class Game:
     def __init__(self, hostCode):
         self.hostCode = hostCode
         self.players = players
+        self.playerID;
 
 class Client:
 
