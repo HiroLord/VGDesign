@@ -10,7 +10,26 @@ public class PlayerInputManager : MonoBehaviour {
 	
 	public bool isPlayer;
 
-	public int playerID;
+	private int playerID;
+	public int PlayerID {
+		get {
+			return playerID;
+		}
+		set {
+			playerID = value;
+			Color newColor = new Color(0,0,0);
+			if (playerID == 1) {
+				newColor = new Color(.8f, .8f, .8f);
+			} else if (playerID == 2) {
+				newColor = new Color(1f, .3f, .3f);
+			} else if (playerID == 3) {
+				newColor = new Color(.3f, .1f, .3f);
+			} else if (playerID == 4) {
+				newColor = new Color(.3f, .4f, 1f);
+			}
+			GetComponentInChildren<Light> ().color = newColor;
+		}
+	}
 	
 	//I feel like this should be in a seperate networking manager tbh
 	private float h;
