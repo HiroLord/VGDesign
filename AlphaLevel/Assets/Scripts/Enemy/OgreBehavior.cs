@@ -54,8 +54,6 @@ public class OgreBehavior : EnemyNetwork
 		CurrTargetID = 0;
 
 		stateMachine = new StateMachine<OgreBehavior> (new Guard (), this);
-		currentHealth = startingHealth;
-		currentEnergy = startingEnergy;
 	}
 
 	public override void SetFromEState(int st) {

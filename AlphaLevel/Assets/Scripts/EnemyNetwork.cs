@@ -30,6 +30,10 @@ public abstract class EnemyNetwork : Entity {
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().AddEnemy (this);
 		}
+		currentHealth = 0;
+		changeHealthHard (-startingHealth);
+		currentEnergy = startingEnergy;
+
 	}
 
 	void OnDestroy() {
