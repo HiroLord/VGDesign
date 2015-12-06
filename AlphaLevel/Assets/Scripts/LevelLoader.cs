@@ -25,6 +25,10 @@ public class LevelLoader : MonoBehaviour
 	}
 
 	void Transititon() {
+		GameObject obj = GameObject.Find ("NetworkManager");
+		if (obj) {
+			obj.GetComponent<NetworkManager> ().ClearEnemies();
+		}
 		foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) {
 			//p.transform.position = new Vector3(0, 1f, 6);
 			p.transform.position = startPosition;

@@ -25,6 +25,7 @@ public class NetworkManager : MonoBehaviour {
 	private bool connected = false;
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
+	private bool host = true;
 	
 	private float timeBetween = 1;
 	
@@ -36,13 +37,19 @@ public class NetworkManager : MonoBehaviour {
 
 	public void AddEnemy(EnemyNetwork enemy) {
 		enemies.Add (enemy);
+		enemy.original = host;
 	}
 
 	public void RemoveEnemy(EnemyNetwork enemy) {
 		enemies.Remove (enemy);
 	}
+
+	public void ClearEnemies() {
+		enemies.Clear();
+	}
 	
 	void Connect(bool host) {
+		this.host = host;
 		try {
 			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
@@ -203,6 +210,13 @@ public class NetworkManager : MonoBehaviour {
 				if (enemies[e] == null) {
 					continue;
 				}
+				// Not right; needs to be changed to enemies on non-hosts
+				int deltaHealth = enemies[e].getHealthDiff();
+				if (deltaHealth > 0) {
+					WriteByte(6);
+					WriteByte(e);
+					WriteByte(deltaHealth);
+				}
 				if (enemies[e].original) {
 					if (enemies[e].getChangedState()) {
 						Debug.Log ("State change!");
@@ -221,13 +235,6 @@ public class NetworkManager : MonoBehaviour {
 						WriteByte (e);
 						WriteFloat (enemies[e].transform.position.x);
 						WriteFloat (enemies[e].transform.position.z);
-					}
-					// Not right; needs to be changed to enemies on non-hosts
-					int deltaHealth = enemies[e].getHealthDiff();
-					if (deltaHealth > 0) {
-						WriteByte(6);
-						WriteByte(e);
-						WriteByte(deltaHealth);
 					}
 				}
 			}
