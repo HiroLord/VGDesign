@@ -32,7 +32,7 @@ public abstract class Entity : MonoBehaviour {
 		checkDeath ();
 	}
 
-	public void TakeDamage(int amount, Vector3 hitPoint)
+	public virtual void TakeDamage(int amount, Vector3 hitPoint)
 	{
 		if (isDead)
 			return;
@@ -48,21 +48,21 @@ public abstract class Entity : MonoBehaviour {
 		}
 	}
 	
-	public void TakeEnergy(int amount)
+	public virtual void TakeEnergy(int amount)
 	{
 		currentEnergy -= amount;
 		if (currentEnergy < 0)
 			currentEnergy = 0;
 	}
 	
-	public void GiveHealth(int amount)
+	public virtual void GiveHealth(int amount)
 	{
 		currentHealth += amount;
 		if (currentHealth > startingHealth)
 			currentHealth = startingHealth;
 	}
 	
-	public void GiveEnergy(int amount)
+	public virtual void GiveEnergy(int amount)
 	{
 		currentEnergy += amount;
 		if (currentEnergy > startingEnergy)
