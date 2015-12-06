@@ -10,6 +10,7 @@ public class PlayerDefenseUpItem : PlayerItem
 		player.setDefense (player.getDefense () + defenseUp);
 	}
 	public override void removeItemEffect(Player player){
+		player.setDefense (player.getDefense () - defenseUp);
 	}
 }
 

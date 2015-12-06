@@ -57,7 +57,6 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		gunLine.SetColors(Color.red, Color.green);
 		timer += Time.deltaTime;
 		if (shooting) {
 			if (timer >= weapon.fireRate) {
@@ -83,10 +82,11 @@ public class Shooting : MonoBehaviour
 		{
 			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
-
-		if(Input.GetKey("r"))
-		{
+		//debug stuff
+		if (Input.GetKey ("r")) {
 			weapon.currentAmmo = weapon.maxAmmo;
+		} else if (Input.GetKeyDown ("x")) {
+			ItemLibrary.createRandomItem(this.gameObject.transform.position);
 		}
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)
 //			{

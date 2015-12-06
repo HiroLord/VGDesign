@@ -25,6 +25,7 @@ public class NetworkManager : MonoBehaviour {
 	private bool connected = false;
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
+	private bool host = true;
 	
 	private float timeBetween = 1;
 	
@@ -36,13 +37,19 @@ public class NetworkManager : MonoBehaviour {
 
 	public void AddEnemy(EnemyNetwork enemy) {
 		enemies.Add (enemy);
+		enemy.original = host;
 	}
 
 	public void RemoveEnemy(EnemyNetwork enemy) {
 		enemies.Remove (enemy);
 	}
+
+	public void ClearEnemies() {
+		enemies.Clear();
+	}
 	
 	void Connect(bool host) {
+		this.host = host;
 		try {
 			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
@@ -78,8 +85,8 @@ public class NetworkManager : MonoBehaviour {
 				float oldY = players[newPID].transform.position.y;
 				float newZ = ReadFloat ();
 				if (players[newPID] == null) { break; }
-				Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
-				players[newPID].GetComponent<Rigidbody> ().MovePosition(new Vector3(newX, oldY, newZ));
+				//Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
+				players[newPID].SnapTo(newX, newZ);
 				break;
 			case 3: // Player is moving or stopping
 				int movPID = ReadByte ();
@@ -98,7 +105,7 @@ public class NetworkManager : MonoBehaviour {
 			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
-				Debug.Log ("New enemy state " + eState.ToString());
+				//Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
 				break;
 			case 6: // Enemy health has changed
@@ -185,7 +192,7 @@ public class NetworkManager : MonoBehaviour {
 						if (Vector3.Distance(pl.transform.position, player.transform.position) < 3f) {
 							pl.getMove().Revive();
 							WriteByte (8);
-							WriteByte (player.PlayerID);
+							WriteByte (pl.PlayerID);
 						}
 					}
 				}
@@ -202,6 +209,13 @@ public class NetworkManager : MonoBehaviour {
 			for (int e=0; e<enemies.Count; e++) {
 				if (enemies[e] == null) {
 					continue;
+				}
+				// Not right; needs to be changed to enemies on non-hosts
+				int deltaHealth = enemies[e].getHealthDiff();
+				if (deltaHealth > 0) {
+					WriteByte(6);
+					WriteByte(e);
+					WriteByte(deltaHealth);
 				}
 				if (enemies[e].original) {
 					if (enemies[e].getChangedState()) {
@@ -221,13 +235,6 @@ public class NetworkManager : MonoBehaviour {
 						WriteByte (e);
 						WriteFloat (enemies[e].transform.position.x);
 						WriteFloat (enemies[e].transform.position.z);
-					}
-					// Not right; needs to be changed to enemies on non-hosts
-					int deltaHealth = enemies[e].getHealthDiff();
-					if (deltaHealth > 0) {
-						WriteByte(6);
-						WriteByte(e);
-						WriteByte(deltaHealth);
 					}
 				}
 			}
@@ -283,7 +290,7 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
-		Debug.Log ("Cannot handle message " + msgID.ToString ());
+		Debug.Log ("Waiting to handle message " + msgID.ToString ());
 		return false;
 	}
 	

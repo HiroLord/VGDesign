@@ -18,6 +18,10 @@ public class Movement : MonoBehaviour {
 	
 	private Vector3 movement;
 	private Vector3 acceleration;
+
+	private float xOffset = 0;
+	private float zOffset = 0;
+
 	private float accAmnt = 0.01f;
 	private Rigidbody playerRigidbody;
 	private float speed;
@@ -64,6 +68,11 @@ public class Movement : MonoBehaviour {
 		groundMask = LayerMask.GetMask ("Ground");
 
 		//Physics.IgnoreLayerCollision(LayerMask.GetMask ("Character"), LayerMask.GetMask ("Floor"), true);
+	}
+
+	public void SetOffset(float newX, float newZ) {
+		xOffset = newX - transform.position.x;
+		zOffset = newZ - transform.position.z;
 	}
 	
 	public void SetRagDoll(bool rag) {
@@ -182,8 +191,18 @@ public class Movement : MonoBehaviour {
 		movement.y = gravity / Time.deltaTime;
 
 		LerpRotation ();
-		
-		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime));
+
+		float xMove = xOffset / 4f;
+		xOffset -= xMove;
+		float zMove = zOffset / 4f;
+		zOffset -= zMove;
+		if (Mathf.Abs (xOffset) < .1f) {
+			xOffset = 0f;
+		}
+		if (Mathf.Abs (zOffset) < .1f) {
+			zOffset = 0f;
+		}
+		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime) + new Vector3(xMove, 0, zMove));
 		Vector3 vl = playerRigidbody.velocity;
 		float newSpeed = 1f - (vl.magnitude);
 		if (newSpeed < 0.1f) {

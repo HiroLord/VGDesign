@@ -63,6 +63,10 @@ public class PlayerInputManager : MonoBehaviour {
 		shooter = GetComponentInChildren<Shooting> ();
 	}
 
+	public void SnapTo(float newX, float newZ) {
+		move.SetOffset (newX, newZ);
+	}
+
 	public Movement getMove() {
 		return move;
 	}
@@ -189,7 +193,7 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 
 			turnTime += Time.deltaTime;
-			if (transform.rotation.y != oldRotation && turnTime > 30 * Time.deltaTime) {
+			if (transform.rotation.y != oldRotation && turnTime > 20 * Time.deltaTime) {
 				oldRotation = transform.rotation.y;
 				turnUpdate = true;
 			}
