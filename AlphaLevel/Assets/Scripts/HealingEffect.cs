@@ -5,11 +5,12 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HealingEffect : MonoBehaviour {
 
 	ParticleSystem particles;
-	Player guy;
+	List<Player> guys = new List<Player>();
 	bool healing;
 	// Use this for initialization
 	void Start () 
@@ -22,16 +23,21 @@ public class HealingEffect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (healing)
-			guy.GiveHealth (1);
+		if (healing) {
+			foreach(Player guy in guys) {
+				guy.GiveHealth (1);
+			}
+		}
 	}
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player")
+		if (col.tag == "Player")
 		{
-			particles.Play ();
-			guy = col.GetComponent<Player>();
+			if (guys.Count == 0) {
+				particles.Play ();
+			}
+			guys.Add(col.GetComponent<Player>());
 			healing = true;
 		}
 	}
@@ -40,8 +46,10 @@ public class HealingEffect : MonoBehaviour {
 	{
 		if (col.tag == "Player")
 		{
-			particles.Stop ();
-			guy = null;
+			guys.Remove(col.GetComponent<Player>());
+			if (guys.Count == 0) {
+				particles.Stop ();
+			}
 			healing = false;
 		}
 

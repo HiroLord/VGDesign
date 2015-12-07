@@ -140,6 +140,14 @@ class Client:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(11)
 
+            elif (msgID == 12):
+                health = self.socket.readByte()
+                for client in self.host.players:
+                    if (client.pID != self.pID and client.confirmed):
+                        client.socket.writeByte(12)
+                        client.socket.writeByte(self.pID)
+                        client.socket.writeByte(health)
+
 
 
     def canHandle(self):
@@ -167,6 +175,8 @@ class Client:
             size = 2
         elif(msgID == 11):
             size = 0
+        elif(msgID == 12):
+            size = 1
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):

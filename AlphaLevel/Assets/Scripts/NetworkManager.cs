@@ -25,6 +25,7 @@ public class NetworkManager : MonoBehaviour {
 	public GameObject instance;
 	private PlayerInputManager[] players = new PlayerInputManager[256];
 	public PlayerInputManager player;
+	private Entity playerEntity;
 	
 	private TcpClient client;
 	private bool connected = false;
@@ -80,6 +81,7 @@ public class NetworkManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level) {
 		if (level == 1) {
 			player = GameObject.Find ("Player").GetComponent<PlayerInputManager> ();
+			playerEntity = player.GetComponent<Entity>();
 			player.PlayerID = myPlayerID;
 			players[myPlayerID] = player;
 			if (connected) {
@@ -216,6 +218,16 @@ public class NetworkManager : MonoBehaviour {
 			case 11:
 				levelLoader.StartFade();
 				break;
+			case 12: // Player health
+				Debug.Log ("Player health changed.");
+				int pHID = ReadByte ();
+				int pHealth = ReadByte ();
+				if (players[pHID] == null) { break; }
+				if (players[pHID].getMove().GetDead() && pHealth > 0) {
+					players[pHID].getMove().Revive();
+				}
+				players[pHID].GetComponent<Entity>().CurrentHealth = pHealth;
+				break;
 			}
 		}
 	}
@@ -260,7 +272,12 @@ public class NetworkManager : MonoBehaviour {
 				WriteByte (4);
 				WriteFloat (player.getRotation());
 			}
-			
+
+			if (playerEntity.getHealthDiff() != 0) {
+				WriteByte (12);
+				WriteByte (playerEntity.currentHealth);
+			}
+
 			if (player.ReviveBtn()) {
 				// Find a player that needs reviving and do just that
 				foreach (PlayerInputManager pl in players) {
@@ -360,6 +377,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 11:
 			sizeM = 0;
+			break;
+		case 12:
+			sizeM = 2;
 			break;
 		default:
 			Debug.Log ("MSG ID " + msgID.ToString() + " does not exist.");
