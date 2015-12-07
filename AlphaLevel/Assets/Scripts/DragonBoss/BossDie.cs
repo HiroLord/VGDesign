@@ -30,6 +30,7 @@ public class BossDie : State<BossAgent> {
 		parts = new GameObject[4];
 		// Enable this state and grab components
 		base.OnEnable (owner, newStateMachine);
+		owner.CurrentHealth = 0;
 		parts [0] = owner.head;
 		parts[1] = owner.leftHand;
 		parts[2] = owner.rightHand;
