@@ -19,6 +19,14 @@ public class LevelLoader : MonoBehaviour
 	private bool startFade;
 	private float startAlpha;
 
+	private bool host = true;
+	public bool Ready = false;
+	public bool Host {
+		set {
+			this.host = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -30,8 +38,18 @@ public class LevelLoader : MonoBehaviour
 		fade.color = Color.black;
 		setAlpha = 0.0f;
 		startAlpha = 1.0f;
+		GameObject obj2 = GameObject.Find ("NetworkManager");
+		if (obj2) {
+			obj2.GetComponent<NetworkManager> ().levelLoader = this;
+		}
+
 	}
-	
+
+	public void StartFade()
+	{
+		startFade = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(setFade)
@@ -67,7 +85,7 @@ public class LevelLoader : MonoBehaviour
 		}
 	}
 
-	void Transititon() {
+	public void Transititon() {
 		GameObject obj = GameObject.Find ("NetworkManager");
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().ClearEnemies();
@@ -87,17 +105,18 @@ public class LevelLoader : MonoBehaviour
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player") {
+		if(host && col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
 				//Transititon();
 				setFade = true;
+				Ready = true;
 			}
 		}
 	}
 
 	void OnTriggerExit(Collider col) {
-		if (col.tag == "Player") {
+		if (host && col.tag == "Player") {
 			count -= 1;
 		}
 	}
