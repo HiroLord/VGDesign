@@ -96,10 +96,10 @@ public class GoblinAttack : State<GoblinBehavior>
 		   !anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsTag ("Attack"))
 		{
 			float dist = Vector3.Distance (ownerObject.transform.position, ownerObject.currTarget.position);
-			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
+			if(dist < ownerObject.attackDist + 0.7f && !hitPlayer)
 			{
 				Player ent = ownerObject.currTarget.GetComponent<Player>();
-				ent.TakeDamage (5, ownerObject.transform.position);
+				ent.TakeDamage (15, ownerObject.transform.position);
 				hitPlayer = true;
 			}
 		}
