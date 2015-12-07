@@ -14,6 +14,7 @@ public class LevelLoader : MonoBehaviour
 	public Vector3 startPosition;
 
 	private GameObject[] players;
+	private Text fail;
 	private int count = 0;
 	public Image fade;
 	private bool setFade;
@@ -44,6 +45,12 @@ public class LevelLoader : MonoBehaviour
 	void Start () 
 	{
 		players = GameObject.FindGameObjectsWithTag ("Player");
+		GameObject f = GameObject.FindGameObjectWithTag ("Failure");
+		if(f != null)
+		{
+			print ("Got text");
+			fail = f.GetComponent<Text>();
+		}
 		bg = GameObject.Find ("BackgroundMusic").GetComponent<BackgroundMusicManager>();
 		GameObject obj = GameObject.FindWithTag ("Fade");
 		if (obj != null)
@@ -80,9 +87,12 @@ public class LevelLoader : MonoBehaviour
 		{
 			if(setAlpha >= 1.0f)
 			{
-//				Color col = Color.black;
-//				col.a = 0.0f;
-//				fade.color = col;
+				if(gameOver)
+				{
+					Color col = fail.color;
+					col.a = 0.0f;
+					fail.color = col;
+				}
 				Transititon();
 				setFade = false;
 			}
@@ -92,6 +102,12 @@ public class LevelLoader : MonoBehaviour
 				setAlpha += Time.deltaTime;
 				col.a = setAlpha;
 				fade.color = col;
+				if(gameOver)
+				{
+					Color col2 = fail.color;
+					col2.a = setAlpha;
+					fail.color = col2;
+				}
 			}
 		}
 		if(startFade)
@@ -107,20 +123,18 @@ public class LevelLoader : MonoBehaviour
 			else
 				startFade = false;
 		}
-		bool dead = true;
-		foreach(GameObject p in players)
-		{
-			Player pla = p.GetComponent<Player>();
-			if(!pla.isDead)
-			{
-				dead = false;
+		if (!gameOver) {
+			bool dead = true;
+			foreach (GameObject p in players) {
+				Player pla = p.GetComponent<Player> ();
+				if (!pla.isDead) {
+					dead = false;
+				}
 			}
-		}
-		if (dead)
-		{
-			print ("All dead!");
-			gameOver = true;
-			StartFade();
+			if (dead) {
+				gameOver = true;
+				StartFade ();
+			}
 		}
 	
 	}
@@ -128,6 +142,7 @@ public class LevelLoader : MonoBehaviour
 	public void Transititon() {
 		Debug.Log ("transition");
 		if(gameOver){
+			gameOver = false;
 			nextLevel = "IslandStart";
 		}
 		bg.Level (nextLevel);

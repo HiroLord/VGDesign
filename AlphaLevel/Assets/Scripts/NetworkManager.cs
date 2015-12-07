@@ -140,7 +140,7 @@ public class NetworkManager : MonoBehaviour {
 					connected = false;
 					return;
 				}
-				Application.LoadLevel ("IslandStart");
+				Application.LoadLevel ("Buffer");
 				for (int i=0; i<4; i++) {
 					hostCode[i] = ReadByte ();
 				}
