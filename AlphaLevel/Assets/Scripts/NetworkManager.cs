@@ -153,9 +153,14 @@ public class NetworkManager : MonoBehaviour {
 				float newX = ReadFloat ();
 				float oldY = players[newPID].transform.position.y;
 				float newZ = ReadFloat ();
+				int newHealth = ReadByte ();
 				if (players[newPID] == null) { break; }
 				//Debug.Log("New position: " + newX.ToString() + ", " + newZ.ToString());
 				players[newPID].SnapTo(newX, newZ);
+				if (players[newPID].getMove().GetDead() && newHealth > 0) {
+					players[newPID].getMove().Revive();
+				}
+				players[newPID].GetComponent<Entity>().CurrentHealth = newHealth;
 				break;
 			case 3: // Player is moving or stopping
 				int movPID = ReadByte ();
@@ -312,6 +317,7 @@ public class NetworkManager : MonoBehaviour {
 				WriteByte (2);
 				WriteFloat (player.transform.position.x);
 				WriteFloat (player.transform.position.z);
+				WriteByte (playerEntity.currentHealth);
 			}
 
 			for (int e=0; e<enemies.Count; e++) {
@@ -364,7 +370,7 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 5;
 			break;
 		case 2:
-			sizeM = 9;
+			sizeM = 10;
 			break;
 		case 3:
 			sizeM = 10;

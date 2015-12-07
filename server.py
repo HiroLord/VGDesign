@@ -64,12 +64,14 @@ class Client:
                 # Player position
                 self.x = self.socket.readFloat();
                 self.y = self.socket.readFloat();
+                pHealth = self.socket.readByte();
                 for client in self.host.players:
                     if client.pID != self.pID and client.confirmed:
                         client.socket.writeByte(2)
                         client.socket.writeByte(self.pID)
                         client.socket.writeFloat(self.x)
                         client.socket.writeFloat(self.y)
+                        client.socket.writeByte(pHealth)
             elif (msgID == 3):
                 self.h = self.socket.readFloat();
                 self.v = self.socket.readFloat();
@@ -158,7 +160,7 @@ class Client:
         if (msgID == 1):
             size = 5
         elif(msgID == 2):
-            size = 9
+            size = 10
         elif(msgID == 3):
             size = 10
         elif(msgID == 4):
