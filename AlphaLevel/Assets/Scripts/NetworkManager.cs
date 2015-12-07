@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour {
 
-	public String IPAddress = "128.61.31.181";
+	public String IPAddress = "192.168.1.115";
 
 	public List<EnemyNetwork> enemies = new List<EnemyNetwork> ();
 
