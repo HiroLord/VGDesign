@@ -80,6 +80,8 @@ public class PlayerInputManager : MonoBehaviour {
 		this.isPlayer = isPlay;
 		this.shooter.setOriginal (isPlay);
 	}
+
+	int moveCountdown = 0;
 	
 	void Update () {
 		if (ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.A))
@@ -89,6 +91,7 @@ public class PlayerInputManager : MonoBehaviour {
 			v = Input.GetAxisRaw ("Vertical");
 			float xaxis = ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickX);
 			float yaxis = -ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickY);
+
 			if (Mathf.Abs (xaxis) > 0.5f) {
 				h = Mathf.Max (Mathf.Min (xaxis, 1f), -1f);
 			} else { 
@@ -112,10 +115,13 @@ public class PlayerInputManager : MonoBehaviour {
 				shooting = false;
 			}
 
-			if (h != oldH || v != oldV) {
+			if ((h != oldH || v != oldV) && moveCountdown < 1) {
 				oldH = h;
 				oldV = v;
 				needsUpdate = true;
+				moveCountdown = 4;
+			} else {
+				moveCountdown -= 1;
 			}
 
 			if (oldShooting != shooting) {

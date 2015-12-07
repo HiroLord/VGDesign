@@ -30,6 +30,8 @@ public class NetworkManager : MonoBehaviour {
 	private float timeBetween = 1;
 
 	public LevelLoader levelLoader;
+
+	private bool confirmed = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -49,8 +51,20 @@ public class NetworkManager : MonoBehaviour {
 	public void ClearEnemies() {
 		enemies.Clear();
 	}
+
+	bool prefetched = false;
+
+	bool PreFetch() {
+		prefetched = Security.PrefetchSocketPolicy (IPAddress, 25001, 3000);
+		return prefetched;
+	}
 	
 	void Connect(bool host) {
+		if (Application.isWebPlayer && !prefetched) {
+			PreFetch ();
+			Connect (host);
+			return;
+		}
 		this.host = host;
 		levelLoader.Host = host;
 		try {
@@ -79,8 +93,13 @@ public class NetworkManager : MonoBehaviour {
 				break;
 			case 1: // My own player ID
 				int pID = ReadByte();
+				if (pID < 1) {
+					Debug.Log ("CLSOE");
+					return;
+				}
 				player.PlayerID = pID;
 				players[pID] = player;
+				confirmed = true;
 				break;
 			case 2: // Updating player position
 				int newPID = ReadByte ();
@@ -177,6 +196,10 @@ public class NetworkManager : MonoBehaviour {
 				for (int i=0; i<recvBufferSize; i++) {
 					data+= " " + recvBuffer[i].ToString();
 				}
+			}
+
+			if (!confirmed) {
+				return;
 			}
 
 			if (levelLoader.Ready) {
