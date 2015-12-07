@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour 
 {
+	private BackgroundMusicManager bg;
 	public string nextLevel;
 	public Vector3 startPosition;
 
@@ -40,6 +41,7 @@ public class LevelLoader : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		bg = GameObject.Find ("BackgroundMusic").GetComponent<BackgroundMusicManager>();
 		GameObject obj = GameObject.FindWithTag ("Fade");
 		if (obj != null)
 			fade = obj.GetComponent<Image> ();
@@ -104,6 +106,8 @@ public class LevelLoader : MonoBehaviour
 	}
 
 	public void Transititon() {
+		Debug.Log ("transition");
+		bg.Level (nextLevel);
 		GameObject obj = GameObject.Find ("NetworkManager");
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().ClearEnemies();
