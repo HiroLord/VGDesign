@@ -6,18 +6,30 @@ from wsserver import *
 
 from time import sleep
 
+games = {}
+
 class Game:
 
     def __init__(self, hostCode):
         self.hostCode = hostCode
-        self.players = players
-        self.playerID;
+        self.players = []
+        self.playerID = 0
+        self.accepting = True
+
+    def addPlayer(self, client):
+        if not self.accepting:
+            return False
+        self.players.append(client)
+        self.playerID += 1
+        client.pID = self.playerID
+        return True
 
 class Client:
 
-    def __init__(self, socket, pID):
+    def __init__(self, socket, gID):
         self.socket = socket
-        self.pID = pID
+        self.gID = gID
+        self.pID = 0
 
         self.x = 0
         self.y = 0
@@ -36,12 +48,16 @@ class Client:
                 for _ in range(4):
                     hostCode += str(self.socket.readByte())
                 print("Host code:", hostCode);
-                self.confirm()
+                self.host = games[int(hostCode)]
+                if (self.host.addPlayer(self)):
+                    self.confirm()
+                else:
+                    self.deny()
             elif (msgID == 2):
                 # Player position
                 self.x = self.socket.readFloat();
                 self.y = self.socket.readFloat();
-                for client in clients:
+                for client in self.host.players:
                     if client.pID != self.pID and client.confirmed:
                         client.socket.writeByte(2)
                         client.socket.writeByte(self.pID)
@@ -51,7 +67,7 @@ class Client:
                 self.h = self.socket.readFloat();
                 self.v = self.socket.readFloat();
                 self.shoot = self.socket.readByte();
-                for client in clients:
+                for client in self.host.players:
                     if client.pID != self.pID and client.confirmed:
                         client.socket.writeByte(3)
                         client.socket.writeByte(self.pID)
@@ -61,7 +77,7 @@ class Client:
 
             elif (msgID == 4):
                 self.rot = self.socket.readFloat()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(4)
                         client.socket.writeByte(self.pID)
@@ -70,7 +86,7 @@ class Client:
             elif (msgID == 5):
                 enemyID = self.socket.readByte()
                 enemyEState = self.socket.readByte()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(5)
                         client.socket.writeByte(enemyID)
@@ -79,7 +95,7 @@ class Client:
             elif (msgID == 6):
                 enemyHID = self.socket.readByte()
                 enemyDHealth = self.socket.readFloat()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(6)
                         client.socket.writeByte(enemyHID)
@@ -89,7 +105,7 @@ class Client:
                 enemyPID = self.socket.readByte()
                 enemyX = self.socket.readFloat()
                 enemyZ = self.socket.readFloat()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(7)
                         client.socket.writeByte(enemyPID)
@@ -98,7 +114,7 @@ class Client:
 
             elif (msgID == 8):
                 revID = self.socket.readByte()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(8)
                         client.socket.writeByte(revID)
@@ -106,14 +122,14 @@ class Client:
             elif (msgID == 9):
                 enemyAID = self.socket.readByte()
                 enemyTarget = self.socket.readByte()
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(9)
                         client.socket.writeByte(enemyAID)
                         client.socket.writeByte(enemyTarget)
 
             elif (msgID == 11):
-                for client in clients:
+                for client in self.host.players:
                     if (client.pID != self.pID and client.confirmed):
                         client.socket.writeByte(11)
 
@@ -175,12 +191,17 @@ class Client:
 
         self.confirmed = True
 
+    def deny(self):
+        self.socket.writeByte(1)
+        self.socket.writeByte(0)
+        self.socket.socket.close()
+
     def disconnect(self):
-        print("Lost client.")
-        print(clients)
+        print("Removing client.")
         clients.remove(self)
-        print(clients)
         self.socket = None
+        if self.host:
+            self.host.players.remove(self)
         return
 
 # This handles a new client.
@@ -193,10 +214,11 @@ def handle(socket):
     clients.append(client)
 
 def main():
-    global gameStarted
-    global stage
     try:
         server = startServer(25001)
+
+        games[9218]= Game(9218)
+
         while True:
             newClient = handleNetwork()
             if newClient:

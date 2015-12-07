@@ -275,6 +275,9 @@ def acceptClient(s):
     print("Accepting client...")
     rec = s.recv(4096)
     print("Handshake:", rec)
+    if "policy" in str(rec):
+        back = """<cross-domain-policy><allow-access-from domain="*" to-ports="*" /></cross-domain-policy>"""
+        s.send(bytes(back,'utf-8'))
     
     s.send(bytearray([254]))
     webSocket = False

@@ -25,7 +25,7 @@ public abstract class EnemyNetwork : Entity {
 	private float updateTimer = 0f;
 
 
-	protected void Start() {
+	void Awake() {
 		GameObject obj = GameObject.Find ("NetworkManager");
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().AddEnemy (this);
@@ -34,6 +34,9 @@ public abstract class EnemyNetwork : Entity {
 		changeHealthHard (startingHealth);
 		currentEnergy = startingEnergy;
 
+	}
+
+	protected void Start() {
 	}
 
 	void OnDestroy() {

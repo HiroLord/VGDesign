@@ -24,6 +24,7 @@ public class OgreDeath : State<OgreBehavior> {
 	
 	public override void OnEnable(OgreBehavior owner, StateMachine<OgreBehavior> newStateMachine)
 	{
+		owner.GetComponent<CapsuleCollider> ().enabled = false;
 		// Enable this state and grab components
 		owner.CurrentEState = OgreBehavior.EState.OgreDeath;
 		base.OnEnable (owner, newStateMachine);
