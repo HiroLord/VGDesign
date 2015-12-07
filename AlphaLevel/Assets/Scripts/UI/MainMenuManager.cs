@@ -80,11 +80,9 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	private void Begin(bool connection) {
-		Application.LoadLevel ("IslandStart");
 		NetworkManager man = GameObject.Find ("NetworkManager").GetComponent<NetworkManager>();
-		man.player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerInputManager>();
-			//.GetComponent<PlayerInputManager>();
-		man.Connect (connection);
+		man.Host = connection;
+		Application.LoadLevel ("IslandStart");
 	}
 
 	public void selectCredits() {

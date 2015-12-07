@@ -27,7 +27,15 @@ public class NetworkManager : MonoBehaviour {
 	private byte[] recvBuffer = new byte[256];
 	private int recvBufferSize = 0;
 	private bool host = true;
-	
+	public bool Host {
+		get {
+			return host;
+		}
+		set {
+			host = value;
+		}
+	}
+
 	private float timeBetween = 1;
 
 	public LevelLoader levelLoader;
@@ -64,6 +72,12 @@ public class NetworkManager : MonoBehaviour {
 		prefetched = Security.PrefetchSocketPolicy (IPAddress, 25001, 3000);
 		return prefetched;
 	}
+
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			Connect (host);
+		}
+	}
 	
 	public void Connect(bool host) {
 		if (Application.isWebPlayer && !prefetched) {
@@ -72,7 +86,9 @@ public class NetworkManager : MonoBehaviour {
 			return;
 		}
 		this.host = host;
-		levelLoader.Host = host;
+		if (levelLoader) {
+			levelLoader.Host = host;
+		}
 		try {
 			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
@@ -83,6 +99,7 @@ public class NetworkManager : MonoBehaviour {
 		catch(SocketException ex) {
 			Debug.Log(ex.Message);
 		}
+		player = GameObject.Find ("Player").GetComponent<PlayerInputManager> ();
 		foreach (EnemyNetwork enemy in enemies) {
 			enemy.original = host;
 		}

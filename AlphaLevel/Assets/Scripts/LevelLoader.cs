@@ -40,7 +40,10 @@ public class LevelLoader : MonoBehaviour
 		startAlpha = 1.0f;
 		GameObject obj2 = GameObject.Find ("NetworkManager");
 		if (obj2) {
-			obj2.GetComponent<NetworkManager> ().levelLoader = this;
+			NetworkManager man = obj2.GetComponent<NetworkManager> ();
+			man.levelLoader = this;
+			host = man.Host;
+
 		}
 
 	}
