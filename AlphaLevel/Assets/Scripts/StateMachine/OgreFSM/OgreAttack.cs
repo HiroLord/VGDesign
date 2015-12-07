@@ -99,7 +99,7 @@ public class OgreAttack : State<OgreBehavior>
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
 				Player ent = ownerObject.currTarget.GetComponent<Player>();
-				ent.TakeDamage (30, ownerObject.transform.position);
+				ent.TakeDamage (34, ownerObject.transform.position);
 				hitPlayer = true;
 			}
 		}

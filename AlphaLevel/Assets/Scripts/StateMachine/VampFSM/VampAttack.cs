@@ -92,8 +92,8 @@ public class VampAttack : State<VampBehavior>
 			if(dist < ownerObject.attackDist + 0.3f  && !hitPlayer)
 			{
 				Player ent = ownerObject.currTarget.GetComponent<Player>();
-				ent.TakeDamage (10, ownerObject.transform.position);
-				ownerObject.GiveHealth (10);
+				ent.TakeDamage (20, ownerObject.transform.position);
+				ownerObject.GiveHealth (20);
 				hitPlayer = true;
 				parts[1].Clear ();
 				Vector3 set = ent.transform.position;
