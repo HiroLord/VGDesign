@@ -81,10 +81,14 @@ public class Movement : MonoBehaviour {
 
 	public void setTargetTurn(Quaternion target) {
 		targetTurn = target;
-		rotSpeed = Quaternion.Angle (transform.rotation, target) / 45f;
-		if (rotSpeed < 1.5f) {
-			rotSpeed = 1.5f;
+		rotSpeed = Quaternion.Angle (transform.rotation, target) / 30f;
+		if (rotSpeed < 2f) {
+			rotSpeed = 2f;
 		}
+	}
+
+	public void setRotSpeed(float speed) {
+		rotSpeed = speed;
 	}
 	
 	public bool GetDead() {

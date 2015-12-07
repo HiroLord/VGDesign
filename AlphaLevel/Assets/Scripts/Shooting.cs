@@ -88,16 +88,16 @@ public class Shooting : MonoBehaviour
 			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
 		//debug stuff
-		if (original && Input.GetKeyUp ("r")) {
+		if (original && (Input.GetKeyUp ("r") || (ControlInputWrapper.GetButtonUp(ControlInputWrapper.Buttons.X)))) {
 			if(clipAmount > 0 && clips.Length != 0)
 			{
 				weapon.currentAmmo = weapon.maxAmmo;
 				clipAmount--;
 				clips[clipAmount].enabled = false;
 			}
-		} else if (Input.GetKeyDown ("x")) {
+		} /*else if (Input.GetKeyDown ("x")) {
 			ItemLibrary.createRandomItem(this.gameObject.transform.position);
-		}
+		} */
 //		if (Input.GetKeyUp ("m"))
 //			addClip ();
 //			if(timer >= timeBetweenBullets * effectsDisplayTime)

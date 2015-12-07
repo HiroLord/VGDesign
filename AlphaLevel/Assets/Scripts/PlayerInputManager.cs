@@ -129,7 +129,7 @@ public class PlayerInputManager : MonoBehaviour {
 				oldShooting = shooting;
 			}
 			
-			if (Input.GetKey ("q")) {
+			if (Input.GetKey ("q") || (ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.Y))) {
 				reviveBtn = true;
 			} else {
 				reviveBtn = false;
@@ -184,9 +184,11 @@ public class PlayerInputManager : MonoBehaviour {
 
 			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickX);
 			float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickY);
+			Debug.Log (xaxis);
 			if (Mathf.Abs(xaxis) > 0.1f || Mathf.Abs (yaxis) > 0.1f) {
 				Vector3 aiming = new Vector3(xaxis, 0, yaxis);
-				transform.rotation = Quaternion.LookRotation (aiming);
+				setRotation (Quaternion.LookRotation (aiming).eulerAngles.y);
+				move.setRotSpeed(15f);
 			}
 
 			turnTime += Time.deltaTime;
