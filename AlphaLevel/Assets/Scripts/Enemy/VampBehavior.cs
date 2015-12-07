@@ -10,7 +10,7 @@ using System.Collections;
 public class VampBehavior : EnemyNetwork 
 {
 	public string enemyType;
-	
+	public GameObject ammoCrate;
 	private Animator anim;
 	private NavMeshAgent agent;
 	private StateMachine<VampBehavior> stateMachine;
@@ -78,6 +78,13 @@ public class VampBehavior : EnemyNetwork
 	
 	public void Death ()
 	{
+		int drop = Random.Range (0, 5);
+		if(drop == 0)
+		{	
+			Vector3 pos = this.transform.position;
+			pos.y += 0.5f;
+			Instantiate(ammoCrate, pos, this.transform.rotation);
+		}
 		Destroy (gameObject);
 	}
 }
