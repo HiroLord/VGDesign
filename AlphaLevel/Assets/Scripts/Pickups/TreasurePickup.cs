@@ -2,21 +2,10 @@
 using System.Collections;
 
 public class TreasurePickup : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public PostDeath death;
 
 	void OnTriggerEnter(Component other){
-		eventTrigger ();
-	}
-
-	void eventTrigger(){
+		death.treasureTaken ();
+		Destroy (gameObject);
 	}
 }

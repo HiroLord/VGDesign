@@ -12,6 +12,10 @@ public class PostDeath : MonoBehaviour {
 	public GameObject exit;
 	Vector3 endPos;
 	public bool isDead = false;
+	public LevelLoader load;
+	public void treasureTaken() {
+		load.nextLevel = "level3";
+	}
 
 	// Use this for initialization
 	void Start () {
