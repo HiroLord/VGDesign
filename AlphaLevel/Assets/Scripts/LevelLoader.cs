@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour 
 {
@@ -12,16 +13,58 @@ public class LevelLoader : MonoBehaviour
 	public Vector3 startPosition;
 
 	private int count = 0;
+	public Image fade;
+	private bool setFade;
+	private float setAlpha;
+	private bool startFade;
+	private float startAlpha;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		GameObject obj = GameObject.FindWithTag ("Fade");
+		if (obj != null)
+			fade = obj.GetComponent<Image> ();
+		setFade = false;
+		startFade = true;
+		fade.color = Color.black;
+		setAlpha = 0.0f;
+		startAlpha = 1.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(setFade)
+		{
+			if(setAlpha >= 1.0f)
+			{
+//				Color col = Color.black;
+//				col.a = 0.0f;
+//				fade.color = col;
+				Transititon();
+				setFade = false;
+			}
+			else
+			{
+				Color col = fade.color;
+				setAlpha += 0.01f;
+				col.a = setAlpha;
+				fade.color = col;
+			}
+		}
+		if(startFade)
+		{
+			//print ("Next fading");
+			if(startAlpha >= 0.0f)
+			{
+				Color col = fade.color;
+				startAlpha -= 0.01f;
+				col.a = startAlpha;
+				fade.color = col;
+			}
+			else
+				startFade = false;
+		}
 	}
 
 	void Transititon() {
@@ -47,7 +90,8 @@ public class LevelLoader : MonoBehaviour
 		if(col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
-				Transititon();
+				//Transititon();
+				setFade = true;
 			}
 		}
 	}
