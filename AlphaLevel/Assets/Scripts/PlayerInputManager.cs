@@ -90,17 +90,18 @@ public class PlayerInputManager : MonoBehaviour {
 			h = Input.GetAxisRaw ("Horizontal");
 			v = Input.GetAxisRaw ("Vertical");
 			float xaxis = ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickX);
-			float yaxis = -ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickY);
-
-			if (Mathf.Abs (xaxis) > 0.5f) {
-				h = Mathf.Max (Mathf.Min (xaxis, 1f), -1f);
-			} else { 
-				h = 0;
-			}
-			if (Mathf.Abs (yaxis) > 0.5f) {
-				v = -Mathf.Max (Mathf.Min (yaxis, 1f), -1f);
-			} else {
-				v = 0;
+			float yaxis = ControlInputWrapper.GetAxis (ControlInputWrapper.Axis.LeftStickY);
+			if (h == 0 && v == 0) {
+				if (Mathf.Abs (xaxis) > 0.5f) {
+					h = Mathf.Max (Mathf.Min (xaxis, 1f), -1f);
+				} else { 
+					h = 0;
+				}
+				if (Mathf.Abs (yaxis) > 0.5f) {
+					v = -Mathf.Max (Mathf.Min (yaxis, 1f), -1f);
+				} else {
+					v = 0;
+				}
 			}
 
 			if (Input.GetKey ("space") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
@@ -184,7 +185,6 @@ public class PlayerInputManager : MonoBehaviour {
 
 			float xaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickX);
 			float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.RightStickY);
-			Debug.Log (xaxis);
 			if (Mathf.Abs(xaxis) > 0.1f || Mathf.Abs (yaxis) > 0.1f) {
 				Vector3 aiming = new Vector3(xaxis, 0, yaxis);
 				setRotation (Quaternion.LookRotation (aiming).eulerAngles.y);

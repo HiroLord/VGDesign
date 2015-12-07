@@ -26,8 +26,8 @@ public static class ControlInputWrapper{
 	private static string RIGHT_WIN_STICK_X = "RightWinStickX";
 	private static string RIGHT_PS_STICK_X = "RightPSStickX";
 	private static string RIGHT_PS_STICK_Y = "RightPSStickY";
-	private static string LEFT_STICK_Y = "Vertical";
-	private static string LEFT_STICK_X = "Horizontal";
+	private static string LEFT_STICK_Y = "LeftStickY";
+	private static string LEFT_STICK_X = "LeftStickX";
 	private static string DPAD_WIN_STICK_Y = "DpadWinStickY";
 	private static string DPAD_WIN_STICK_X = "DpadWinStickX";
 	private static string DPAD_LINUX_STICK_X = "DpadLinuxStickX";
