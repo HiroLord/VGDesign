@@ -4,6 +4,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.IO;
 using System.Net;
@@ -15,6 +16,9 @@ using System.Linq;
 public class NetworkManager : MonoBehaviour {
 
 	public String IPAddress = "192.168.1.115";
+
+	public int[] hostCode = {0,0,0,0};
+	private int myPlayerID = 0;
 
 	public List<EnemyNetwork> enemies = new List<EnemyNetwork> ();
 
@@ -75,7 +79,14 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
 		if (level == 1) {
-			Connect (host);
+			player = GameObject.Find ("Player").GetComponent<PlayerInputManager> ();
+			player.PlayerID = myPlayerID;
+			players[myPlayerID] = player;
+			string hostString = "Host Code: ";
+			for (var i=0; i<4; i++) {
+				hostString += hostCode[i];
+			}
+			GameObject.Find ("HostPanel").GetComponentInChildren<Text>().text = hostString;
 		}
 	}
 	
@@ -99,7 +110,6 @@ public class NetworkManager : MonoBehaviour {
 		catch(SocketException ex) {
 			Debug.Log(ex.Message);
 		}
-		player = GameObject.Find ("Player").GetComponent<PlayerInputManager> ();
 		foreach (EnemyNetwork enemy in enemies) {
 			enemy.original = host;
 		}
@@ -112,19 +122,24 @@ public class NetworkManager : MonoBehaviour {
 			case 254:
 				// Send our information
 				WriteByte (1);
-				WriteByte (9);
-				WriteByte (2);
-				WriteByte (1);
-				WriteByte (8);
+				WriteByte (host ? 1 : 0);
+				for (int i=0; i<4; i++) {
+					WriteByte (hostCode[i]);
+				}
 				break;
 			case 1: // My own player ID
 				int pID = ReadByte();
 				if (pID < 1) {
-					Debug.Log ("CLSOE");
+					client.Close();
+					connected = false;
 					return;
 				}
-				player.PlayerID = pID;
-				players[pID] = player;
+				Application.LoadLevel ("IslandStart");
+				for (int i=0; i<4; i++) {
+					hostCode[i] = ReadByte ();
+				}
+				Debug.Log (hostCode);
+				myPlayerID = pID;
 				confirmed = true;
 				break;
 			case 2: // Updating player position
@@ -312,7 +327,7 @@ public class NetworkManager : MonoBehaviour {
 			sizeM = 0;
 			break;
 		case 1:
-			sizeM = 1;
+			sizeM = 5;
 			break;
 		case 2:
 			sizeM = 9;
