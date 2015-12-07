@@ -191,7 +191,7 @@ public class NetworkManager : MonoBehaviour {
 				int crPID = ReadByte ();
 				float crX = ReadFloat ();
 				float crZ = ReadFloat ();
-				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 0, crZ), new Quaternion(0,0,0,0));
+				GameObject newPlayer = (GameObject)Instantiate (instance, new Vector3(crX, 1, crZ), new Quaternion(0,0,0,0));
 				players[crPID] = newPlayer.GetComponent<PlayerInputManager>();
 				players[crPID].PlayerID = crPID;
 				players[crPID].setIsPlayer(false);

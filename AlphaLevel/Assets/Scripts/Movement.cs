@@ -202,6 +202,7 @@ public class Movement : MonoBehaviour {
 		if (Mathf.Abs (zOffset) < .1f) {
 			zOffset = 0f;
 		}
+
 		playerRigidbody.MovePosition (transform.position + (movement * speed * Time.deltaTime) + new Vector3(xMove, 0, zMove));
 		Vector3 vl = playerRigidbody.velocity;
 		float newSpeed = 1f - (vl.magnitude);
