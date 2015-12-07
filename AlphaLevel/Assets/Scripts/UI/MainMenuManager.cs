@@ -66,16 +66,25 @@ public class MainMenuManager : MonoBehaviour {
 		} else if (fTimer < fireflyWait) {
 			fTimer += Time.deltaTime;
 		}
-		Debug.Log (fTimer);
+		//Debug.Log (fTimer);
 	}
 
 	public void selectConnect() {
-		Debug.Log ("Connect selected");
+		Debug.Log ("Join selected");
+		Begin (true);
 	}
 
 	public void selectHost() {
 		Debug.Log ("Host selected");
-		Application.LoadLevel ("Level1");
+		Begin (true);
+	}
+
+	private void Begin(bool connection) {
+		Application.LoadLevel ("IslandStart");
+		NetworkManager man = GameObject.Find ("NetworkManager").GetComponent<NetworkManager>();
+		man.player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerInputManager>();
+			//.GetComponent<PlayerInputManager>();
+		man.Connect (connection);
 	}
 
 	public void selectCredits() {

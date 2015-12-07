@@ -65,7 +65,7 @@ public class NetworkManager : MonoBehaviour {
 		return prefetched;
 	}
 	
-	void Connect(bool host) {
+	public void Connect(bool host) {
 		if (Application.isWebPlayer && !prefetched) {
 			PreFetch ();
 			Connect (host);
@@ -82,6 +82,9 @@ public class NetworkManager : MonoBehaviour {
 		}
 		catch(SocketException ex) {
 			Debug.Log(ex.Message);
+		}
+		foreach (EnemyNetwork enemy in enemies) {
+			enemy.original = host;
 		}
 	}
 	
@@ -186,14 +189,13 @@ public class NetworkManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!connected) {
+			/*
 			if (Input.GetKey ("h")) {
 				Connect (true);
 			} else if (Input.GetKey ("c")) {
 				Connect (false);
-				foreach (EnemyNetwork enemy in enemies) {
-					enemy.original = false;
-				}
 			}
+			*/
 		} else {
 			while (client.GetStream().DataAvailable) {
 				recvBuffer[recvBufferSize] = (byte)client.GetStream().ReadByte();
