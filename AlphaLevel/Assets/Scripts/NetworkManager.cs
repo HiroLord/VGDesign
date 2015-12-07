@@ -151,7 +151,7 @@ public class NetworkManager : MonoBehaviour {
 				players[crPID].setIsPlayer(false);
 				break;
 			case 11:
-				levelLoader.Transititon();
+				levelLoader.StartFade();
 				break;
 			}
 		}
