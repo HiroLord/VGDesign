@@ -82,11 +82,13 @@ public class NetworkManager : MonoBehaviour {
 			player = GameObject.Find ("Player").GetComponent<PlayerInputManager> ();
 			player.PlayerID = myPlayerID;
 			players[myPlayerID] = player;
-			string hostString = "Host Code: ";
-			for (var i=0; i<4; i++) {
-				hostString += hostCode[i];
+			if (connected) {
+				string hostString = "Host Code: ";
+				for (var i=0; i<4; i++) {
+					hostString += hostCode[i];
+				}
+				GameObject.Find ("HostPanel").GetComponentInChildren<Text>().text = hostString;
 			}
-			GameObject.Find ("HostPanel").GetComponentInChildren<Text>().text = hostString;
 		}
 	}
 	
