@@ -33,6 +33,8 @@ public class LevelLoader : MonoBehaviour
 		GameObject obj = GameObject.FindWithTag ("Fade");
 		if (obj != null)
 			fade = obj.GetComponent<Image> ();
+		Vector2 rect = new Vector2 (Screen.width, Screen.height);
+		fade.rectTransform.sizeDelta = rect;
 		setFade = false;
 		startFade = true;
 		fade.color = Color.black;
