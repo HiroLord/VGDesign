@@ -110,7 +110,6 @@ public class LevelLoader : MonoBehaviour
 		if(host && col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
-				//Transititon();
 				setFade = true;
 				Ready = true;
 			}
