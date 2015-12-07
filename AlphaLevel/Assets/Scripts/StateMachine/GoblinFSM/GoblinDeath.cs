@@ -24,6 +24,7 @@ public class GoblinDeath : State<GoblinBehavior> {
 	
 	public override void OnEnable(GoblinBehavior owner, StateMachine<GoblinBehavior> newStateMachine)
 	{
+		owner.GetComponent<CapsuleCollider> ().enabled = false;
 		// Enable this state and grab components
 		owner.CurrentEState = GoblinBehavior.EState.GoblinDeath;
 		base.OnEnable (owner, newStateMachine);

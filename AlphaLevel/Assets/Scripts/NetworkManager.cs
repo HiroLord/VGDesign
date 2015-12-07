@@ -219,6 +219,7 @@ public class NetworkManager : MonoBehaviour {
 				levelLoader.StartFade();
 				break;
 			case 12: // Player health
+				Debug.Log ("Player health changed.");
 				int pHID = ReadByte ();
 				int pHealth = ReadByte ();
 				if (players[pHID] == null) { break; }

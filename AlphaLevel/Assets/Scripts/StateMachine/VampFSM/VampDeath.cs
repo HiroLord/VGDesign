@@ -24,6 +24,7 @@ public class VampDeath : State<VampBehavior> {
 	
 	public override void OnEnable(VampBehavior owner, StateMachine<VampBehavior> newStateMachine)
 	{
+		owner.GetComponent<CapsuleCollider> ().enabled = false;
 		// Enable this state and grab components
 		owner.CurrentEState = VampBehavior.EState.VampDeath;
 		base.OnEnable (owner, newStateMachine);

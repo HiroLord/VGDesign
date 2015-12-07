@@ -179,7 +179,7 @@ class Client:
             size = 1
         else:
             print("MSG id", msgID, "does not exist.")
-        if size < len(self.socket.data):
+        if size <= len(self.socket.data):
             print("Parsing MsgID", msgID)
             return True
         print("Waiting to parse MsgID", msgID)
