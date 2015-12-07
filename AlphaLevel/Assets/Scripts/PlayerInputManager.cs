@@ -130,16 +130,6 @@ public class PlayerInputManager : MonoBehaviour {
 			}
 		}
 
-		if (!move.GetDead ()) {
-			if (Input.GetKey ("k")) {
-				move.Kill ();
-			}
-		} else {
-			if (Input.GetKey ("q")) {
-				move.Revive();
-			}
-		}
-
 		shooter.setShooting (shooting);
 		
 		//this should be somewhere else

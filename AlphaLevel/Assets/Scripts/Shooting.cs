@@ -64,7 +64,9 @@ public class Shooting : MonoBehaviour
 		if (shooting) {
 			if (timer >= weapon.fireRate) {
 				if (Time.timeScale != 0 && weapon.currentAmmo > 0) {
-					weapon.currentAmmo--;
+					if (original) {
+						weapon.currentAmmo--;
+					}
 					Shoot ();
 				} else {
 					timer = 0f;
