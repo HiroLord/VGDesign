@@ -198,7 +198,7 @@ public class NetworkManager : MonoBehaviour {
 			if (player.ReviveBtn()) {
 				// Find a player that needs reviving and do just that
 				foreach (PlayerInputManager pl in players) {
-					if (pl.getMove ().GetDead()) {
+					if (pl && pl.getMove ().GetDead()) {
 						if (Vector3.Distance(pl.transform.position, player.transform.position) < 3f) {
 							pl.getMove().Revive();
 							WriteByte (8);
