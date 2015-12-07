@@ -78,8 +78,8 @@ public class VampBehavior : EnemyNetwork
 	
 	public void Death ()
 	{
-		int drop = Random.Range (0, 5);
-		if(drop == 0)
+		int drop = Random.Range (0, 10);
+		if(drop <= 3)
 		{	
 			Vector3 pos = this.transform.position;
 			pos.y += 0.5f;
