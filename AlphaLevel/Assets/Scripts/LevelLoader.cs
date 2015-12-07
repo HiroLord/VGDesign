@@ -47,7 +47,7 @@ public class LevelLoader : MonoBehaviour
 
 	public void StartFade()
 	{
-		startFade = true;
+		setFade = true;
 	}
 
 	// Update is called once per frame
@@ -108,7 +108,6 @@ public class LevelLoader : MonoBehaviour
 		if(host && col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
-				//Transititon();
 				setFade = true;
 				Ready = true;
 			}

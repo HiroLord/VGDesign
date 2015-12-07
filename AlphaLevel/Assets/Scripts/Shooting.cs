@@ -86,7 +86,7 @@ public class Shooting : MonoBehaviour
 			disp.text = weapon.currentAmmo + "/" + weapon.maxAmmo;
 		}
 		//debug stuff
-		if (Input.GetKeyUp ("r")) {
+		if (original && Input.GetKeyUp ("r")) {
 			if(clipAmount > 0 && clips.Length != 0)
 			{
 				weapon.currentAmmo = weapon.maxAmmo;
