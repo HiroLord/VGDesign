@@ -13,12 +13,14 @@ public class LevelLoader : MonoBehaviour
 	public string nextLevel;
 	public Vector3 startPosition;
 
+	private GameObject[] players;
 	private int count = 0;
 	public Image fade;
 	private bool setFade;
 	private float setAlpha;
 	private bool startFade;
 	private float startAlpha;
+	private bool gameOver = false;
 
 	private bool host = true;
 	private int ready = 0;
@@ -41,12 +43,14 @@ public class LevelLoader : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		players = GameObject.FindGameObjectsWithTag ("Player");
 		bg = GameObject.Find ("BackgroundMusic").GetComponent<BackgroundMusicManager>();
 		GameObject obj = GameObject.FindWithTag ("Fade");
 		if (obj != null)
 			fade = obj.GetComponent<Image> ();
 		setFade = false;
 		startFade = true;
+		gameOver = false;
 		fade.color = Color.black;
 		setAlpha = 0.0f;
 		startAlpha = 1.0f;
@@ -103,10 +107,29 @@ public class LevelLoader : MonoBehaviour
 			else
 				startFade = false;
 		}
+		bool dead = true;
+		foreach(GameObject p in players)
+		{
+			Player pla = p.GetComponent<Player>();
+			if(!pla.isDead)
+			{
+				dead = false;
+			}
+		}
+		if (dead)
+		{
+			print ("All dead!");
+			gameOver = true;
+			StartFade();
+		}
+	
 	}
 
 	public void Transititon() {
 		Debug.Log ("transition");
+		if(gameOver){
+			nextLevel = "IslandStart";
+		}
 		bg.Level (nextLevel);
 		GameObject obj = GameObject.Find ("NetworkManager");
 		if (obj) {
