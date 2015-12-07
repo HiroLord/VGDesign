@@ -76,7 +76,7 @@ public class GoblinBehavior : EnemyNetwork
 	public void Death ()
 	{
 		int drop = Random.Range (0, 10);
-		if(drop == 0)
+		if(drop <= 2)
 		{	
 			Vector3 pos = this.transform.position;
 			pos.y += 0.5f;
