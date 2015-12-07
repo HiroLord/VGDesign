@@ -176,7 +176,7 @@ class Client:
         elif(msgID == 11):
             size = 0
         elif(msgID == 12):
-            size = 1
+            size = 2
         else:
             print("MSG id", msgID, "does not exist.")
         if size <= len(self.socket.data):

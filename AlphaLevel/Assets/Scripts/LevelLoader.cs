@@ -126,9 +126,11 @@ public class LevelLoader : MonoBehaviour
 		if (!gameOver) {
 			bool dead = true;
 			foreach (GameObject p in players) {
-				Player pla = p.GetComponent<Player> ();
-				if (!pla.isDead) {
-					dead = false;
+				if (p) {
+					Player pla = p.GetComponent<Player> ();
+					if (!pla.isDead) {
+						dead = false;
+					}
 				}
 			}
 			if (dead) {
@@ -144,6 +146,11 @@ public class LevelLoader : MonoBehaviour
 		if(gameOver){
 			gameOver = false;
 			nextLevel = "IslandStart";
+			startPosition = new Vector3(-13, 3, 12);
+			fail.enabled = true;
+			Color col = fail.color;
+			col.a = 1f;
+			fail.color = col;
 		}
 		bg.Level (nextLevel);
 		GameObject obj = GameObject.Find ("NetworkManager");
@@ -152,6 +159,7 @@ public class LevelLoader : MonoBehaviour
 		}
 		foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) {
 			//p.transform.position = new Vector3(0, 1f, 6);
+			p.GetComponent<Movement>().Revive();
 			p.transform.position = startPosition;
 			p.GetComponent<Rigidbody>().MovePosition(startPosition);
 		}

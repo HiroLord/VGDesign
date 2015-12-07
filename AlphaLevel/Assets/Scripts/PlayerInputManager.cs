@@ -21,9 +21,9 @@ public class PlayerInputManager : MonoBehaviour {
 			if (playerID == 1) {
 				newColor = new Color(.8f, .8f, .8f);
 			} else if (playerID == 2) {
-				newColor = new Color(1f, .3f, .3f);
+				newColor = new Color(.9f, .5f, .9f);
 			} else if (playerID == 3) {
-				newColor = new Color(.3f, .1f, .3f);
+				newColor = new Color(.3f, 1f, .3f);
 			} else if (playerID == 4) {
 				newColor = new Color(.3f, .4f, 1f);
 			}
