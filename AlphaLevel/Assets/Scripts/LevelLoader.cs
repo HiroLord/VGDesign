@@ -33,8 +33,6 @@ public class LevelLoader : MonoBehaviour
 		GameObject obj = GameObject.FindWithTag ("Fade");
 		if (obj != null)
 			fade = obj.GetComponent<Image> ();
-		Vector2 rect = new Vector2 (Screen.width, Screen.height);
-		fade.rectTransform.sizeDelta = rect;
 		setFade = false;
 		startFade = true;
 		fade.color = Color.black;
@@ -47,9 +45,14 @@ public class LevelLoader : MonoBehaviour
 
 	}
 
-	public void StartFade()
-	{
+	void resize() {
+		Vector2 rect = new Vector2 (Screen.width, Screen.height);
+		fade.rectTransform.sizeDelta = rect;
+	}
+
+	public void StartFade() {
 		setFade = true;
+		resize ();
 	}
 
 	// Update is called once per frame
@@ -67,7 +70,7 @@ public class LevelLoader : MonoBehaviour
 			else
 			{
 				Color col = fade.color;
-				setAlpha += 0.01f;
+				setAlpha += Time.deltaTime;
 				col.a = setAlpha;
 				fade.color = col;
 			}
@@ -78,7 +81,7 @@ public class LevelLoader : MonoBehaviour
 			if(startAlpha >= 0.0f)
 			{
 				Color col = fade.color;
-				startAlpha -= 0.01f;
+				startAlpha -= Time.deltaTime;
 				col.a = startAlpha;
 				fade.color = col;
 			}
@@ -110,7 +113,7 @@ public class LevelLoader : MonoBehaviour
 		if(host && col.tag == "Player") {
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
-				setFade = true;
+				StartFade();
 				Ready = true;
 			}
 		}
