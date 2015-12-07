@@ -14,6 +14,13 @@ public abstract class Entity : MonoBehaviour {
 	private int oldHealth;
 	public int currentEnergy;
 
+	public int CurrentHealth {
+		set {
+			currentHealth = value;
+			checkDeath();
+		}
+	}
+
 	public int getHealthDiff() {
 		int diff = oldHealth - currentHealth;
 		oldHealth = currentHealth;
