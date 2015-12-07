@@ -172,12 +172,14 @@ public class Shooting : MonoBehaviour
 		print (weapon.damage);
 	}
 
-	public void addClip()
+	public bool addClip()
 	{
 		int cLen = clips.Length;
-		if (clipAmount == cLen && clips.Length == 0)
-			return;
+		if (clipAmount == cLen && clips.Length == 0
+			|| clipAmount == 5)
+			return false;
 		clips [clipAmount++].enabled = true;
+		return true;
 	}
 
 }
