@@ -54,13 +54,14 @@ public class PlayerInputManager : MonoBehaviour {
 	float camRayLength = 100f;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		move = gameObject.GetComponent<Movement>();
 		anim = move.anim;
 		movement = move.getMove ();
 		floorMask = LayerMask.GetMask ("Floor");
 
 		this.shooter = GetComponentInChildren<Shooting> ();
+		Debug.Log ("Set Shooter.");
 	}
 
 	public void SnapTo(float newX, float newZ) {

@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour {
 	private Dictionary<string, Quaternion> savedLocalRotations = new Dictionary<string, Quaternion>();
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
 		
@@ -119,7 +119,7 @@ public class Movement : MonoBehaviour {
 				if (body.name == "M4MB") {
 					gun = body.GetComponent<Rigidbody>();
 				}
-				Debug.Log (body.name);
+				//Debug.Log (body.name);
 				if (!savedLocalPositions.ContainsKey(body.name)) {
 					savedLocalPositions.Add (body.name, body.transform.localPosition);
 					savedLocalRotations.Add (body.name, body.transform.localRotation);

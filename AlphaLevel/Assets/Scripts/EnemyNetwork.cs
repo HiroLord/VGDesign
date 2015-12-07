@@ -30,18 +30,24 @@ public abstract class EnemyNetwork : Entity {
 		if (obj) {
 			obj.GetComponent<NetworkManager> ().AddEnemy (this);
 		}
+		currentHealth = 0;
+		changeHealthHard (startingHealth);
+		currentEnergy = startingEnergy;
+
 	}
 
 	void OnDestroy() {
-		//GameObject.Find ("NetworkManager").GetComponent<NetworkManager> ().RemoveEnemy (this);
+		GameObject.Find ("NetworkManager").GetComponent<NetworkManager> ().RemoveEnemy (this);
 	}
 
 	protected void Update() {
-		if (updateTimer > 90f * Time.deltaTime) {
-			needUpdate = true;
-			updateTimer = 0f;
+		if (original) {
+			if (updateTimer > 90f * Time.deltaTime) {
+				needUpdate = true;
+				updateTimer = 0f;
+			}
+			updateTimer += Time.deltaTime;
 		}
-		updateTimer += Time.deltaTime;
 	}
 
 	public bool TargetChanged() {

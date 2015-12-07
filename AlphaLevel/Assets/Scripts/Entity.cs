@@ -28,7 +28,7 @@ public abstract class Entity : MonoBehaviour {
 	public void changeHealth(int deltaH) {
 		if (isDead)
 			return;
-		currentHealth -= deltaH;
+		currentHealth += deltaH;
 		checkDeath ();
 	}
 
@@ -41,7 +41,7 @@ public abstract class Entity : MonoBehaviour {
 		checkDeath ();
 	}
 
-	protected virtual void checkDeath() {
+	protected void checkDeath() {
 		if(currentHealth <= 0) {
 			currentHealth = 0;
 			isDead = true;

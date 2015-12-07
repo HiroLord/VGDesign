@@ -12,6 +12,6 @@ public class WeaponItemPickup : Pickup {
 		string name = this.gameObject.name;
 		name = name.Substring(0,name.IndexOf("Item"));
 		shooting.addWeaponItem (ItemLibrary.weaponItems [name]);
-		GameObject.Destroy (this.gameObject);
+		destroyObject ();
 	}
 }

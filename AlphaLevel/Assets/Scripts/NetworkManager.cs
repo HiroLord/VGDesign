@@ -28,6 +28,8 @@ public class NetworkManager : MonoBehaviour {
 	private bool host = true;
 	
 	private float timeBetween = 1;
+
+	public LevelLoader levelLoader;
 	
 	// Use this for initialization
 	void Start () {
@@ -50,6 +52,7 @@ public class NetworkManager : MonoBehaviour {
 	
 	void Connect(bool host) {
 		this.host = host;
+		levelLoader.Host = host;
 		try {
 			client = new TcpClient(IPAddress, 25001);
 			client.ReceiveTimeout = 0;
@@ -105,14 +108,14 @@ public class NetworkManager : MonoBehaviour {
 			case 5: // Enemy state has changed
 				int enemyID = ReadByte();
 				int eState = ReadByte ();
-				//Debug.Log ("New enemy state " + eState.ToString());
+				Debug.Log ("New enemy state " + eState.ToString());
 				enemies[enemyID].SetFromEState(eState);
 				break;
 			case 6: // Enemy health has changed
 				int enemyHID = ReadByte ();
-				int enemyDH = ReadByte ();
+				float enemyDH = ReadFloat ();
 				Debug.Log ("Enemy health change " + enemyDH.ToString());
-				enemies[enemyHID].changeHealthHard(-enemyDH);
+				enemies[enemyHID].changeHealthHard(-((int)enemyDH));
 				break;
 			case 7: // Enemy position update
 				Debug.Log ("New enemy position.");
@@ -147,6 +150,9 @@ public class NetworkManager : MonoBehaviour {
 				players[crPID].PlayerID = crPID;
 				players[crPID].setIsPlayer(false);
 				break;
+			case 11:
+				levelLoader.StartFade();
+				break;
 			}
 		}
 	}
@@ -171,6 +177,10 @@ public class NetworkManager : MonoBehaviour {
 				for (int i=0; i<recvBufferSize; i++) {
 					data+= " " + recvBuffer[i].ToString();
 				}
+			}
+
+			if (levelLoader.Ready) {
+				WriteByte (11);
 			}
 			
 			if (player.NeedsUpdate()) {
@@ -212,10 +222,11 @@ public class NetworkManager : MonoBehaviour {
 				}
 				// Not right; needs to be changed to enemies on non-hosts
 				int deltaHealth = enemies[e].getHealthDiff();
-				if (deltaHealth > 0) {
+				if (deltaHealth != 0) {
+					Debug.Log ("Health changed!");
 					WriteByte(6);
 					WriteByte(e);
-					WriteByte(deltaHealth);
+					WriteFloat(deltaHealth);
 				}
 				if (enemies[e].original) {
 					if (enemies[e].getChangedState()) {
@@ -281,16 +292,19 @@ public class NetworkManager : MonoBehaviour {
 		case 10:
 			sizeM = 9;
 			break;
+		case 11:
+			sizeM = 0;
+			break;
 		default:
 			Debug.Log ("MSG ID " + msgID.ToString() + " does not exist.");
 			recvBufferSize = 0;
 			break;
 		}
 		if (sizeM < recvBufferSize) {
-			Debug.Log("Handling message " + msgID.ToString());
+			//Debug.Log("Handling message " + msgID.ToString());
 			return true;
 		}
-		Debug.Log ("Waiting to handle message " + msgID.ToString ());
+		//Debug.Log ("Waiting to handle message " + msgID.ToString ());
 		return false;
 	}
 	
