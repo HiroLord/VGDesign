@@ -141,6 +141,7 @@ public class NetworkManager : MonoBehaviour {
 				int enemyPID = ReadByte ();
 				float enemyX = ReadFloat ();
 				float enemyZ = ReadFloat ();
+				Debug.Log (enemyX);
 				float oldEY = enemies[enemyPID].transform.position.y;
 				enemies[enemyPID].transform.position = new Vector3(enemyX, oldEY, enemyZ);
 				break;
