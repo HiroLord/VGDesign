@@ -71,7 +71,7 @@ public class MainMenuManager : MonoBehaviour {
 
 	public void selectConnect() {
 		Debug.Log ("Join selected");
-		Begin (true);
+		Begin (false);
 	}
 
 	public void selectHost() {
