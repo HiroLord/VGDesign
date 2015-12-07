@@ -92,6 +92,7 @@ public class NetworkManager : MonoBehaviour {
 				}
 				GameObject.Find ("HostPanel").GetComponentInChildren<Text>().text = hostString;
 			}
+			confirmed = true;
 		}
 	}
 	
@@ -145,7 +146,7 @@ public class NetworkManager : MonoBehaviour {
 				}
 				Debug.Log (hostCode);
 				myPlayerID = pID;
-				confirmed = true;
+				//confirmed = true;
 				break;
 			case 2: // Updating player position
 				int newPID = ReadByte ();
@@ -394,6 +395,9 @@ public class NetworkManager : MonoBehaviour {
 			break;
 		case 12:
 			sizeM = 2;
+			break;
+		case 20:
+			sizeM = 1;
 			break;
 		default:
 			Debug.Log ("MSG ID " + msgID.ToString() + " does not exist.");
