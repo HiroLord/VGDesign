@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Die : State<BossAgent> {
+public class BossDie : State<BossAgent> {
 	private Transform head;
 	private Transform leftHand;
 	private Transform rightHand;
@@ -26,6 +26,7 @@ public class Die : State<BossAgent> {
 	
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
+		owner.CurrentEState = BossAgent.EState.Die;
 		parts = new GameObject[4];
 		// Enable this state and grab components
 		base.OnEnable (owner, newStateMachine);

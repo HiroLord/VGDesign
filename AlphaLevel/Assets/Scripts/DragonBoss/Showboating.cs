@@ -51,7 +51,7 @@ public class Showboating : State<BossAgent> {
 		}
 
 		if (health.health <= 0) {
-			ownerStateMachine.CurrentState = new Die ();
+			ownerStateMachine.CurrentState = new BossDie ();
 		}
 	}
 	// Update is called once per frame
@@ -114,6 +114,7 @@ public class Showboating : State<BossAgent> {
 
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
+		owner.CurrentEState = BossAgent.EState.Showboating;
 		// Enable this state and grab components
 		base.OnEnable (owner, newStateMachine);
 		head = owner.head.transform;

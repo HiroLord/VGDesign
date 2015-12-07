@@ -49,7 +49,7 @@ public class HandSpinDeath : State<BossAgent> {
 	public override void CheckForNewState()
 	{
 		if (health.health <= 0) {
-			ownerStateMachine.CurrentState = new Die ();
+			ownerStateMachine.CurrentState = new BossDie ();
 		}
 
 		if (handTimer > 20f) {
@@ -105,6 +105,7 @@ public class HandSpinDeath : State<BossAgent> {
 	
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
+		owner.CurrentEState = BossAgent.EState.HandSpinDeath;
 		// Enable this state and grab components
 		base.OnEnable (owner, newStateMachine);
 		head = owner.head.transform;

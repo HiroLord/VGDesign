@@ -27,10 +27,8 @@ public class FireAtPlayer : State<BossAgent> {
 	private Vector3 leftDir;
 	private Vector3 rightDir;
 	private Vector3 tailDir;
-
-	private Rigidbody targetRigidBody;
+	
 	private GameObject target;
-	private Transform targetTransform;
 	private BossHealth health;
 
 	float timer;
@@ -47,7 +45,7 @@ public class FireAtPlayer : State<BossAgent> {
 	public override void CheckForNewState()
 	{
 		if (health.health <= 0) {
-			ownerStateMachine.CurrentState = new Die ();
+			ownerStateMachine.CurrentState = new BossDie ();
 		}
 
 		if (timer > 7f) {
@@ -56,7 +54,7 @@ public class FireAtPlayer : State<BossAgent> {
 	}
 	// Update is called once per frame
 	public override void Update () {
-		Vector3 lookAt = targetTransform.position;
+		Vector3 lookAt = ownerObject.currTarget.position;
 		lookAt.y += 1f;
 
 		Vector3 relativePos =  origin.position - lookAt;
@@ -90,15 +88,13 @@ public class FireAtPlayer : State<BossAgent> {
 	//To rotate the player currently being targeted
 	public void targetPlayer(GameObject player) {
 		target = player;
-		targetRigidBody = player.GetComponent<Rigidbody> ();
-		targetTransform = target.transform.Find ("ActualTransform");
-		Debug.Log (targetTransform.position);
-		Debug.Log (target.transform.position);
+		ownerObject.currTarget = target.transform.Find ("ActualTransform");
 	}
 
 	public override void OnEnable(BossAgent owner, StateMachine<BossAgent> newStateMachine)
 	{
 		// Enable this state and grab components
+		owner.CurrentEState = BossAgent.EState.FireAtPlayer;
 		base.OnEnable (owner, newStateMachine);
 		head = owner.head.transform;
 		leftHand = owner.leftHand.transform;
