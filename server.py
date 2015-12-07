@@ -1,6 +1,6 @@
 # This file runs the websockets.
 
-import string, cgi, time
+import string, cgi, time, random
 
 from wsserver import *
 
@@ -34,6 +34,7 @@ class Client:
         self.x = 0
         self.y = 0
         self.confirmed = False
+        self.host = None
     
     def handle(self):
         #if (self.socket.canHandleMsg() == False):
@@ -44,13 +45,19 @@ class Client:
         while self.canHandle():
             msgID = self.socket.readByte()
             if (msgID == 1):
+                hosting = self.socket.readByte()
                 hostCode = ""
                 for _ in range(4):
                     hostCode += str(self.socket.readByte())
-                print("Host code:", hostCode);
-                self.host = games[int(hostCode)]
-                if (self.host.addPlayer(self)):
-                    self.confirm()
+                if hosting == 1:
+                    hostCode = createGame()
+                print("Host code:", hostCode)
+                if (int(hostCode) in games):
+                    self.host = games[int(hostCode)]
+                    if self.host.addPlayer(self):
+                        self.confirm()
+                    else:
+                        self.deny()
                 else:
                     self.deny()
             elif (msgID == 2):
@@ -173,6 +180,9 @@ class Client:
     def confirm(self):
         self.socket.writeByte(1)
         self.socket.writeByte(self.pID)
+        for i in range(4):
+            self.socket.writeByte(int(str(self.host.hostCode)[i]))
+
         #self.socket.sendMessage()
 
         for client in clients:
@@ -193,8 +203,8 @@ class Client:
 
     def deny(self):
         self.socket.writeByte(1)
-        self.socket.writeByte(0)
-        self.socket.socket.close()
+        for _ in range(5):
+            self.socket.writeByte(0)
 
     def disconnect(self):
         print("Removing client.")
@@ -212,6 +222,16 @@ def handle(socket):
     pID += 1
     client = Client(socket, pID)
     clients.append(client)
+
+def createGame():
+    hostCode = ""
+    for _ in range(4):
+        hostCode += str(int(random.random() * 9) + 1)
+    hostCode = int(hostCode)
+    if hostCode in games:
+        return createGame
+    games[hostCode] = Game(hostCode)
+    return str(hostCode)
 
 def main():
     try:

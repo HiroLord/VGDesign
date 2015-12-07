@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour {
@@ -15,6 +16,8 @@ public class MainMenuManager : MonoBehaviour {
 	Vector3 endPosition;
 	Vector3 endFireflies;
 	public Text[] menu;
+	public Text hostCode;
+	private List<int> hostCodes = new List<int>();
 	int currentSelection = 0;
 	int oldSelection = 0;
 	string oldCopy;
@@ -37,11 +40,12 @@ public class MainMenuManager : MonoBehaviour {
 		menu[currentSelection].text = "- " + menu[currentSelection].text + " -";
 		createdCredits = null;
 		fTimer = 0;
+		hostCode.enabled = false;
 	}
 
 	public void hoverOption(int num) {
 		//reset old menu item
-		if (currentSelection != num) {
+		if (currentSelection != num && !hostCode.enabled) {
 			oldSelection = currentSelection;
 			menu [oldSelection].text = oldCopy;
 			menu[oldSelection].fontSize = 25;
@@ -66,23 +70,54 @@ public class MainMenuManager : MonoBehaviour {
 		} else if (fTimer < fireflyWait) {
 			fTimer += Time.deltaTime;
 		}
+
+		if (hostCode.enabled) {
+			int[] keys = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+			foreach (int key in keys) {
+				if (Input.GetKeyUp(key.ToString())) {
+					if (hostCodes.Count < 4) {
+						hostCodes.Add(key);
+					}
+				}
+			}
+			if (Input.GetKeyUp("backspace")) {
+				if (hostCodes.Count > 0) {
+					hostCodes = hostCodes.GetRange(0, hostCodes.Count-1);
+				}
+			}
+			string hostString = "";
+			foreach (int code in hostCodes) {
+				hostString += code;
+			}
+			hostCode.text = "Host Code: " + hostString;
+
+			if (Input.GetKeyDown ("return")) {
+				Begin (false, hostCodes.ToArray());
+			}
+			if (Input.GetKeyDown ("escape")) {
+				hostCode.enabled = false;
+			}
+		}
 		//Debug.Log (fTimer);
 	}
 
 	public void selectConnect() {
 		Debug.Log ("Join selected");
-		Begin (false);
+		//Begin (false);
+		hostCode.enabled = true;
 	}
 
 	public void selectHost() {
 		Debug.Log ("Host selected");
-		Begin (true);
+		int[] h = {0,0,0,0};
+		Begin (true, h);
 	}
 
-	private void Begin(bool connection) {
+	private void Begin(bool connection, int[] code) {
 		NetworkManager man = GameObject.Find ("NetworkManager").GetComponent<NetworkManager>();
 		man.Host = connection;
-		Application.LoadLevel ("IslandStart");
+		man.hostCode = code;
+		man.Connect (connection);
 	}
 
 	public void selectCredits() {
@@ -128,6 +163,9 @@ public class MainMenuManager : MonoBehaviour {
 
 	void handleMenuInput() {
 		float h = Input.GetAxisRaw ("Vertical");
+		if (hostCode.enabled) {
+			h = 0;
+		}
 		float yaxis = ControlInputWrapper.GetAxis(ControlInputWrapper.Axis.LeftStickY);
 		int size = menu.Length;
 		int t = currentSelection;
@@ -155,7 +193,7 @@ public class MainMenuManager : MonoBehaviour {
 		}
 
 		//handles selections
-		if (Input.GetKey ("space") || Input.GetKey ("return") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
+		if (Input.GetKeyUp ("space") || Input.GetKeyUp ("return") || ControlInputWrapper.GetButton (ControlInputWrapper.Buttons.RightBumper)) {
 			if (canSelect) {
 				handleSelection(menu[currentSelection].name);
 				canSelect = false;
