@@ -20,7 +20,17 @@ public class LevelLoader : MonoBehaviour
 	private float startAlpha;
 
 	private bool host = true;
-	public bool Ready = false;
+	private int ready = 0;
+	public bool Ready {
+		get {
+			if (ready != 1) {
+				return false;
+			} else {
+				ready = 2;
+				return true;
+			}
+		}
+	}
 	public bool Host {
 		set {
 			this.host = value;
@@ -117,7 +127,7 @@ public class LevelLoader : MonoBehaviour
 			count += 1;
 			if (count == GameObject.FindGameObjectsWithTag("Player").Length) {
 				StartFade();
-				Ready = true;
+				ready = 1;
 			}
 		}
 	}

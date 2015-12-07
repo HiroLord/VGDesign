@@ -34,6 +34,7 @@ class Client:
         self.x = 0
         self.y = 0
         self.confirmed = False
+        self.host = None
     
     def handle(self):
         #if (self.socket.canHandleMsg() == False):
