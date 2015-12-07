@@ -15,7 +15,7 @@ using System.Linq;
 
 public class NetworkManager : MonoBehaviour {
 
-	public String IPAddress = "192.168.1.115";
+	public String IPAddress = "http://preston.room409.xyz/";
 
 	public int[] hostCode = {0,0,0,0};
 	private int myPlayerID = 0;
@@ -74,6 +74,7 @@ public class NetworkManager : MonoBehaviour {
 	bool prefetched = false;
 
 	bool PreFetch() {
+		IPAddress = Dns.GetHostAddresses(IPAddress)[0].ToString();
 		prefetched = Security.PrefetchSocketPolicy (IPAddress, 25001, 3000);
 		return prefetched;
 	}
@@ -228,6 +229,19 @@ public class NetworkManager : MonoBehaviour {
 				}
 				players[pHID].GetComponent<Entity>().CurrentHealth = pHealth;
 				break;
+			case 20: // Delete player
+				Debug.Log ("Player left.");
+				int pDID = ReadByte ();
+				if (players[pDID] == null) { break; }
+				Destroy(players[pDID].gameObject);
+				players[pDID] = null;
+				foreach (EnemyNetwork enemy in enemies) {
+					if (enemy.CurrTargetID == pDID) {
+						enemy.CurrTargetID = player.PlayerID;
+						enemy.currTarget = player.transform;
+					}
+				}
+				break;
 			}
 		}
 	}
@@ -257,7 +271,7 @@ public class NetworkManager : MonoBehaviour {
 				return;
 			}
 
-			if (levelLoader.Ready) {
+			if (levelLoader && levelLoader.Ready) {
 				WriteByte (11);
 			}
 			

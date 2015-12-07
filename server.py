@@ -222,6 +222,9 @@ class Client:
         self.socket = None
         if self.host:
             self.host.players.remove(self)
+            for client in self.host.players:
+                client.socket.writeByte(20)
+                client.socket.writeByte(self.pID)
         return
 
 # This handles a new client.
