@@ -200,6 +200,8 @@ class Client:
         print("Removing client.")
         clients.remove(self)
         self.socket = None
+        if self.host:
+            self.host.players.remove(self)
         return
 
 # This handles a new client.

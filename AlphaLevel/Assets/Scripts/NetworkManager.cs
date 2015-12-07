@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class NetworkManager : MonoBehaviour {
 
@@ -35,13 +36,18 @@ public class NetworkManager : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("NetworkingManager initialized");
 		DontDestroyOnLoad (gameObject);
+	}
+
+	private int sortByName (GameObject a, GameObject b) {
+		return (a.name.Length).CompareTo(b.name.Length);
 	}
 
 	public void AddEnemy(EnemyNetwork enemy) {
 		enemies.Add (enemy);
 		enemy.original = host;
+
+		enemies = enemies.OrderBy(go=>go.name).ToList();
 	}
 
 	public void RemoveEnemy(EnemyNetwork enemy) {
@@ -141,6 +147,7 @@ public class NetworkManager : MonoBehaviour {
 				int enemyPID = ReadByte ();
 				float enemyX = ReadFloat ();
 				float enemyZ = ReadFloat ();
+				Debug.Log (enemyX);
 				float oldEY = enemies[enemyPID].transform.position.y;
 				enemies[enemyPID].transform.position = new Vector3(enemyX, oldEY, enemyZ);
 				break;
